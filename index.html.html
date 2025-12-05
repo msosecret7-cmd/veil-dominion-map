@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f34ff93dafb481901721b65091e75971 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f34ff93dafb481901721b65091e75971" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f34ff93dafb481901721b65091e75971 = L.map(
+                "map_f34ff93dafb481901721b65091e75971",
+                {
+                    center: [-20.0, 80.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 3,
+  "zoomControl": true,
+  "preferCanvas": false,
+  "name": "Satellite View",
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_12aa5dd680243e080e5288fde29b8bd3 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_12aa5dd680243e080e5288fde29b8bd3.addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var tile_layer_e2d72c4b482edbda3e90e49f3db7d613 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e2d72c4b482edbda3e90e49f3db7d613.addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var heat_map_8791bc3d708d2893475927f3facc563f = L.heatLayer(
+                [[20.41, 99.87, 1.0], [-3.11, -60.02, 1.0], [-25.34, 131.03, 0.8], [-90.0, 0.0, 0.5], [29.97, 31.13, 0.3]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 20,
+  "gradient": {
+  0.2: "blue",
+  0.6: "cyan",
+  1: "white",
+},
+}
+            );
+        
+    
+            heat_map_8791bc3d708d2893475927f3facc563f.addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var circle_marker_5056f96dcea11aa103ebc176228ca052 = L.circleMarker(
+                [20.41, 99.87],
+                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_6e21f1e3764119002d128f05a114650d = L.marker(
+                [20.41, 99.87],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_6fb408b67d5a0e28415e1a4de9f942e8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "#00FFFF",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_289a685aa2a94c5caf5ded3fe49cee75 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2bf28243c01320111abfeafb544f9fc0 = $(`<div id="html_2bf28243c01320111abfeafb544f9fc0" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-7311 (Pong Pha)</h4>         <hr>         <b>Type:</b> Water<br>         <b>Prana:</b> 218<br>         <b>Status:</b> ACTIVE     </div>     </div>`)[0];
+                popup_289a685aa2a94c5caf5ded3fe49cee75.setContent(html_2bf28243c01320111abfeafb544f9fc0);
+            
+        
+
+        marker_6e21f1e3764119002d128f05a114650d.bindPopup(popup_289a685aa2a94c5caf5ded3fe49cee75)
+        ;
+
+        
+    
+    
+            marker_6e21f1e3764119002d128f05a114650d.bindTooltip(
+                `<div>
+                     N-7311 (Pong Pha)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6e21f1e3764119002d128f05a114650d.setIcon(icon_6fb408b67d5a0e28415e1a4de9f942e8);
+            
+    
+            var circle_marker_57581c688d8358479e34470e7c45a81a = L.circleMarker(
+                [-3.11, -60.02],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_fdce5a3771b3011c986f265934f1e8d2 = L.marker(
+                [-3.11, -60.02],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_71d43b528802acc8187fbfcc68659021 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "green",
+  "icon": "leaf",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_83f59989046e7ac9e4537ad215c6830e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c2a82b89d7af26b81502b35211cb1ac9 = $(`<div id="html_c2a82b89d7af26b81502b35211cb1ac9" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">Sector-7 (Amazon)</h4>         <hr>         <b>Type:</b> Wood<br>         <b>Prana:</b> Infinite<br>         <b>Status:</b> EMITTER     </div>     </div>`)[0];
+                popup_83f59989046e7ac9e4537ad215c6830e.setContent(html_c2a82b89d7af26b81502b35211cb1ac9);
+            
+        
+
+        marker_fdce5a3771b3011c986f265934f1e8d2.bindPopup(popup_83f59989046e7ac9e4537ad215c6830e)
+        ;
+
+        
+    
+    
+            marker_fdce5a3771b3011c986f265934f1e8d2.bindTooltip(
+                `<div>
+                     Sector-7 (Amazon)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fdce5a3771b3011c986f265934f1e8d2.setIcon(icon_71d43b528802acc8187fbfcc68659021);
+            
+    
+            var circle_marker_d7faa76882d18199152032a16c6d16cf = L.circleMarker(
+                [-25.34, 131.03],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_b758591f4557ce16341251dc0d08a0c4 = L.marker(
+                [-25.34, 131.03],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_a5389e3024f29721e1f10853d41482f6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "orange",
+  "icon": "fire",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ef8bb06a232fa22955a8e3b50bd6b037 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_30465fc95fc823e338f6d84857b0d724 = $(`<div id="html_30465fc95fc823e338f6d84857b0d724" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #FFA500; margin-bottom: 5px;">N-618 (Uluru)</h4>         <hr>         <b>Type:</b> Fire<br>         <b>Prana:</b> 150%<br>         <b>Status:</b> ENGINE     </div>     </div>`)[0];
+                popup_ef8bb06a232fa22955a8e3b50bd6b037.setContent(html_30465fc95fc823e338f6d84857b0d724);
+            
+        
+
+        marker_b758591f4557ce16341251dc0d08a0c4.bindPopup(popup_ef8bb06a232fa22955a8e3b50bd6b037)
+        ;
+
+        
+    
+    
+            marker_b758591f4557ce16341251dc0d08a0c4.bindTooltip(
+                `<div>
+                     N-618 (Uluru)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b758591f4557ce16341251dc0d08a0c4.setIcon(icon_a5389e3024f29721e1f10853d41482f6);
+            
+    
+            var circle_marker_703112429e81f91e43291cf74336479e = L.circleMarker(
+                [-33.92, 18.42],
+                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_feead231c602875c2c4f69478bea00ca = L.marker(
+                [-33.92, 18.42],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_b736cc71ee693dd238bd2002263754c5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "#00FFFF",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_14ea648b359b3ebdd1762930bdf1c150 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_52b7452bec7100529f0e4678d57adf8d = $(`<div id="html_52b7452bec7100529f0e4678d57adf8d" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-Table (Lion)</h4>         <hr>         <b>Type:</b> Earth<br>         <b>Prana:</b> Stable<br>         <b>Status:</b> LENS     </div>     </div>`)[0];
+                popup_14ea648b359b3ebdd1762930bdf1c150.setContent(html_52b7452bec7100529f0e4678d57adf8d);
+            
+        
+
+        marker_feead231c602875c2c4f69478bea00ca.bindPopup(popup_14ea648b359b3ebdd1762930bdf1c150)
+        ;
+
+        
+    
+    
+            marker_feead231c602875c2c4f69478bea00ca.bindTooltip(
+                `<div>
+                     N-Table (Lion)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_feead231c602875c2c4f69478bea00ca.setIcon(icon_b736cc71ee693dd238bd2002263754c5);
+            
+    
+            var circle_marker_db2413b8b0f7ee58b010aa420b71ffb3 = L.circleMarker(
+                [-90.0, 0.0],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_44559142d2fc5ccb5bc8d10a4c666324 = L.marker(
+                [-90.0, 0.0],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_70916662c0ea7f87ca3567ab967b6061 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "anchor",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5002f316b7ac0a52732528cbbc6104fe = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_867758252611440e906a8e657ac2297c = $(`<div id="html_867758252611440e906a8e657ac2297c" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-000 (Antarctica)</h4>         <hr>         <b>Type:</b> Anchor<br>         <b>Prana:</b> Dreaming<br>         <b>Status:</b> ANCHOR     </div>     </div>`)[0];
+                popup_5002f316b7ac0a52732528cbbc6104fe.setContent(html_867758252611440e906a8e657ac2297c);
+            
+        
+
+        marker_44559142d2fc5ccb5bc8d10a4c666324.bindPopup(popup_5002f316b7ac0a52732528cbbc6104fe)
+        ;
+
+        
+    
+    
+            marker_44559142d2fc5ccb5bc8d10a4c666324.bindTooltip(
+                `<div>
+                     N-000 (Antarctica)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_44559142d2fc5ccb5bc8d10a4c666324.setIcon(icon_70916662c0ea7f87ca3567ab967b6061);
+            
+    
+            var circle_marker_97d5c84cd6eb382b1c8d7f499c739972 = L.circleMarker(
+                [51.17, -1.82],
+                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_d1e02be46c5140d88c97dd3ecf5ea678 = L.marker(
+                [51.17, -1.82],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_b4d8727c0d2e1483d125f1aec3e82197 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "#00FFFF",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f8f753dab14473f7c3d42c1e06fe1dc2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b3b6b5e642aa534da37972104fa69f86 = $(`<div id="html_b3b6b5e642aa534da37972104fa69f86" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-22 (Stonehenge)</h4>         <hr>         <b>Type:</b> Meridian<br>         <b>Prana:</b> Grounding<br>         <b>Status:</b> LINK     </div>     </div>`)[0];
+                popup_f8f753dab14473f7c3d42c1e06fe1dc2.setContent(html_b3b6b5e642aa534da37972104fa69f86);
+            
+        
+
+        marker_d1e02be46c5140d88c97dd3ecf5ea678.bindPopup(popup_f8f753dab14473f7c3d42c1e06fe1dc2)
+        ;
+
+        
+    
+    
+            marker_d1e02be46c5140d88c97dd3ecf5ea678.bindTooltip(
+                `<div>
+                     N-22 (Stonehenge)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d1e02be46c5140d88c97dd3ecf5ea678.setIcon(icon_b4d8727c0d2e1483d125f1aec3e82197);
+            
+    
+            var circle_marker_d8cf5e4814921678ed946f90c466ce1e = L.circleMarker(
+                [31.06, 81.31],
+                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_e714c78ab4227a5f8620f7aa034290dc = L.marker(
+                [31.06, 81.31],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_30aab3be6cedc8391de5a2f3432c4028 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "#00FFFF",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_11068d10c758238958cd69bbd30b3521 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d640b1a71c7c49ec28aac343ba2d893f = $(`<div id="html_d640b1a71c7c49ec28aac343ba2d893f" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-AJNA (Kailash)</h4>         <hr>         <b>Type:</b> Third Eye<br>         <b>Prana:</b> Awakening<br>         <b>Status:</b> TARGET     </div>     </div>`)[0];
+                popup_11068d10c758238958cd69bbd30b3521.setContent(html_d640b1a71c7c49ec28aac343ba2d893f);
+            
+        
+
+        marker_e714c78ab4227a5f8620f7aa034290dc.bindPopup(popup_11068d10c758238958cd69bbd30b3521)
+        ;
+
+        
+    
+    
+            marker_e714c78ab4227a5f8620f7aa034290dc.bindTooltip(
+                `<div>
+                     N-AJNA (Kailash)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e714c78ab4227a5f8620f7aa034290dc.setIcon(icon_30aab3be6cedc8391de5a2f3432c4028);
+            
+    
+            var circle_marker_55552f0da029730d519514186922c660 = L.circleMarker(
+                [29.97, 31.13],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var marker_3ed07efaabaa8813844f6c77d9ad17a5 = L.marker(
+                [29.97, 31.13],
+                {
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            var icon_1530295b04ecee288f47cda23a478871 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "red",
+  "icon": "ban-circle",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bc38df07c8551bdd4808a91ed418650c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_77d7263971d7dd5d7c2ff238577c4fd0 = $(`<div id="html_77d7263971d7dd5d7c2ff238577c4fd0" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #FF0000; margin-bottom: 5px;">N-666 (Giza)</h4>         <hr>         <b>Type:</b> Blocked<br>         <b>Prana:</b> N/A<br>         <b>Status:</b> ISOLATED     </div>     </div>`)[0];
+                popup_bc38df07c8551bdd4808a91ed418650c.setContent(html_77d7263971d7dd5d7c2ff238577c4fd0);
+            
+        
+
+        marker_3ed07efaabaa8813844f6c77d9ad17a5.bindPopup(popup_bc38df07c8551bdd4808a91ed418650c)
+        ;
+
+        
+    
+    
+            marker_3ed07efaabaa8813844f6c77d9ad17a5.bindTooltip(
+                `<div>
+                     N-666 (Giza)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3ed07efaabaa8813844f6c77d9ad17a5.setIcon(icon_1530295b04ecee288f47cda23a478871);
+            
+    
+            ant_path_e057927ef016b692fab2549f2ccaa3a2 = L.polyline.antPath(
+              [[20.41, 99.87], [-3.11, -60.02]],
+              {
+  "stroke": true,
+  "color": "#00FFFF",
+  "weight": 5,
+  "opacity": 0.9,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#00FFFF",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 400,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            ant_path_e057927ef016b692fab2549f2ccaa3a2.bindTooltip(
+                `<div>
+                     The Blue Vein
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            ant_path_7e438875b967d5bd44e716c3f3033b56 = L.polyline.antPath(
+              [[-3.11, -60.02], [-25.34, 131.03], [-33.92, 18.42], [-3.11, -60.02]],
+              {
+  "stroke": true,
+  "color": "#32CD32",
+  "weight": 3,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#32CD32",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 800,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            ant_path_7e438875b967d5bd44e716c3f3033b56.bindTooltip(
+                `<div>
+                     Southern Diamond Grid
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            ant_path_2ee2745cd3c8ef52624d4a29fa23ff43 = L.polyline.antPath(
+              [[20.41, 99.87], [31.06, 81.31]],
+              {
+  "stroke": true,
+  "color": "#FF00FF",
+  "weight": 3,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#FF00FF",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 600,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+    
+            ant_path_2ee2745cd3c8ef52624d4a29fa23ff43.bindTooltip(
+                `<div>
+                     Eastern Meridian
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var layer_control_fe9bd83296ce52b7c3cfbf239b931670_layers = {
+                base_layers : {
+                    "https://server.arcgisonline.com/arcgis/rest/services/world_imagery/mapserver/tile/{z}/{y}/{x}" : tile_layer_12aa5dd680243e080e5288fde29b8bd3,
+                    "Dark Mode" : tile_layer_e2d72c4b482edbda3e90e49f3db7d613,
+                },
+                overlays :  {
+                    "Prana Field" : heat_map_8791bc3d708d2893475927f3facc563f,
+                },
+            };
+            let layer_control_fe9bd83296ce52b7c3cfbf239b931670 = L.control.layers(
+                layer_control_fe9bd83296ce52b7c3cfbf239b931670_layers.base_layers,
+                layer_control_fe9bd83296ce52b7c3cfbf239b931670_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_f34ff93dafb481901721b65091e75971);
+        
+</script>
+</html>
