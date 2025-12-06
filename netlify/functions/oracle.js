@@ -8,7 +8,7 @@ exports.handler = async function(event, context) {
 
   try {
     // *** KEY နေရာမှာ မိတ်ဆွေရဲ့ Key အရှည်ကြီးကို သေချာထည့်ပါ ***
-    const genAI = new GoogleGenerativeAI("AIzaSy...မိတ်ဆွေရဲ့_Key_အစစ်ကို_ဒီမှာထည့်ပါ...");
+    const genAI = new GoogleGenerativeAI("AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA");
     
     // Model ကို gemini-1.5-flash သုံးပါမယ် (ပိုမြန်ပြီး Error နည်းလို့ပါ)
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
