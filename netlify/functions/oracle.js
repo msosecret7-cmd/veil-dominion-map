@@ -5,28 +5,26 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // *** KEY ထည့်ရန် ***
+    // *** KEY နေရာမှာ Key အစစ်ကို ထည့်ပါ ***
+    // (Space မပါစေနဲ့၊ " " ထဲမှာပဲ ရှိပါစေ)
     const API_KEY = "AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA";
     
-    // Google's Direct Endpoint (Library မလိုပါ)
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    // FIX: 'gemini-pro' ကို ပြောင်းသုံးထားပါတယ် (ဒါက အငြိမ်ဆုံးပါ)
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
 
     const data = JSON.parse(event.body);
     const userMessage = data.question;
 
-    // Shadow Archivist Persona
-    const systemInstruction = "You are MSO-7 (Shadow Archivist) of the Veil Dominion. Speak briefly, mystically, and with authority. Context: Pong Pha is active. Giza is blocked.";
-
-    // Data Packet Preparation
+    // Data format
     const payload = {
       contents: [{
         parts: [{
-          text: systemInstruction + "\n\nUser asks: " + userMessage
+          text: "You are MSO-7 (Shadow Archivist). Answer briefly and mystically. User asks: " + userMessage
         }]
       }]
     };
 
-    // Sending the Signal (Fetch API)
+    // Direct Signal Sending
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -35,13 +33,19 @@ exports.handler = async function(event, context) {
 
     const result = await response.json();
 
-    // Check for API Errors
+    // Google Error စစ်ဆေးခြင်း
     if (result.error) {
-      throw new Error(result.error.message);
+      return {
+        statusCode: 200, 
+        body: JSON.stringify({ reply: "GOOGLE ERROR: " + result.error.message })
+      };
     }
 
-    // Extracting the answer
-    const replyText = result.candidates[0].content.parts[0].text;
+    // အဖြေထုတ်ယူခြင်း (Safe Extraction)
+    let replyText = "The Oracle is silent.";
+    if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts) {
+       replyText = result.candidates[0].content.parts[0].text;
+    }
 
     return {
       statusCode: 200,
@@ -49,10 +53,9 @@ exports.handler = async function(event, context) {
     };
 
   } catch (error) {
-    console.error("Direct Link Error:", error);
     return {
       statusCode: 200,
-      body: JSON.stringify({ reply: "SIGNAL ERROR: " + error.message })
+      body: JSON.stringify({ reply: "CONNECTION ERROR: " + error.message })
     };
   }
 };
