@@ -1,5 +1,3 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-
 exports.handler = async function(event, context) {
   // Only allow POST requests
   if (event.httpMethod !== "POST") {
@@ -7,34 +5,54 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // *** အရေးကြီး ***
-    // ဒီအောက်က " " ကြားထဲမှာ Key ကို ထည့်ပါ။
-    const MY_API_KEY = "AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA";
-
-    const genAI = new GoogleGenerativeAI(MY_API_KEY);
+    // *** KEY ထည့်ရန် ***
+    const API_KEY = "AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA";
     
-    // FIX: Version အသစ်နဲ့ ကိုက်ညီတဲ့ Model ကို သုံးပါမည်
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    // Google's Direct Endpoint (Library မလိုပါ)
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     const data = JSON.parse(event.body);
-    const userPrompt = data.question;
+    const userMessage = data.question;
 
-    const systemPrompt = "You are MSO-7 (Shadow Archivist). Speak briefly and mystically about the Veil Dominion map.";
-    
-    const result = await model.generateContent(systemPrompt + " User: " + userPrompt);
-    const response = await result.response;
-    const text = response.text();
+    // Shadow Archivist Persona
+    const systemInstruction = "You are MSO-7 (Shadow Archivist) of the Veil Dominion. Speak briefly, mystically, and with authority. Context: Pong Pha is active. Giza is blocked.";
+
+    // Data Packet Preparation
+    const payload = {
+      contents: [{
+        parts: [{
+          text: systemInstruction + "\n\nUser asks: " + userMessage
+        }]
+      }]
+    };
+
+    // Sending the Signal (Fetch API)
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    // Check for API Errors
+    if (result.error) {
+      throw new Error(result.error.message);
+    }
+
+    // Extracting the answer
+    const replyText = result.candidates[0].content.parts[0].text;
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ reply: text }),
+      body: JSON.stringify({ reply: replyText }),
     };
 
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Direct Link Error:", error);
     return {
-      statusCode: 200, 
-      body: JSON.stringify({ reply: "SYSTEM ERROR: " + error.message }) 
+      statusCode: 200,
+      body: JSON.stringify({ reply: "SIGNAL ERROR: " + error.message })
     };
   }
 };
