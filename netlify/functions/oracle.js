@@ -7,15 +7,14 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // *** အရေးကြီး ***
-    // ဒီအောက်က " " ကြားထဲမှာ Key ကို ထည့်ပါ။ 
-    // မြန်မာစာ လုံးဝ မပါစေရ။ Space (နေရာလွတ်) မပါစေရ။
-    // လက်ရှိ Key မှာ အမှားပါနေနိုင်လို့ Key အသစ်ကို သေချာပြန်ကူးထည့်ပါ။
-    
+    // *** KEY နေရာမှာ မိတ်ဆွေရဲ့ Key အစစ်ကို သေချာပြန်ထည့်ပါ ***
+    // သတိပြုရန်: Space တွေ၊ မြန်မာဂဏန်းတွေ မပါစေရ။
     const MY_API_KEY = "AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA";
 
     const genAI = new GoogleGenerativeAI(MY_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    
+    // FIX: Model ကို 'gemini-pro' သို့ ပြောင်းလိုက်ပါ (ဒါက အငြိမ်ဆုံးပါ)
+    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
     const data = JSON.parse(event.body);
     const userPrompt = data.question;
@@ -35,7 +34,6 @@ exports.handler = async function(event, context) {
     console.error("Error:", error);
     return {
       statusCode: 200, 
-      // Error တက်ရင် ဘာကြောင့်လဲဆိုတာ ပြန်ပြောပြမယ့် code
       body: JSON.stringify({ reply: "SYSTEM ERROR: " + error.message }) 
     };
   }
