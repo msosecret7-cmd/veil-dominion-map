@@ -7,16 +7,19 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // *** KEY နေရာမှာ မိတ်ဆွေရဲ့ Key အရှည်ကြီးကို သေချာထည့်ပါ ***
-    const genAI = new GoogleGenerativeAI("AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA");
+    // *** အရေးကြီး ***
+    // ဒီအောက်က " " ကြားထဲမှာ Key ကို ထည့်ပါ။ 
+    // မြန်မာစာ လုံးဝ မပါစေရ။ Space (နေရာလွတ်) မပါစေရ။
+    // လက်ရှိ Key မှာ အမှားပါနေနိုင်လို့ Key အသစ်ကို သေချာပြန်ကူးထည့်ပါ။
     
-    // Model ကို gemini-1.5-flash သုံးပါမယ် (ပိုမြန်ပြီး Error နည်းလို့ပါ)
+    const MY_API_KEY = "AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA";
+
+    const genAI = new GoogleGenerativeAI(MY_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
     const data = JSON.parse(event.body);
     const userPrompt = data.question;
 
-    // The Shadow Archivist Persona
     const systemPrompt = "You are MSO-7 (Shadow Archivist). Speak briefly and mystically about the Veil Dominion map.";
     
     const result = await model.generateContent(systemPrompt + " User: " + userPrompt);
@@ -29,10 +32,10 @@ exports.handler = async function(event, context) {
     };
 
   } catch (error) {
-    // DEBUG MODE: Error အစစ်ကို ပြန်ပို့ပေးမယ့် ကုဒ်
-    console.error("Error details:", error);
+    console.error("Error:", error);
     return {
-      statusCode: 200, // 200 ပြန်ပို့မှ Chat box မှာ စာပေါ်မှာပါ
+      statusCode: 200, 
+      // Error တက်ရင် ဘာကြောင့်လဲဆိုတာ ပြန်ပြောပြမယ့် code
       body: JSON.stringify({ reply: "SYSTEM ERROR: " + error.message }) 
     };
   }
