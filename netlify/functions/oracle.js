@@ -8,7 +8,7 @@ exports.handler = async function(event, context) {
 
   try {
     // Netlify Variable ထဲက Key ကို လှမ်းယူပါမယ်
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const genAI = new GoogleGenerativeAI("AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA");
     const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
     const data = JSON.parse(event.body);
