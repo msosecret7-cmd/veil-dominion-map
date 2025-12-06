@@ -7,14 +7,14 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // *** KEY နေရာမှာ မိတ်ဆွေရဲ့ Key အစစ်ကို သေချာပြန်ထည့်ပါ ***
-    // သတိပြုရန်: Space တွေ၊ မြန်မာဂဏန်းတွေ မပါစေရ။
+    // *** အရေးကြီး ***
+    // ဒီအောက်က " " ကြားထဲမှာ Key ကို ထည့်ပါ။
     const MY_API_KEY = "AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA";
 
     const genAI = new GoogleGenerativeAI(MY_API_KEY);
     
-    // FIX: Model ကို 'gemini-pro' သို့ ပြောင်းလိုက်ပါ (ဒါက အငြိမ်ဆုံးပါ)
-    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+    // FIX: Version အသစ်နဲ့ ကိုက်ညီတဲ့ Model ကို သုံးပါမည်
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
     const data = JSON.parse(event.body);
     const userPrompt = data.question;
