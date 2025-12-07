@@ -57,18 +57,8 @@
     
     
             <div class="folium-map" id="map_9bfd5fd5fe43925cfa279caa32602cde" ></div>
-<div id="oracle-ui" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; width: 320px; font-family: 'Courier New', monospace;">
-    
-    <div id="chat-display" style="background: rgba(0, 10, 20, 0.9); border: 1px solid #00FFFF; border-radius: 8px 8px 0 0; height: 200px; padding: 10px; overflow-y: auto; color: #00FFFF; font-size: 12px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);">
-        <div style="margin-bottom: 10px; color: #32CD32;">>> SYSTEM ONLINE.<br>>> SHADOW ARCHIVIST LISTENING...</div>
-    </div>
 
-    <div style="display: flex; background: #000; border: 1px solid #00FFFF; border-top: none; border-radius: 0 0 8px 8px;">
-        <input type="text" id="user-input" placeholder="Query the Grid..." style="flex: 1; background: transparent; border: none; color: white; padding: 10px; font-family: inherit; outline: none;">
-        <button onclick="askOracle()" style="background: #00FFFF; color: #000; border: none; padding: 0 15px; font-weight: bold; cursor: pointer; transition: all 0.3s;">SEND</button>
-    </div>
-</div>
-
+<body>
 <script>
     async function askOracle() {
         const inputField = document.getElementById('user-input');
