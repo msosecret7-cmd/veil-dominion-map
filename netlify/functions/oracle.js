@@ -6,26 +6,43 @@ exports.handler = async function(event, context) {
 
   try {
     // *** KEY နေရာမှာ Key အစစ်ကို ထည့်ပါ ***
-    // (Space မပါစေနဲ့၊ " " ထဲမှာပဲ ရှိပါစေ)
-    const API_KEY = "AIzaSyCs9vAJjkCzUa71Qd_tkhOmpnbCGMxlNuA";
+    const API_KEY = "AIzaSyC6hh6zCR7LVM4C8fYiylJz2CgItuSjkWo";
     
-    // FIX: 'gemini-pro' ကို ပြောင်းသုံးထားပါတယ် (ဒါက အငြိမ်ဆုံးပါ)
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+    // STEP 1: မော်ဒယ်စာရင်းကို အရင်လှမ်းမေးပါမည် (Check Available Models)
+    const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${API_KEY}`;
+    const listResponse = await fetch(listUrl);
+    const listData = await listResponse.json();
 
+    if (listData.error) {
+      return { statusCode: 200, body: JSON.stringify({ reply: "KEY ERROR: " + listData.error.message }) };
+    }
+
+    // STEP 2: 'Gemini' ပါဝင်ပြီး Chat လို့ရတဲ့ မော်ဒယ်တစ်ခုကို ရှာပါမည်
+    let targetModel = "models/gemini-1.5-flash"; // Default backup
+    
+    if (listData.models) {
+        const validModel = listData.models.find(m => 
+            m.name.includes('gemini') && 
+            m.supportedGenerationMethods.includes('generateContent')
+        );
+        if (validModel) {
+            targetModel = validModel.name; // အလိုအလျောက် တွေ့ရှိသော မော်ဒယ်
+        }
+    }
+
+    // STEP 3: တွေ့ရှိသော မော်ဒယ်ဖြင့် စကားပြောပါမည်
+    const chatUrl = `https://generativelanguage.googleapis.com/v1beta/${targetModel}:generateContent?key=${API_KEY}`;
+    
     const data = JSON.parse(event.body);
-    const userMessage = data.question;
-
-    // Data format
     const payload = {
       contents: [{
         parts: [{
-          text: "You are MSO-7 (Shadow Archivist). Answer briefly and mystically. User asks: " + userMessage
+          text: "You are MSO-7 (Shadow Archivist). Speak briefly and mystically. User asks: " + data.question
         }]
       }]
     };
 
-    // Direct Signal Sending
-    const response = await fetch(url, {
+    const response = await fetch(chatUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -33,15 +50,11 @@ exports.handler = async function(event, context) {
 
     const result = await response.json();
 
-    // Google Error စစ်ဆေးခြင်း
     if (result.error) {
-      return {
-        statusCode: 200, 
-        body: JSON.stringify({ reply: "GOOGLE ERROR: " + result.error.message })
-      };
+      return { statusCode: 200, body: JSON.stringify({ reply: "GENERATE ERROR: " + result.error.message }) };
     }
 
-    // အဖြေထုတ်ယူခြင်း (Safe Extraction)
+    // အဖြေပြန်ထုတ်ခြင်း
     let replyText = "The Oracle is silent.";
     if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts) {
        replyText = result.candidates[0].content.parts[0].text;
@@ -49,13 +62,13 @@ exports.handler = async function(event, context) {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ reply: replyText }),
+      body: JSON.stringify({ reply: replyText + ` (Model Used: ${targetModel})` }),
     };
 
   } catch (error) {
     return {
       statusCode: 200,
-      body: JSON.stringify({ reply: "CONNECTION ERROR: " + error.message })
+      body: JSON.stringify({ reply: "SYSTEM CRASH: " + error.message })
     };
   }
 };
