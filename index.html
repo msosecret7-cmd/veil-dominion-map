@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_9bfd5fd5fe43925cfa279caa32602cde {
+                #map_6961ba1977d9e54833784b57bc4afa80 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -52,78 +52,28 @@
         
     <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
 </head>
 <body>
     
     
-            <div class="folium-map" id="map_9bfd5fd5fe43925cfa279caa32602cde" ></div>
-
-    <div style="position: absolute; top: 20px; left: 20px; z-index: 1000;">
-    <details style="background: rgba(0,0,0,0.8); border: 1px solid #00FFFF; border-radius: 5px; padding: 10px; width: 300px; color: white;">
-        <summary style="cursor: pointer; color: #00FFFF; font-weight: bold;">📡 TRANSMIT SIGNAL</summary>
-        <p style="font-size: 12px; color: #ccc;">Send your voice to the Shadow Archivist.</p>
-        
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSenEJhPZnBSbyIKKdmMixg9vdsM3ZLvlmbDZjqXHt29NVvsug/viewform?usp=dialogframeborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-        </details>
-    </div>
-<body>
-<script>
-    async function askOracle() {
-        const inputField = document.getElementById('user-input');
-        const displayDiv = document.getElementById('chat-display');
-        const question = inputField.value.trim();
-        
-        if (!question) return;
-
-        // User Message
-        displayDiv.innerHTML += `<div style="margin: 5px 0; color: #FFF;">> ${question}</div>`;
-        displayDiv.scrollTop = displayDiv.scrollHeight; // Auto scroll down
-        inputField.value = ''; // Clear input
-        inputField.placeholder = "Processing...";
-
-        try {
-            // Call Netlify Function
-            const response = await fetch('/.netlify/functions/oracle', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ question: question })
-            });
-            
-            const data = await response.json();
-            
-            // AI Response
-            displayDiv.innerHTML += `<div style="margin: 5px 0 15px 0; color: #00FFFF; border-left: 2px solid #32CD32; padding-left: 8px;">${data.reply}</div>`;
-            
-        } catch (error) {
-            displayDiv.innerHTML += `<div style="color: #FF0000;">>> ERROR: SIGNAL LOST.</div>`;
-        }
-        
-        displayDiv.scrollTop = displayDiv.scrollHeight;
-        inputField.placeholder = "Query the Grid...";
-    }
-
-    // Allow "Enter" key to send
-    document.getElementById("user-input").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            askOracle();
-        }
-    });
-        </script>
+            <div class="folium-map" id="map_6961ba1977d9e54833784b57bc4afa80" ></div>
         
 </body>
 <script>
     
     
-            var map_9bfd5fd5fe43925cfa279caa32602cde = L.map(
-                "map_9bfd5fd5fe43925cfa279caa32602cde",
+            var map_6961ba1977d9e54833784b57bc4afa80 = L.map(
+                "map_6961ba1977d9e54833784b57bc4afa80",
                 {
-                    center: [-20.0, 80.0],
+                    center: [10.0, 80.0],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 3,
   "zoomControl": true,
   "preferCanvas": false,
-  "name": "Satellite View",
+  "name": "Satellite Reality",
 }
 
                 }
@@ -133,7 +83,7 @@
 
         
     
-            var tile_layer_b918f420d9a1df9172b93f1e47fc44b3 = L.tileLayer(
+            var tile_layer_ae329928b2b03c809b3007d4cca50532 = L.tileLayer(
                 "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 {
   "minZoom": 0,
@@ -150,10 +100,10 @@
             );
         
     
-            tile_layer_b918f420d9a1df9172b93f1e47fc44b3.addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            tile_layer_ae329928b2b03c809b3007d4cca50532.addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var tile_layer_2fb3e53fbad71ad4ecd135d0eb611660 = L.tileLayer(
+            var tile_layer_832c9a2f48f5d7cf42501cbaa55a688d = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -170,65 +120,125 @@
             );
         
     
-            tile_layer_2fb3e53fbad71ad4ecd135d0eb611660.addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            tile_layer_832c9a2f48f5d7cf42501cbaa55a688d.addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var heat_map_b2fa4c43d025e943656162b29a100916 = L.heatLayer(
-                [[20.41, 99.87, 1.0], [-3.11, -60.02, 1.0], [-25.34, 131.03, 1.0], [-33.92, 18.42, 1.0], [-90.0, 0.0, 1.0], [51.17, -1.82, 1.0], [31.06, 81.31, 1.0], [29.97, 31.13, 1.0]],
+            var heat_map_5bca39ae809ea4d7031eb3cf1027f601 = L.heatLayer(
+                [[20.78, 97.03, 1.0], [20.41, 99.87, 1.0], [-3.11, -60.02, 1.0], [-32.65, -70.01, 1.0], [-33.92, 18.42, 1.0], [-25.34, 131.03, 1.0], [-80.0, -120.0, 1.0], [51.17, -1.82, 1.0], [31.06, 81.31, 1.0]],
                 {
   "minOpacity": 0.5,
   "maxZoom": 18,
-  "radius": 25,
-  "blur": 20,
+  "radius": 35,
+  "blur": 25,
+  "gradient": {
+  0.2: "blue",
+  0.4: "cyan",
+  0.6: "lime",
+  0.9: "white",
+},
 }
             );
         
     
-            heat_map_b2fa4c43d025e943656162b29a100916.addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            heat_map_5bca39ae809ea4d7031eb3cf1027f601.addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var circle_marker_ca4896f1cd471fc10f4263ca0ce7e531 = L.circleMarker(
-                [20.41, 99.87],
-                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            var circle_marker_49a821ab9b6131e44c2f4ce349807a20 = L.circleMarker(
+                [20.78, 97.03],
+                {"bubblingMouseEvents": true, "color": "#FFFFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFFFFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_d0a7b2e6a9a9f125e8f28b992fa8d53b = L.marker(
-                [20.41, 99.87],
+            var marker_6b589dd996eadaf0ae981704a0aea7e2 = L.marker(
+                [20.78, 97.03],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_2911c88572605515d85dfdaaefeab205 = L.AwesomeMarkers.icon(
+            var icon_fab15d2a355c1381a3a4697670f27858 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "#00FFFF",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
+  "iconColor": "#FFFFFF",
+  "icon": "user",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_0a3a351e038f34a693fcd3678ba7c303 = L.popup({
+        var popup_f1c41c346d9f9317e0bfc8c051f56300 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_becf7bcb4f9cb2897981a5fa25c47b63 = $(`<div id="html_becf7bcb4f9cb2897981a5fa25c47b63" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-7311 (Pong Pha)</h4>         <hr>         <b>Type:</b> Water<br>         <b>Prana:</b> 218<br>         <b>Status:</b> ACTIVE     </div>     </div>`)[0];
-                popup_0a3a351e038f34a693fcd3678ba7c303.setContent(html_becf7bcb4f9cb2897981a5fa25c47b63);
+                var html_22f3dafabc8bff16840ff4a935494325 = $(`<div id="html_22f3dafabc8bff16840ff4a935494325" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #FFFFFF; padding: 10px; border: 1px solid #FFFFFF; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #FFFFFF;">N-PROXY (Taunggyi)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>COMMAND NEXUS / FORGE</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Aetheric Receiver (Online)</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: User-Alpha (Hybrid)</p>     </div>     </div>`)[0];
+                popup_f1c41c346d9f9317e0bfc8c051f56300.setContent(html_22f3dafabc8bff16840ff4a935494325);
             
         
 
-        marker_d0a7b2e6a9a9f125e8f28b992fa8d53b.bindPopup(popup_0a3a351e038f34a693fcd3678ba7c303)
+        marker_6b589dd996eadaf0ae981704a0aea7e2.bindPopup(popup_f1c41c346d9f9317e0bfc8c051f56300)
         ;
 
         
     
     
-            marker_d0a7b2e6a9a9f125e8f28b992fa8d53b.bindTooltip(
+            marker_6b589dd996eadaf0ae981704a0aea7e2.bindTooltip(
+                `<div>
+                     N-PROXY (Taunggyi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6b589dd996eadaf0ae981704a0aea7e2.setIcon(icon_fab15d2a355c1381a3a4697670f27858);
+            
+    
+            var circle_marker_74098588020bb3a9381fc07ff207a1c1 = L.circleMarker(
+                [20.41, 99.87],
+                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            var marker_ecabe928c0e91537630844dede523728 = L.marker(
+                [20.41, 99.87],
+                {
+}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            var icon_afd29670de2cf6760246a2ae4f3cc9c2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "#00FFFF",
+  "icon": "tint",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ed8300c8ba689e2fe95c2f3699db170e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8c0ee8d98c5943c3f7c03a2fc1c70e7b = $(`<div id="html_8c0ee8d98c5943c3f7c03a2fc1c70e7b" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #00FFFF; padding: 10px; border: 1px solid #00FFFF; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #00FFFF;">N-7311 (Pong Pha)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>ACTIVE GROUNDING WELL</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Limestone Tidal Vessel</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: 528Hz (Resonance)</p>     </div>     </div>`)[0];
+                popup_ed8300c8ba689e2fe95c2f3699db170e.setContent(html_8c0ee8d98c5943c3f7c03a2fc1c70e7b);
+            
+        
+
+        marker_ecabe928c0e91537630844dede523728.bindPopup(popup_ed8300c8ba689e2fe95c2f3699db170e)
+        ;
+
+        
+    
+    
+            marker_ecabe928c0e91537630844dede523728.bindTooltip(
                 `<div>
                      N-7311 (Pong Pha)
                  </div>`,
@@ -238,51 +248,51 @@
             );
         
     
-                marker_d0a7b2e6a9a9f125e8f28b992fa8d53b.setIcon(icon_2911c88572605515d85dfdaaefeab205);
+                marker_ecabe928c0e91537630844dede523728.setIcon(icon_afd29670de2cf6760246a2ae4f3cc9c2);
             
     
-            var circle_marker_dd25132636aa7ba0919a81f8590edd48 = L.circleMarker(
+            var circle_marker_12567105c9024498db371cc0a9023c50 = L.circleMarker(
                 [-3.11, -60.02],
-                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+                {"bubblingMouseEvents": true, "color": "#32CD32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#32CD32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_5049aa8c49066d8151f528569ad69c17 = L.marker(
+            var marker_365113d892554a1deedef058ab0cd1d8 = L.marker(
                 [-3.11, -60.02],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_7475c3a417ee111048f29395a6ff069f = L.AwesomeMarkers.icon(
+            var icon_00b61ba28b9bfa1a5550ac0a3d211574 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "green",
-  "icon": "leaf",
-  "prefix": "glyphicon",
+  "iconColor": "#32CD32",
+  "icon": "server",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_f13a042787c314410fe44885f832e479 = L.popup({
+        var popup_cca025aca8ac9acbfb52386e7f091d23 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_aafadeda581ff4cec55e70cb38f9d5d3 = $(`<div id="html_aafadeda581ff4cec55e70cb38f9d5d3" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #32CD32; margin-bottom: 5px;">Sector-7 (Amazon)</h4>         <hr>         <b>Type:</b> Wood<br>         <b>Prana:</b> Infinite<br>         <b>Status:</b> EMITTER     </div>     </div>`)[0];
-                popup_f13a042787c314410fe44885f832e479.setContent(html_aafadeda581ff4cec55e70cb38f9d5d3);
+                var html_e5f5c4785909c16db953306cb90e68f2 = $(`<div id="html_e5f5c4785909c16db953306cb90e68f2" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #32CD32; padding: 10px; border: 1px solid #32CD32; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #32CD32;">Sector-7 (Amazon)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>ONLINE GREEN CLOUD</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Jaguar-Byte Guardian</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Infinite Bandwidth</p>     </div>     </div>`)[0];
+                popup_cca025aca8ac9acbfb52386e7f091d23.setContent(html_e5f5c4785909c16db953306cb90e68f2);
             
         
 
-        marker_5049aa8c49066d8151f528569ad69c17.bindPopup(popup_f13a042787c314410fe44885f832e479)
+        marker_365113d892554a1deedef058ab0cd1d8.bindPopup(popup_cca025aca8ac9acbfb52386e7f091d23)
         ;
 
         
     
     
-            marker_5049aa8c49066d8151f528569ad69c17.bindTooltip(
+            marker_365113d892554a1deedef058ab0cd1d8.bindTooltip(
                 `<div>
                      Sector-7 (Amazon)
                  </div>`,
@@ -292,53 +302,53 @@
             );
         
     
-                marker_5049aa8c49066d8151f528569ad69c17.setIcon(icon_7475c3a417ee111048f29395a6ff069f);
+                marker_365113d892554a1deedef058ab0cd1d8.setIcon(icon_00b61ba28b9bfa1a5550ac0a3d211574);
             
     
-            var circle_marker_04132e9426a1ddf942ecb93f0a2705ff = L.circleMarker(
-                [-25.34, 131.03],
-                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            var circle_marker_6bce953d96aa0706119a3cc163675202 = L.circleMarker(
+                [-32.65, -70.01],
+                {"bubblingMouseEvents": true, "color": "#A9A9A9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#A9A9A9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_cee2ee7e67df1a7c7060de381970956b = L.marker(
-                [-25.34, 131.03],
+            var marker_b570e0353e46f04332231f8e3ba4e15b = L.marker(
+                [-32.65, -70.01],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_4b6a070ce37a323974602faba49aaba8 = L.AwesomeMarkers.icon(
+            var icon_f6e72c02a00fede8e8b51768fd568be7 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "orange",
-  "icon": "fire",
-  "prefix": "glyphicon",
+  "iconColor": "#A9A9A9",
+  "icon": "image",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_15c5fc9996b6f78f944b0dcec4663633 = L.popup({
+        var popup_ecf7fbb8049001856c2dd07843a690c5 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_201417bc6592576f2fc09085bbb7c086 = $(`<div id="html_201417bc6592576f2fc09085bbb7c086" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #FFA500; margin-bottom: 5px;">N-618 (Uluru)</h4>         <hr>         <b>Type:</b> Fire<br>         <b>Prana:</b> 150%<br>         <b>Status:</b> ENGINE     </div>     </div>`)[0];
-                popup_15c5fc9996b6f78f944b0dcec4663633.setContent(html_201417bc6592576f2fc09085bbb7c086);
+                var html_60cda352d02638cc35ef0571895cbd51 = $(`<div id="html_60cda352d02638cc35ef0571895cbd51" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #A9A9A9; padding: 10px; border: 1px solid #A9A9A9; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #A9A9A9;">Mount Silica (Andes)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>PERMEABLE ARCHIVE</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Bio-Lithic Crystalline Roots</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: 1:168 (Time Dilation)</p>     </div>     </div>`)[0];
+                popup_ecf7fbb8049001856c2dd07843a690c5.setContent(html_60cda352d02638cc35ef0571895cbd51);
             
         
 
-        marker_cee2ee7e67df1a7c7060de381970956b.bindPopup(popup_15c5fc9996b6f78f944b0dcec4663633)
+        marker_b570e0353e46f04332231f8e3ba4e15b.bindPopup(popup_ecf7fbb8049001856c2dd07843a690c5)
         ;
 
         
     
     
-            marker_cee2ee7e67df1a7c7060de381970956b.bindTooltip(
+            marker_b570e0353e46f04332231f8e3ba4e15b.bindTooltip(
                 `<div>
-                     N-618 (Uluru)
+                     Mount Silica (Andes)
                  </div>`,
                 {
   "sticky": true,
@@ -346,51 +356,51 @@
             );
         
     
-                marker_cee2ee7e67df1a7c7060de381970956b.setIcon(icon_4b6a070ce37a323974602faba49aaba8);
+                marker_b570e0353e46f04332231f8e3ba4e15b.setIcon(icon_f6e72c02a00fede8e8b51768fd568be7);
             
     
-            var circle_marker_0af7d56411f9607489552a40a1b5ec23 = L.circleMarker(
+            var circle_marker_3edb0bedffaeefb02b0b6e82945e3e13 = L.circleMarker(
                 [-33.92, 18.42],
-                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+                {"bubblingMouseEvents": true, "color": "#FFD700", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFD700", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_97abebc2de89fa7c3c0b99a181ae3855 = L.marker(
+            var marker_b65486956b41c0b951590a46ae73ee23 = L.marker(
                 [-33.92, 18.42],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_af36453731a5340f60d9296f64a97daa = L.AwesomeMarkers.icon(
+            var icon_1c28b62fbc846d3046ea1fdbd786a16f = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "#00FFFF",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
+  "iconColor": "#FFD700",
+  "icon": "globe",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_7d5cb27eaafdbded8218418bc8b77993 = L.popup({
+        var popup_4290cac02fd11875b6a4f117431a948e = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_a088bade359bbeab56d402ba63c5a02e = $(`<div id="html_a088bade359bbeab56d402ba63c5a02e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-Table (Lion)</h4>         <hr>         <b>Type:</b> Earth<br>         <b>Prana:</b> Stable<br>         <b>Status:</b> LENS     </div>     </div>`)[0];
-                popup_7d5cb27eaafdbded8218418bc8b77993.setContent(html_a088bade359bbeab56d402ba63c5a02e);
+                var html_ad4ecabced470f330fdae96f086f7eaa = $(`<div id="html_ad4ecabced470f330fdae96f086f7eaa" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #FFD700; padding: 10px; border: 1px solid #FFD700; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #FFD700;">N-Table (Lion)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>GEOMANTIC LENS</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: The Sleeping Lion</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Earth Magnetic</p>     </div>     </div>`)[0];
+                popup_4290cac02fd11875b6a4f117431a948e.setContent(html_ad4ecabced470f330fdae96f086f7eaa);
             
         
 
-        marker_97abebc2de89fa7c3c0b99a181ae3855.bindPopup(popup_7d5cb27eaafdbded8218418bc8b77993)
+        marker_b65486956b41c0b951590a46ae73ee23.bindPopup(popup_4290cac02fd11875b6a4f117431a948e)
         ;
 
         
     
     
-            marker_97abebc2de89fa7c3c0b99a181ae3855.bindTooltip(
+            marker_b65486956b41c0b951590a46ae73ee23.bindTooltip(
                 `<div>
                      N-Table (Lion)
                  </div>`,
@@ -400,53 +410,53 @@
             );
         
     
-                marker_97abebc2de89fa7c3c0b99a181ae3855.setIcon(icon_af36453731a5340f60d9296f64a97daa);
+                marker_b65486956b41c0b951590a46ae73ee23.setIcon(icon_1c28b62fbc846d3046ea1fdbd786a16f);
             
     
-            var circle_marker_276a5ab2f4589d42b2691c0a6640f8ce = L.circleMarker(
-                [-90.0, 0.0],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            var circle_marker_7f70be76ead9c561c8ff70f9b568e494 = L.circleMarker(
+                [-25.34, 131.03],
+                {"bubblingMouseEvents": true, "color": "#FFA500", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFA500", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_6800cab590dd05da299cfc55d11750b0 = L.marker(
-                [-90.0, 0.0],
+            var marker_38a46dd529c677ac9764fcc584cda3ea = L.marker(
+                [-25.34, 131.03],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_11a22917c29f455cfcfa85fa7f1434a3 = L.AwesomeMarkers.icon(
+            var icon_4dea1a40de42bc255788d9a84f8b6323 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "white",
-  "icon": "anchor",
-  "prefix": "glyphicon",
+  "iconColor": "#FFA500",
+  "icon": "fire",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_1b271326142f3d632654d8de1b2baa2c = L.popup({
+        var popup_bc354d00343be2d0b1a7a7044bc7eedd = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_63a7b9a719db83c9c8688156b44e5ee1 = $(`<div id="html_63a7b9a719db83c9c8688156b44e5ee1" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-000 (Antarctica)</h4>         <hr>         <b>Type:</b> Anchor<br>         <b>Prana:</b> Dreaming<br>         <b>Status:</b> ANCHOR     </div>     </div>`)[0];
-                popup_1b271326142f3d632654d8de1b2baa2c.setContent(html_63a7b9a719db83c9c8688156b44e5ee1);
+                var html_34d6a78c0f4c7e640ad3070f4eb7fabe = $(`<div id="html_34d6a78c0f4c7e640ad3070f4eb7fabe" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #FFA500; padding: 10px; border: 1px solid #FFA500; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #FFA500;">N-618 (Uluru)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>SOLAR ENGINE / RED GARDEN</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Crystalline Kangaroo Array</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Scalar Wave (Fire)</p>     </div>     </div>`)[0];
+                popup_bc354d00343be2d0b1a7a7044bc7eedd.setContent(html_34d6a78c0f4c7e640ad3070f4eb7fabe);
             
         
 
-        marker_6800cab590dd05da299cfc55d11750b0.bindPopup(popup_1b271326142f3d632654d8de1b2baa2c)
+        marker_38a46dd529c677ac9764fcc584cda3ea.bindPopup(popup_bc354d00343be2d0b1a7a7044bc7eedd)
         ;
 
         
     
     
-            marker_6800cab590dd05da299cfc55d11750b0.bindTooltip(
+            marker_38a46dd529c677ac9764fcc584cda3ea.bindTooltip(
                 `<div>
-                     N-000 (Antarctica)
+                     N-618 (Uluru)
                  </div>`,
                 {
   "sticky": true,
@@ -454,51 +464,105 @@
             );
         
     
-                marker_6800cab590dd05da299cfc55d11750b0.setIcon(icon_11a22917c29f455cfcfa85fa7f1434a3);
+                marker_38a46dd529c677ac9764fcc584cda3ea.setIcon(icon_4dea1a40de42bc255788d9a84f8b6323);
             
     
-            var circle_marker_25b3fe1ce2f9a7b7483e3d93ac46ae39 = L.circleMarker(
-                [51.17, -1.82],
-                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            var circle_marker_7dc72ad6e24dad8c34439d2eaac765fb = L.circleMarker(
+                [-80.0, -120.0],
+                {"bubblingMouseEvents": true, "color": "#F0F8FF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F0F8FF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_0ee602e2f730b4d8c46426a2b36bf75f = L.marker(
-                [51.17, -1.82],
+            var marker_89082f0e0636f46a7ad0a340697d171b = L.marker(
+                [-80.0, -120.0],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_551b8179eb5bd615dd4fccf2cd9e39ad = L.AwesomeMarkers.icon(
+            var icon_4d1e85d63bb533cd70b1225cfd451aa3 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "#00FFFF",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
+  "iconColor": "#F0F8FF",
+  "icon": "snowflake-o",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_1a1851cd2bd8907e694688d723e67e68 = L.popup({
+        var popup_9d27b348e92bd25f5a0ddbcf74e2d439 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_604c82acd97391a529d312e9d2daeeea = $(`<div id="html_604c82acd97391a529d312e9d2daeeea" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-22 (Stonehenge)</h4>         <hr>         <b>Type:</b> Meridian<br>         <b>Prana:</b> Grounding<br>         <b>Status:</b> LINK     </div>     </div>`)[0];
-                popup_1a1851cd2bd8907e694688d723e67e68.setContent(html_604c82acd97391a529d312e9d2daeeea);
+                var html_fa37a90f2c4d100ae99f4642e0cebdb9 = $(`<div id="html_fa37a90f2c4d100ae99f4642e0cebdb9" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #F0F8FF; padding: 10px; border: 1px solid #F0F8FF; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #F0F8FF;">N-000 (Aurora Nullus)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>PRIMARY SERVER FARM</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Blue Ice Server Spires</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Absolute Zero Logic</p>     </div>     </div>`)[0];
+                popup_9d27b348e92bd25f5a0ddbcf74e2d439.setContent(html_fa37a90f2c4d100ae99f4642e0cebdb9);
             
         
 
-        marker_0ee602e2f730b4d8c46426a2b36bf75f.bindPopup(popup_1a1851cd2bd8907e694688d723e67e68)
+        marker_89082f0e0636f46a7ad0a340697d171b.bindPopup(popup_9d27b348e92bd25f5a0ddbcf74e2d439)
         ;
 
         
     
     
-            marker_0ee602e2f730b4d8c46426a2b36bf75f.bindTooltip(
+            marker_89082f0e0636f46a7ad0a340697d171b.bindTooltip(
+                `<div>
+                     N-000 (Aurora Nullus)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_89082f0e0636f46a7ad0a340697d171b.setIcon(icon_4d1e85d63bb533cd70b1225cfd451aa3);
+            
+    
+            var circle_marker_30272184a1efd4c1e54b2b35ad14ed04 = L.circleMarker(
+                [51.17, -1.82],
+                {"bubblingMouseEvents": true, "color": "#9370DB", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9370DB", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            var marker_8220206e60c1a369f2805596de946212 = L.marker(
+                [51.17, -1.82],
+                {
+}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            var icon_0d7bdae99cc36e39ce2fb3ab338d0a58 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "#9370DB",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_88afa5e750d4055253bcd57455c0b216 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_98a3bbd8b248460f9138245492f05a3b = $(`<div id="html_98a3bbd8b248460f9138245492f05a3b" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #9370DB; padding: 10px; border: 1px solid #9370DB; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #9370DB;">N-22 (Stonehenge)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>ANCIENT MERIDIAN</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Stone Circle Portal</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Ley Line Hub</p>     </div>     </div>`)[0];
+                popup_88afa5e750d4055253bcd57455c0b216.setContent(html_98a3bbd8b248460f9138245492f05a3b);
+            
+        
+
+        marker_8220206e60c1a369f2805596de946212.bindPopup(popup_88afa5e750d4055253bcd57455c0b216)
+        ;
+
+        
+    
+    
+            marker_8220206e60c1a369f2805596de946212.bindTooltip(
                 `<div>
                      N-22 (Stonehenge)
                  </div>`,
@@ -508,51 +572,51 @@
             );
         
     
-                marker_0ee602e2f730b4d8c46426a2b36bf75f.setIcon(icon_551b8179eb5bd615dd4fccf2cd9e39ad);
+                marker_8220206e60c1a369f2805596de946212.setIcon(icon_0d7bdae99cc36e39ce2fb3ab338d0a58);
             
     
-            var circle_marker_c814a8e1922504082ee185d7acf4f2fa = L.circleMarker(
+            var circle_marker_bcfae0bf46411ad4bce077059cad349c = L.circleMarker(
                 [31.06, 81.31],
-                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+                {"bubblingMouseEvents": true, "color": "#FF00FF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF00FF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_678ec2d48d101cca2cc832f135514091 = L.marker(
+            var marker_4fa4c0194d9422bdc1411fda2c5d5ed7 = L.marker(
                 [31.06, 81.31],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_c649a1d803209387aa083ad7c1822db5 = L.AwesomeMarkers.icon(
+            var icon_5553184920ec7f7bf52f827ccf48bfeb = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "#00FFFF",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
+  "iconColor": "#FF00FF",
+  "icon": "eye",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_4748bd41e621914fdb2aa9f1fdde6a68 = L.popup({
+        var popup_31ad848c20f04edc5d470afe48da3eec = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_f9d60ca3c097d0e5679046e02455ab29 = $(`<div id="html_f9d60ca3c097d0e5679046e02455ab29" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #00FFFF; margin-bottom: 5px;">N-AJNA (Kailash)</h4>         <hr>         <b>Type:</b> Third Eye<br>         <b>Prana:</b> Awakening<br>         <b>Status:</b> TARGET     </div>     </div>`)[0];
-                popup_4748bd41e621914fdb2aa9f1fdde6a68.setContent(html_f9d60ca3c097d0e5679046e02455ab29);
+                var html_4751ac2c59433c0f299775b9cf772aff = $(`<div id="html_4751ac2c59433c0f299775b9cf772aff" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #FF00FF; padding: 10px; border: 1px solid #FF00FF; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #FF00FF;">N-AJNA (Kailash)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>THIRD EYE TARGET</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: The Crystal Pyramid</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Cosmic Uplink</p>     </div>     </div>`)[0];
+                popup_31ad848c20f04edc5d470afe48da3eec.setContent(html_4751ac2c59433c0f299775b9cf772aff);
             
         
 
-        marker_678ec2d48d101cca2cc832f135514091.bindPopup(popup_4748bd41e621914fdb2aa9f1fdde6a68)
+        marker_4fa4c0194d9422bdc1411fda2c5d5ed7.bindPopup(popup_31ad848c20f04edc5d470afe48da3eec)
         ;
 
         
     
     
-            marker_678ec2d48d101cca2cc832f135514091.bindTooltip(
+            marker_4fa4c0194d9422bdc1411fda2c5d5ed7.bindTooltip(
                 `<div>
                      N-AJNA (Kailash)
                  </div>`,
@@ -562,51 +626,51 @@
             );
         
     
-                marker_678ec2d48d101cca2cc832f135514091.setIcon(icon_c649a1d803209387aa083ad7c1822db5);
+                marker_4fa4c0194d9422bdc1411fda2c5d5ed7.setIcon(icon_5553184920ec7f7bf52f827ccf48bfeb);
             
     
-            var circle_marker_8b220372d1c3610108530d6d22f913eb = L.circleMarker(
+            var circle_marker_9cc5f2b69930a1c37ce828ccab7a907d = L.circleMarker(
                 [29.97, 31.13],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+                {"bubblingMouseEvents": true, "color": "#FF0000", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var marker_560a6751b4eaae64dcd2063d9cdcda24 = L.marker(
+            var marker_198bb5afacbf2308aefcdb2d17973953 = L.marker(
                 [29.97, 31.13],
                 {
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            var icon_22745791e366926a5cd3372ee6542610 = L.AwesomeMarkers.icon(
+            var icon_60699a5b03faa9ebca05f54454370802 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "black",
-  "iconColor": "red",
-  "icon": "ban-circle",
-  "prefix": "glyphicon",
+  "iconColor": "#FF0000",
+  "icon": "ban",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_66bcba244928f138ea4dba4bbdbe5483 = L.popup({
+        var popup_adb930a401e018d8fc6c2240b6657acc = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_d4ffe5e55211d0fe806592876d550c56 = $(`<div id="html_d4ffe5e55211d0fe806592876d550c56" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 200px;">         <h4 style="color: #FF0000; margin-bottom: 5px;">N-666 (Giza)</h4>         <hr>         <b>Type:</b> Blocked<br>         <b>Prana:</b> N/A<br>         <b>Status:</b> ISOLATED     </div>     </div>`)[0];
-                popup_66bcba244928f138ea4dba4bbdbe5483.setContent(html_d4ffe5e55211d0fe806592876d550c56);
+                var html_2231abe07fe2684aaf0e17fb55847743 = $(`<div id="html_2231abe07fe2684aaf0e17fb55847743" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New', monospace; width: 250px; background: rgba(0,0,0,0.85); color: #FF0000; padding: 10px; border: 1px solid #FF0000; border-radius: 5px;">         <h4 style="margin: 0; text-transform: uppercase; border-bottom: 1px solid #FF0000;">N-666 (Giza)</h4>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">STATUS: <b>BLOCKED (The Silent Scream)</b></p>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">VISUAL: Sand-Locked Pyramid</p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: CONNECTION SEVERED</p>     </div>     </div>`)[0];
+                popup_adb930a401e018d8fc6c2240b6657acc.setContent(html_2231abe07fe2684aaf0e17fb55847743);
             
         
 
-        marker_560a6751b4eaae64dcd2063d9cdcda24.bindPopup(popup_66bcba244928f138ea4dba4bbdbe5483)
+        marker_198bb5afacbf2308aefcdb2d17973953.bindPopup(popup_adb930a401e018d8fc6c2240b6657acc)
         ;
 
         
     
     
-            marker_560a6751b4eaae64dcd2063d9cdcda24.bindTooltip(
+            marker_198bb5afacbf2308aefcdb2d17973953.bindTooltip(
                 `<div>
                      N-666 (Giza)
                  </div>`,
@@ -616,16 +680,72 @@
             );
         
     
-                marker_560a6751b4eaae64dcd2063d9cdcda24.setIcon(icon_22745791e366926a5cd3372ee6542610);
+                marker_198bb5afacbf2308aefcdb2d17973953.setIcon(icon_60699a5b03faa9ebca05f54454370802);
             
     
-            ant_path_83df693ad5ea39e17577d7bcd8459ece = L.polyline.antPath(
-              [[20.41, 99.87], [-3.11, -60.02]],
+            ant_path_7269cf8c3f781eb7b622d204e361ff0e = L.polyline.antPath(
+              [[-25.34, 131.03], [20.78, 97.03]],
+              {
+  "stroke": true,
+  "color": "#FFA500",
+  "weight": 3,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+5,
+10,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#FFA500",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 600,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            ant_path_7269cf8c3f781eb7b622d204e361ff0e.bindTooltip(
+                `<div>
+                     Solar Prana Stream (Incoming Fuel)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f903e75efd7127f50f3736ca406ec749 = L.polyline(
+                [[20.41, 99.87], [20.78, 97.03]],
+                {"bubblingMouseEvents": true, "color": "#FFFFFF", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "#FFFFFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            poly_line_f903e75efd7127f50f3736ca406ec749.bindTooltip(
+                `<div>
+                     Local Ground Link
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            ant_path_71d81615ba887c914748287359472e45 = L.polyline.antPath(
+              [[20.41, 99.87], [-32.65, -70.01], [-3.11, -60.02]],
               {
   "stroke": true,
   "color": "#00FFFF",
-  "weight": 5,
-  "opacity": 0.9,
+  "weight": 4,
+  "opacity": 0.5,
   "lineCap": "round",
   "lineJoin": "round",
   "dashArray": [
@@ -643,15 +763,15 @@
   "paused": false,
   "reverse": false,
   "hardwareAcceleration": false,
-  "delay": 400,
+  "delay": 800,
   "pulseColor": "#FFFFFF",
 }
-        ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+        ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            ant_path_83df693ad5ea39e17577d7bcd8459ece.bindTooltip(
+            ant_path_71d81615ba887c914748287359472e45.bindTooltip(
                 `<div>
-                     The Blue Vein
+                     The Blue Vein (Active Flow)
                  </div>`,
                 {
   "sticky": true,
@@ -659,7 +779,7 @@
             );
         
     
-            ant_path_60933c9a231bba350a53743d5033fd11 = L.polyline.antPath(
+            ant_path_45f5fa44602813fdd41d879d8b08ac6f = L.polyline.antPath(
               [[-3.11, -60.02], [-25.34, 131.03], [-33.92, 18.42], [-3.11, -60.02]],
               {
   "stroke": true,
@@ -686,10 +806,10 @@
   "delay": 1000,
   "pulseColor": "#FFFFFF",
 }
-        ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+        ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
     
-            ant_path_60933c9a231bba350a53743d5033fd11.bindTooltip(
+            ant_path_45f5fa44602813fdd41d879d8b08ac6f.bindTooltip(
                 `<div>
                      Southern Diamond Grid
                  </div>`,
@@ -699,25 +819,91 @@
             );
         
     
-            var layer_control_1d52f667de3fefc666e7001db7686c7f_layers = {
+            ant_path_5d279a8411dda51e0275be47a3dc0359 = L.polyline.antPath(
+              [[20.41, 99.87], [31.06, 81.31]],
+              {
+  "stroke": true,
+  "color": "#FF00FF",
+  "weight": 2,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+5,
+10,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#FF00FF",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1200,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            ant_path_5d279a8411dda51e0275be47a3dc0359.bindTooltip(
+                `<div>
+                     Eastern Meridian (Awakening)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ed55c440023f256e122d430cc3f12ef8 = L.circleMarker(
+                [29.97, 31.13],
+                {"bubblingMouseEvents": true, "color": "#FF0000", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#FF0000", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 35, "stroke": true, "weight": 2}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
+        
+    
+            circle_marker_ed55c440023f256e122d430cc3f12ef8.bindTooltip(
+                `<div>
+                     RESTRICTED ZONE: Giza Blockage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var layer_control_d6a22393a2db21eaf742445561d3fd8f_layers = {
                 base_layers : {
-                    "https://server.arcgisonline.com/arcgis/rest/services/world_imagery/mapserver/tile/{z}/{y}/{x}" : tile_layer_b918f420d9a1df9172b93f1e47fc44b3,
-                    "Dark Mode" : tile_layer_2fb3e53fbad71ad4ecd135d0eb611660,
+                    "https://server.arcgisonline.com/arcgis/rest/services/world_imagery/mapserver/tile/{z}/{y}/{x}" : tile_layer_ae329928b2b03c809b3007d4cca50532,
+                    "System Dark Mode" : tile_layer_832c9a2f48f5d7cf42501cbaa55a688d,
                 },
                 overlays :  {
-                    "Prana Field" : heat_map_b2fa4c43d025e943656162b29a100916,
+                    "Prana Energy Field" : heat_map_5bca39ae809ea4d7031eb3cf1027f601,
                 },
             };
-            let layer_control_1d52f667de3fefc666e7001db7686c7f = L.control.layers(
-                layer_control_1d52f667de3fefc666e7001db7686c7f_layers.base_layers,
-                layer_control_1d52f667de3fefc666e7001db7686c7f_layers.overlays,
+            let layer_control_d6a22393a2db21eaf742445561d3fd8f = L.control.layers(
+                layer_control_d6a22393a2db21eaf742445561d3fd8f_layers.base_layers,
+                layer_control_d6a22393a2db21eaf742445561d3fd8f_layers.overlays,
                 {
   "position": "topright",
   "collapsed": true,
   "autoZIndex": true,
 }
-            ).addTo(map_9bfd5fd5fe43925cfa279caa32602cde);
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
 
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_6961ba1977d9e54833784b57bc4afa80);
         
 </script>
 </html>
