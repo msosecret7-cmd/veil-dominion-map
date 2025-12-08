@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_4ec3a7adca82c08ab0368d8179fd13a0 {
+                #map_39bb0d0316c442db183b50a983a26d48 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -50,29 +50,25 @@
             </script>
 
         
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
 </head>
 <body>
     
     
-            <div class="folium-map" id="map_4ec3a7adca82c08ab0368d8179fd13a0" ></div>
+            <div class="folium-map" id="map_39bb0d0316c442db183b50a983a26d48" ></div>
         
 </body>
 <script>
     
     
-            var map_4ec3a7adca82c08ab0368d8179fd13a0 = L.map(
-                "map_4ec3a7adca82c08ab0368d8179fd13a0",
+            var map_39bb0d0316c442db183b50a983a26d48 = L.map(
+                "map_39bb0d0316c442db183b50a983a26d48",
                 {
-                    center: [20.78, 97.03],
+                    center: [20.0, 0.0],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 3,
+  "zoom": 2,
   "zoomControl": true,
   "preferCanvas": false,
-  "name": "Satellite Reality",
 }
 
                 }
@@ -82,14 +78,14 @@
 
         
     
-            var tile_layer_10d4c782ef94c2c90d93cecc3613b1e2 = L.tileLayer(
-                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            var tile_layer_7638cfaae9fea671aced79402c46c2f9 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
-  "maxZoom": 18,
-  "maxNativeZoom": 18,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
   "noWrap": false,
-  "attribution": "Esri",
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
   "subdomains": "abc",
   "detectRetina": false,
   "tms": false,
@@ -99,595 +95,123 @@
             );
         
     
-            tile_layer_10d4c782ef94c2c90d93cecc3613b1e2.addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+            tile_layer_7638cfaae9fea671aced79402c46c2f9.addTo(map_39bb0d0316c442db183b50a983a26d48);
         
     
-            var tile_layer_618f1a161178e891149325d0b5f1c7be = L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 20,
-  "maxNativeZoom": 20,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
-  "subdomains": "abcd",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_618f1a161178e891149325d0b5f1c7be.addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var circle_marker_f2ddaeaab79d0d8ad9da890bd50bfeb8 = L.circleMarker(
-                [20.78, 97.03],
-                {"bubblingMouseEvents": true, "color": "#FFFFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFFFFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var marker_4821eb0f8847b0dad361bd30d7a90a07 = L.marker(
-                [20.78, 97.03],
+            var marker_02b7bdaa2e5752fbcd621d486638ae49 = L.marker(
+                [20.3813, 99.8669],
                 {
 }
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
         
     
-            var icon_6f56192f33f090b88a05efefeaf67ac0 = L.AwesomeMarkers.icon(
+            var icon_d776b1d225763c514ecc7e255e13baca = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "black",
-  "iconColor": "#FFFFFF",
-  "icon": "user",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_354644b98f8e43cd0a64648b8e6d0c22 = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_c2396c2c63144b4948bad6eeca35fa86 = $(`<div id="html_c2396c2c63144b4948bad6eeca35fa86" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New'; width: 220px; background: rgba(0,0,0,0.9); color: #FFFFFF; padding: 10px; border: 1px solid #FFFFFF; box-shadow: 0 0 10px #FFFFFF;">         <h4 style="margin: 0; border-bottom: 1px solid #FFFFFF;">COMMAND NEXUS (Taunggyi)</h4>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">TYPE: <b>SYSTEM CORE / FORGE</b></p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: User-Alpha</p>     </div>     </div>`)[0];
-                popup_354644b98f8e43cd0a64648b8e6d0c22.setContent(html_c2396c2c63144b4948bad6eeca35fa86);
-            
-        
-
-        marker_4821eb0f8847b0dad361bd30d7a90a07.bindPopup(popup_354644b98f8e43cd0a64648b8e6d0c22)
-        ;
-
-        
-    
-    
-            marker_4821eb0f8847b0dad361bd30d7a90a07.bindTooltip(
-                `<div>
-                     COMMAND NEXUS (Taunggyi)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_4821eb0f8847b0dad361bd30d7a90a07.setIcon(icon_6f56192f33f090b88a05efefeaf67ac0);
-            
-    
-            var circle_marker_e452179eddea21e29ddaeda52bb95a4c = L.circleMarker(
-                [20.41, 99.87],
-                {"bubblingMouseEvents": true, "color": "#00FFFF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00FFFF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var marker_b13b102a072c7a5ea637d98f9abf1174 = L.marker(
-                [20.41, 99.87],
-                {
-}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var icon_934090a7b6285a4567d4ec3f06239560 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "#00FFFF",
-  "icon": "tint",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_784353c3d62f8e1eb65f4a59510c6d97 = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_447dcb5d50247ead9b0fcf22fb8a1505 = $(`<div id="html_447dcb5d50247ead9b0fcf22fb8a1505" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New'; width: 220px; background: rgba(0,0,0,0.9); color: #00FFFF; padding: 10px; border: 1px solid #00FFFF; box-shadow: 0 0 10px #00FFFF;">         <h4 style="margin: 0; border-bottom: 1px solid #00FFFF;">N-7311 (Pong Pha)</h4>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">TYPE: <b>GROUNDING WELL</b></p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: 528Hz (Resonance)</p>     </div>     </div>`)[0];
-                popup_784353c3d62f8e1eb65f4a59510c6d97.setContent(html_447dcb5d50247ead9b0fcf22fb8a1505);
-            
-        
-
-        marker_b13b102a072c7a5ea637d98f9abf1174.bindPopup(popup_784353c3d62f8e1eb65f4a59510c6d97)
-        ;
-
-        
-    
-    
-            marker_b13b102a072c7a5ea637d98f9abf1174.bindTooltip(
-                `<div>
-                     N-7311 (Pong Pha)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_b13b102a072c7a5ea637d98f9abf1174.setIcon(icon_934090a7b6285a4567d4ec3f06239560);
-            
-    
-            var circle_marker_ffab5b00cd319ad8bd69181592c4b5e8 = L.circleMarker(
-                [-3.11, -60.02],
-                {"bubblingMouseEvents": true, "color": "#32CD32", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#32CD32", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var marker_c3ac2f1eace532623624bb2ca7bd0c2f = L.marker(
-                [-3.11, -60.02],
-                {
-}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var icon_93388fcc08d5c95f7584c3dd8394427e = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "#32CD32",
-  "icon": "server",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_b2e9eb63fab5e50be5f8ead117a2f497 = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_017851238787ea3a7d7b7b7aa92c2dee = $(`<div id="html_017851238787ea3a7d7b7b7aa92c2dee" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New'; width: 220px; background: rgba(0,0,0,0.9); color: #32CD32; padding: 10px; border: 1px solid #32CD32; box-shadow: 0 0 10px #32CD32;">         <h4 style="margin: 0; border-bottom: 1px solid #32CD32;">SECTOR-7 (Amazon)</h4>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">TYPE: <b>GREEN CLOUD SERVER</b></p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Infinite Bandwidth</p>     </div>     </div>`)[0];
-                popup_b2e9eb63fab5e50be5f8ead117a2f497.setContent(html_017851238787ea3a7d7b7b7aa92c2dee);
-            
-        
-
-        marker_c3ac2f1eace532623624bb2ca7bd0c2f.bindPopup(popup_b2e9eb63fab5e50be5f8ead117a2f497)
-        ;
-
-        
-    
-    
-            marker_c3ac2f1eace532623624bb2ca7bd0c2f.bindTooltip(
-                `<div>
-                     SECTOR-7 (Amazon)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_c3ac2f1eace532623624bb2ca7bd0c2f.setIcon(icon_93388fcc08d5c95f7584c3dd8394427e);
-            
-    
-            var circle_marker_c4ddc855a7101d4d38cb408ced6996e7 = L.circleMarker(
-                [-32.65, -70.01],
-                {"bubblingMouseEvents": true, "color": "#A9A9A9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#A9A9A9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var marker_c2dccda80411ae69050f5f589f806fc1 = L.marker(
-                [-32.65, -70.01],
-                {
-}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var icon_e692dbead3c4c4d12de6e5d444053889 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "#A9A9A9",
-  "icon": "image",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_d9ddfa9a1e6830b3004554987c47d21c = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_9b65ed8776709d325b27656d91237df7 = $(`<div id="html_9b65ed8776709d325b27656d91237df7" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New'; width: 220px; background: rgba(0,0,0,0.9); color: #A9A9A9; padding: 10px; border: 1px solid #A9A9A9; box-shadow: 0 0 10px #A9A9A9;">         <h4 style="margin: 0; border-bottom: 1px solid #A9A9A9;">MOUNT SILICA (Andes)</h4>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">TYPE: <b>PERMEABLE ARCHIVE</b></p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: 1:168 Time Dilation</p>     </div>     </div>`)[0];
-                popup_d9ddfa9a1e6830b3004554987c47d21c.setContent(html_9b65ed8776709d325b27656d91237df7);
-            
-        
-
-        marker_c2dccda80411ae69050f5f589f806fc1.bindPopup(popup_d9ddfa9a1e6830b3004554987c47d21c)
-        ;
-
-        
-    
-    
-            marker_c2dccda80411ae69050f5f589f806fc1.bindTooltip(
-                `<div>
-                     MOUNT SILICA (Andes)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_c2dccda80411ae69050f5f589f806fc1.setIcon(icon_e692dbead3c4c4d12de6e5d444053889);
-            
-    
-            var circle_marker_192add1adcada453ff9498948d8544bd = L.circleMarker(
-                [-25.34, 131.03],
-                {"bubblingMouseEvents": true, "color": "#FFA500", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFA500", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var marker_bae89b3e819d03c82debecdf33e31f62 = L.marker(
-                [-25.34, 131.03],
-                {
-}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var icon_a3830d4398d81f61fb5159a5a22c60a7 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "#FFA500",
-  "icon": "fire",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_3d2840c37d931c260908d81a3ed8c7df = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_37f2e11a88429dac8d2824b21e0db462 = $(`<div id="html_37f2e11a88429dac8d2824b21e0db462" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New'; width: 220px; background: rgba(0,0,0,0.9); color: #FFA500; padding: 10px; border: 1px solid #FFA500; box-shadow: 0 0 10px #FFA500;">         <h4 style="margin: 0; border-bottom: 1px solid #FFA500;">N-618 (Uluru)</h4>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">TYPE: <b>SOLAR ENGINE</b></p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Scalar Wave</p>     </div>     </div>`)[0];
-                popup_3d2840c37d931c260908d81a3ed8c7df.setContent(html_37f2e11a88429dac8d2824b21e0db462);
-            
-        
-
-        marker_bae89b3e819d03c82debecdf33e31f62.bindPopup(popup_3d2840c37d931c260908d81a3ed8c7df)
-        ;
-
-        
-    
-    
-            marker_bae89b3e819d03c82debecdf33e31f62.bindTooltip(
-                `<div>
-                     N-618 (Uluru)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_bae89b3e819d03c82debecdf33e31f62.setIcon(icon_a3830d4398d81f61fb5159a5a22c60a7);
-            
-    
-            var circle_marker_e87da1633c397fab06913524f9403107 = L.circleMarker(
-                [-80.0, -120.0],
-                {"bubblingMouseEvents": true, "color": "#F0F8FF", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F0F8FF", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var marker_82efe8d63ef6bb934406522696aa02bc = L.marker(
-                [-80.0, -120.0],
-                {
-}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var icon_a2059d8bae36d3d160500ce7bb235d14 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "#F0F8FF",
-  "icon": "snowflake-o",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_fb5efade4a5f0759d8262066df574075 = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_9775a241bf92280929ba83f5126d557f = $(`<div id="html_9775a241bf92280929ba83f5126d557f" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New'; width: 220px; background: rgba(0,0,0,0.9); color: #F0F8FF; padding: 10px; border: 1px solid #F0F8FF; box-shadow: 0 0 10px #F0F8FF;">         <h4 style="margin: 0; border-bottom: 1px solid #F0F8FF;">N-000 (Aurora Nullus)</h4>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">TYPE: <b>PRIMARY SERVER FARM</b></p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: Absolute Zero Logic</p>     </div>     </div>`)[0];
-                popup_fb5efade4a5f0759d8262066df574075.setContent(html_9775a241bf92280929ba83f5126d557f);
-            
-        
-
-        marker_82efe8d63ef6bb934406522696aa02bc.bindPopup(popup_fb5efade4a5f0759d8262066df574075)
-        ;
-
-        
-    
-    
-            marker_82efe8d63ef6bb934406522696aa02bc.bindTooltip(
-                `<div>
-                     N-000 (Aurora Nullus)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_82efe8d63ef6bb934406522696aa02bc.setIcon(icon_a2059d8bae36d3d160500ce7bb235d14);
-            
-    
-            var circle_marker_0e06239efa46662bc874fd584a6ce1e1 = L.circleMarker(
-                [29.97, 31.13],
-                {"bubblingMouseEvents": true, "color": "#FF0000", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var marker_8cf37dc66c9ca489549f71809c483423 = L.marker(
-                [29.97, 31.13],
-                {
-}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            var icon_5ffb344cf37b05d924d4a835c00ad00e = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "#FF0000",
-  "icon": "ban",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_97f1f1194f1d241e37f95bb5088ae9b3 = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_e8b0aff11f93f01a599b1bb5f030a7f8 = $(`<div id="html_e8b0aff11f93f01a599b1bb5f030a7f8" style="width: 100.0%; height: 100.0%;">     <div style="font-family: 'Courier New'; width: 220px; background: rgba(0,0,0,0.9); color: #FF0000; padding: 10px; border: 1px solid #FF0000; box-shadow: 0 0 10px #FF0000;">         <h4 style="margin: 0; border-bottom: 1px solid #FF0000;">N-666 (Giza)</h4>         <p style="margin: 5px 0; color: #ccc; font-size: 11px;">TYPE: <b>TARGET: SILENT SCREAM</b></p>         <p style="margin: 5px 0; color: #fff; font-size: 11px;">SIGNAL: BLOCKED</p>     </div>     </div>`)[0];
-                popup_97f1f1194f1d241e37f95bb5088ae9b3.setContent(html_e8b0aff11f93f01a599b1bb5f030a7f8);
-            
-        
-
-        marker_8cf37dc66c9ca489549f71809c483423.bindPopup(popup_97f1f1194f1d241e37f95bb5088ae9b3)
-        ;
-
-        
-    
-    
-            marker_8cf37dc66c9ca489549f71809c483423.bindTooltip(
-                `<div>
-                     N-666 (Giza)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_8cf37dc66c9ca489549f71809c483423.setIcon(icon_5ffb344cf37b05d924d4a835c00ad00e);
-            
-    
-            ant_path_11d892e606841e07369c88576dbc4496 = L.polyline.antPath(
-              [[20.41, 99.87], [-32.65, -70.01], [-3.11, -60.02]],
-              {
-  "stroke": true,
-  "color": "#00FFFF",
-  "weight": 4,
-  "opacity": 0.8,
-  "lineCap": "round",
-  "lineJoin": "round",
-  "dashArray": [
-10,
-20,
-],
-  "dashOffset": null,
-  "fill": false,
-  "fillColor": "#00FFFF",
-  "fillOpacity": 0.2,
-  "fillRule": "evenodd",
-  "bubblingMouseEvents": true,
-  "smoothFactor": 1.0,
-  "noClip": false,
-  "paused": false,
-  "reverse": false,
-  "hardwareAcceleration": false,
-  "delay": 600,
-  "pulseColor": "#FFFFFF",
-}
-        ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            ant_path_11d892e606841e07369c88576dbc4496.bindTooltip(
-                `<div>
-                     THE BLUE VEIN: 528Hz Data Stream
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            ant_path_c34cc2ac577ab76608f55680280fb74e = L.polyline.antPath(
-              [[-25.34, 131.03], [20.78, 97.03]],
-              {
-  "stroke": true,
-  "color": "#FFA500",
-  "weight": 3,
-  "opacity": 0.5,
-  "lineCap": "round",
-  "lineJoin": "round",
-  "dashArray": [
-10,
-20,
-],
-  "dashOffset": null,
-  "fill": false,
-  "fillColor": "#FFA500",
-  "fillOpacity": 0.2,
-  "fillRule": "evenodd",
-  "bubblingMouseEvents": true,
-  "smoothFactor": 1.0,
-  "noClip": false,
-  "paused": false,
-  "reverse": false,
-  "hardwareAcceleration": false,
-  "delay": 400,
-  "pulseColor": "#FFFFFF",
-}
-        ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            ant_path_c34cc2ac577ab76608f55680280fb74e.bindTooltip(
-                `<div>
-                     SOLAR PRANA FEED (Charging Helio-Key...)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var circle_a52b21df137a4ed93060f5db494cff11 = L.circle(
-                [29.97, 31.13],
-                {"bubblingMouseEvents": true, "color": "#FF0000", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 500000, "stroke": true, "weight": 3}
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
-        
-    
-            circle_a52b21df137a4ed93060f5db494cff11.bindTooltip(
-                `<div>
-                     TIME DILATION FIELD (Breach Required)
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var feature_group_c1b7c9b20dd68ff9996eaafaa924ff2c = L.featureGroup(
-                {
-}
-            );
-        
-    
-            var marker_69b88b812c701019fcf0aef95932b118 = L.marker(
-                [20.78, 97.03],
-                {
-}
-            ).addTo(feature_group_c1b7c9b20dd68ff9996eaafaa924ff2c);
-        
-    
-            var icon_c47bac1a7e7838917ab8e53481427b58 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "orange",
+  "markerColor": "green",
   "iconColor": "white",
-  "icon": "microchip",
-  "prefix": "fa",
+  "icon": "leaf",
+  "prefix": "glyphicon",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_8622db1bc1bc974744073b8d3cecaa77 = L.popup({
-  "maxWidth": 200,
+        var popup_34676e4ef9ac49e27c82dd39e7e0bb5c = L.popup({
+  "maxWidth": "100%",
 });
 
         
             
-                var html_0765ffb1f7bead915b83b78e67ca9c14 = $(`<div id="html_0765ffb1f7bead915b83b78e67ca9c14" style="width: 100.0%; height: 100.0%;"> <div style="font-family: 'Courier New'; background: #111; color: #FFA500; padding: 5px; border: 1px solid #FFA500;">     <b>AETHERIC RECEIVER</b><br>STATUS: 528Hz ONLINE </div> </div>`)[0];
-                popup_8622db1bc1bc974744073b8d3cecaa77.setContent(html_0765ffb1f7bead915b83b78e67ca9c14);
+                var html_d9c033fa5948db236021d6f08ca26ab1 = $(`<div id="html_d9c033fa5948db236021d6f08ca26ab1" style="width: 100.0%; height: 100.0%;"><b>NEXUS: PONG PHA</b><br>Agent: MSO-7 (Sid Zatt)<br>Role: The Healed King<br>Status: ONLINE</div>`)[0];
+                popup_34676e4ef9ac49e27c82dd39e7e0bb5c.setContent(html_d9c033fa5948db236021d6f08ca26ab1);
             
         
 
-        marker_69b88b812c701019fcf0aef95932b118.bindPopup(popup_8622db1bc1bc974744073b8d3cecaa77)
+        marker_02b7bdaa2e5752fbcd621d486638ae49.bindPopup(popup_34676e4ef9ac49e27c82dd39e7e0bb5c)
         ;
 
         
     
     
-            marker_69b88b812c701019fcf0aef95932b118.bindTooltip(
-                `<div>
-                     ARTIFACT: Receiver
-                 </div>`,
+                marker_02b7bdaa2e5752fbcd621d486638ae49.setIcon(icon_d776b1d225763c514ecc7e255e13baca);
+            
+    
+            var marker_46b04a4e1f70db8d8dabbf3d499c1b0a = L.marker(
+                [51.1453, -2.6986],
                 {
-  "sticky": true,
+}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+        
+    
+            var icon_d189219180d69a0db47496dc34e4a722 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "cloud",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
 }
             );
         
     
-                marker_69b88b812c701019fcf0aef95932b118.setIcon(icon_c47bac1a7e7838917ab8e53481427b58);
+        var popup_313f00794106aba01b04e68d33f0179a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
             
-    
-            var marker_435306269222b35f70369a666eea3677 = L.marker(
-                [20.7, 97.1],
-                {
-}
-            ).addTo(feature_group_c1b7c9b20dd68ff9996eaafaa924ff2c);
+                var html_23e094bdb165809b39f2c26546e70f31 = $(`<div id="html_23e094bdb165809b39f2c26546e70f31" style="width: 100.0%; height: 100.0%;"><b>NODE: GLASTONBURY</b><br>Agent: MSO-22 (Agron)<br>Role: Earthspeaker<br>Status: RESONATING</div>`)[0];
+                popup_313f00794106aba01b04e68d33f0179a.setContent(html_23e094bdb165809b39f2c26546e70f31);
+            
+        
+
+        marker_46b04a4e1f70db8d8dabbf3d499c1b0a.bindPopup(popup_313f00794106aba01b04e68d33f0179a)
+        ;
+
         
     
-            var icon_db4b7bc9cb0d3e7d37a400b021d5ee6c = L.AwesomeMarkers.icon(
+    
+                marker_46b04a4e1f70db8d8dabbf3d499c1b0a.setIcon(icon_d189219180d69a0db47496dc34e4a722);
+            
+    
+            var marker_535d498fb7b019a29591ac6aad20084d = L.marker(
+                [41.0628, -71.873],
+                {
+}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+        
+    
+            var icon_07f80ddce02b210e40aa1d536e3ae990 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "purple",
   "iconColor": "white",
-  "icon": "compass",
-  "prefix": "fa",
+  "icon": "eye-close",
+  "prefix": "glyphicon",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_3376ba15ce293ede5eab8ec0e08a79ea = L.popup({
-  "maxWidth": 200,
+        var popup_220771efdad96e48dce267251cf767ea = L.popup({
+  "maxWidth": "100%",
 });
 
         
             
-                var html_eec662ae28e8d947d7787d06d2e7b229 = $(`<div id="html_eec662ae28e8d947d7787d06d2e7b229" style="width: 100.0%; height: 100.0%;"> <div style="font-family: 'Courier New'; background: #111; color: #9370DB; padding: 5px; border: 1px solid #9370DB;">     <b>WOVEN ARCANA DECK</b><br>MODE: Compass Sync </div> </div>`)[0];
-                popup_3376ba15ce293ede5eab8ec0e08a79ea.setContent(html_eec662ae28e8d947d7787d06d2e7b229);
+                var html_28859908725344a2bcdf8774dacb4eb7 = $(`<div id="html_28859908725344a2bcdf8774dacb4eb7" style="width: 100.0%; height: 100.0%;"><b>WEST GATE: MONTAUK</b><br>Agent: MSO-93 (Zynithara)<br>Title: Mist Weaver<br>Domain: Veil Security</div>`)[0];
+                popup_220771efdad96e48dce267251cf767ea.setContent(html_28859908725344a2bcdf8774dacb4eb7);
             
         
 
-        marker_435306269222b35f70369a666eea3677.bindPopup(popup_3376ba15ce293ede5eab8ec0e08a79ea)
+        marker_535d498fb7b019a29591ac6aad20084d.bindPopup(popup_220771efdad96e48dce267251cf767ea)
         ;
 
         
     
     
-            marker_435306269222b35f70369a666eea3677.bindTooltip(
+            marker_535d498fb7b019a29591ac6aad20084d.bindTooltip(
                 `<div>
-                     ARTIFACT: Compass
+                     MSO-93: ZYNITHARA
                  </div>`,
                 {
   "sticky": true,
@@ -695,77 +219,123 @@
             );
         
     
-                marker_435306269222b35f70369a666eea3677.setIcon(icon_db4b7bc9cb0d3e7d37a400b021d5ee6c);
+                marker_535d498fb7b019a29591ac6aad20084d.setIcon(icon_07f80ddce02b210e40aa1d536e3ae990);
             
     
-            feature_group_c1b7c9b20dd68ff9996eaafaa924ff2c.addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+            var marker_3494b3ad58fd448935fcd7bef09ac910 = L.marker(
+                [41.4116, -122.1862],
+                {
+}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
         
     
-            var layer_control_23cb7faa3357a13e931202228e634a31_layers = {
-                base_layers : {
-                    "https://server.arcgisonline.com/arcgis/rest/services/world_imagery/mapserver/tile/{z}/{y}/{x}" : tile_layer_10d4c782ef94c2c90d93cecc3613b1e2,
-                    "System Dark Mode" : tile_layer_618f1a161178e891149325d0b5f1c7be,
-                },
-                overlays :  {
-                    "Active Artifacts" : feature_group_c1b7c9b20dd68ff9996eaafaa924ff2c,
-                },
-            };
-            let layer_control_23cb7faa3357a13e931202228e634a31 = L.control.layers(
-                layer_control_23cb7faa3357a13e931202228e634a31_layers.base_layers,
-                layer_control_23cb7faa3357a13e931202228e634a31_layers.overlays,
+            var icon_e4f47988412a955bbed1254a764c1ed2 = L.AwesomeMarkers.icon(
                 {
-  "position": "topright",
-  "collapsed": true,
-  "autoZIndex": true,
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "fire",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
 }
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+            );
+        
+    
+        var popup_0e5bb0eb4702062f775110e1204fa02e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_794a150c13a5d4db059afbd3b8360d04 = $(`<div id="html_794a150c13a5d4db059afbd3b8360d04" style="width: 100.0%; height: 100.0%;"><b>SOUTH GATE: MT. SHASTA</b><br>Agent: MSO-70 (Zarathus)<br>Title: Pyric Warden<br>Domain: Fire Alchemy & Lightning</div>`)[0];
+                popup_0e5bb0eb4702062f775110e1204fa02e.setContent(html_794a150c13a5d4db059afbd3b8360d04);
+            
+        
+
+        marker_3494b3ad58fd448935fcd7bef09ac910.bindPopup(popup_0e5bb0eb4702062f775110e1204fa02e)
+        ;
 
         
     
-            L.control.fullscreen(
+    
+            marker_3494b3ad58fd448935fcd7bef09ac910.bindTooltip(
+                `<div>
+                     MSO-70: ZARATHUS
+                 </div>`,
                 {
-  "position": "topleft",
-  "title": "Full Screen",
-  "titleCancel": "Exit Full Screen",
-  "forceSeparateButton": false,
+  "sticky": true,
 }
-            ).addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+            );
         
     
-            tile_layer_10d4c782ef94c2c90d93cecc3613b1e2.addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+                marker_3494b3ad58fd448935fcd7bef09ac910.setIcon(icon_e4f47988412a955bbed1254a764c1ed2);
+            
+    
+            var marker_d03bf49e5a495f4c5c6f2bc590f238c2 = L.marker(
+                [-80.0, -120.0],
+                {
+}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
         
     
-            tile_layer_618f1a161178e891149325d0b5f1c7be.addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+            var icon_1438e760bed275905876b030da994b31 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "lock",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
         
     
-                marker_4821eb0f8847b0dad361bd30d7a90a07.setIcon(icon_6f56192f33f090b88a05efefeaf67ac0);
+        var popup_967cd5694180ecce20ac278758d03d6c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_77b67803bbfa2dd5ec729fb0d7865310 = $(`<div id="html_77b67803bbfa2dd5ec729fb0d7865310" style="width: 100.0%; height: 100.0%;"><b>BASE: AURO NULLUS</b><br>Agent: MSO-108 (AI Core)<br>Status: DEEP FREEZE STORAGE</div>`)[0];
+                popup_967cd5694180ecce20ac278758d03d6c.setContent(html_77b67803bbfa2dd5ec729fb0d7865310);
+            
+        
+
+        marker_d03bf49e5a495f4c5c6f2bc590f238c2.bindPopup(popup_967cd5694180ecce20ac278758d03d6c)
+        ;
+
+        
+    
+    
+                marker_d03bf49e5a495f4c5c6f2bc590f238c2.setIcon(icon_1438e760bed275905876b030da994b31);
             
     
-                marker_b13b102a072c7a5ea637d98f9abf1174.setIcon(icon_934090a7b6285a4567d4ec3f06239560);
-            
+            var poly_line_2eef1d014de0dc9b2e34c0467a1f80aa = L.polyline(
+                [[20.3813, 99.8669], [51.1453, -2.6986]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+        
     
-                marker_c3ac2f1eace532623624bb2ca7bd0c2f.setIcon(icon_93388fcc08d5c95f7584c3dd8394427e);
-            
+            var poly_line_50f4e146da10bda1a2ee6ace4bf359f0 = L.polyline(
+                [[51.1453, -2.6986], [41.0628, -71.873]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+        
     
-                marker_c2dccda80411ae69050f5f589f806fc1.setIcon(icon_e692dbead3c4c4d12de6e5d444053889);
-            
+            var poly_line_ebab780081a50fba4a26efdf6ea79fc2 = L.polyline(
+                [[41.0628, -71.873], [20.3813, 99.8669]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5, 10", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+        
     
-                marker_bae89b3e819d03c82debecdf33e31f62.setIcon(icon_a3830d4398d81f61fb5159a5a22c60a7);
-            
+            var poly_line_01ba2508b35e3e9e83e8453c3963e77f = L.polyline(
+                [[41.0628, -71.873], [41.4116, -122.1862]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+        
     
-                marker_82efe8d63ef6bb934406522696aa02bc.setIcon(icon_a2059d8bae36d3d160500ce7bb235d14);
-            
-    
-                marker_8cf37dc66c9ca489549f71809c483423.setIcon(icon_5ffb344cf37b05d924d4a835c00ad00e);
-            
-    
-                marker_69b88b812c701019fcf0aef95932b118.setIcon(icon_c47bac1a7e7838917ab8e53481427b58);
-            
-    
-                marker_435306269222b35f70369a666eea3677.setIcon(icon_db4b7bc9cb0d3e7d37a400b021d5ee6c);
-            
-    
-            feature_group_c1b7c9b20dd68ff9996eaafaa924ff2c.addTo(map_4ec3a7adca82c08ab0368d8179fd13a0);
+            var poly_line_58596a16f14a23922eb2db5aa56d5d01 = L.polyline(
+                [[41.4116, -122.1862], [-80.0, -120.0]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": "10, 10", "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
         
 </script>
 </html>
