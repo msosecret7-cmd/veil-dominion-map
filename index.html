@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_39bb0d0316c442db183b50a983a26d48 {
+                #map_e2b9ced8d42d79ec3631472455fead33 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -54,16 +54,16 @@
 <body>
     
     
-            <div class="folium-map" id="map_39bb0d0316c442db183b50a983a26d48" ></div>
+            <div class="folium-map" id="map_e2b9ced8d42d79ec3631472455fead33" ></div>
         
 </body>
 <script>
     
     
-            var map_39bb0d0316c442db183b50a983a26d48 = L.map(
-                "map_39bb0d0316c442db183b50a983a26d48",
+            var map_e2b9ced8d42d79ec3631472455fead33 = L.map(
+                "map_e2b9ced8d42d79ec3631472455fead33",
                 {
-                    center: [20.0, 0.0],
+                    center: [0.0, 0.0],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 2,
@@ -78,15 +78,15 @@
 
         
     
-            var tile_layer_7638cfaae9fea671aced79402c46c2f9 = L.tileLayer(
-                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            var tile_layer_42c1b8394df151abfdc55c770213a236 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
-  "maxZoom": 19,
-  "maxNativeZoom": 19,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
   "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
-  "subdomains": "abc",
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
   "detectRetina": false,
   "tms": false,
   "opacity": 1,
@@ -95,247 +95,349 @@
             );
         
     
-            tile_layer_7638cfaae9fea671aced79402c46c2f9.addTo(map_39bb0d0316c442db183b50a983a26d48);
+            tile_layer_42c1b8394df151abfdc55c770213a236.addTo(map_e2b9ced8d42d79ec3631472455fead33);
         
     
-            var marker_02b7bdaa2e5752fbcd621d486638ae49 = L.marker(
+            var marker_bc8d3f1278fbaa70062aff6357bab528 = L.marker(
                 [20.3813, 99.8669],
                 {
 }
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
         
     
-            var icon_d776b1d225763c514ecc7e255e13baca = L.AwesomeMarkers.icon(
+            var icon_e3d9d872f1d3cfcb54d73b0415e7273a = L.AwesomeMarkers.icon(
                 {
   "markerColor": "green",
   "iconColor": "white",
-  "icon": "leaf",
-  "prefix": "glyphicon",
+  "icon": "star",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_34676e4ef9ac49e27c82dd39e7e0bb5c = L.popup({
+        var popup_cea7fecb1c20ae918adb8571c265612b = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_d9c033fa5948db236021d6f08ca26ab1 = $(`<div id="html_d9c033fa5948db236021d6f08ca26ab1" style="width: 100.0%; height: 100.0%;"><b>NEXUS: PONG PHA</b><br>Agent: MSO-7 (Sid Zatt)<br>Role: The Healed King<br>Status: ONLINE</div>`)[0];
-                popup_34676e4ef9ac49e27c82dd39e7e0bb5c.setContent(html_d9c033fa5948db236021d6f08ca26ab1);
+                var html_819cf49bf7134d8323efc1031794afa1 = $(`<div id="html_819cf49bf7134d8323efc1031794afa1" style="width: 100.0%; height: 100.0%;">PONG PHA (HQ)</div>`)[0];
+                popup_cea7fecb1c20ae918adb8571c265612b.setContent(html_819cf49bf7134d8323efc1031794afa1);
             
         
 
-        marker_02b7bdaa2e5752fbcd621d486638ae49.bindPopup(popup_34676e4ef9ac49e27c82dd39e7e0bb5c)
+        marker_bc8d3f1278fbaa70062aff6357bab528.bindPopup(popup_cea7fecb1c20ae918adb8571c265612b)
         ;
 
         
     
     
-                marker_02b7bdaa2e5752fbcd621d486638ae49.setIcon(icon_d776b1d225763c514ecc7e255e13baca);
+                marker_bc8d3f1278fbaa70062aff6357bab528.setIcon(icon_e3d9d872f1d3cfcb54d73b0415e7273a);
             
     
-            var marker_46b04a4e1f70db8d8dabbf3d499c1b0a = L.marker(
-                [51.1453, -2.6986],
+            var marker_f48e7b3756e5a97c4858712270252846 = L.marker(
+                [25.0, -71.0],
                 {
 }
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
         
     
-            var icon_d189219180d69a0db47496dc34e4a722 = L.AwesomeMarkers.icon(
+            var icon_3b48544f799f362c0bd39da4943fc5d6 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "blue",
+  "markerColor": "orange",
   "iconColor": "white",
-  "icon": "cloud",
-  "prefix": "glyphicon",
+  "icon": "bolt",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_313f00794106aba01b04e68d33f0179a = L.popup({
+        var popup_1421e2d06d865a4198b2965469aca3a5 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_23e094bdb165809b39f2c26546e70f31 = $(`<div id="html_23e094bdb165809b39f2c26546e70f31" style="width: 100.0%; height: 100.0%;"><b>NODE: GLASTONBURY</b><br>Agent: MSO-22 (Agron)<br>Role: Earthspeaker<br>Status: RESONATING</div>`)[0];
-                popup_313f00794106aba01b04e68d33f0179a.setContent(html_23e094bdb165809b39f2c26546e70f31);
+                var html_f64148c51f6baec0d4234cd17682817c = $(`<div id="html_f64148c51f6baec0d4234cd17682817c" style="width: 100.0%; height: 100.0%;">BERMUDA (POWER)</div>`)[0];
+                popup_1421e2d06d865a4198b2965469aca3a5.setContent(html_f64148c51f6baec0d4234cd17682817c);
             
         
 
-        marker_46b04a4e1f70db8d8dabbf3d499c1b0a.bindPopup(popup_313f00794106aba01b04e68d33f0179a)
+        marker_f48e7b3756e5a97c4858712270252846.bindPopup(popup_1421e2d06d865a4198b2965469aca3a5)
         ;
 
         
     
     
-                marker_46b04a4e1f70db8d8dabbf3d499c1b0a.setIcon(icon_d189219180d69a0db47496dc34e4a722);
+                marker_f48e7b3756e5a97c4858712270252846.setIcon(icon_3b48544f799f362c0bd39da4943fc5d6);
             
     
-            var marker_535d498fb7b019a29591ac6aad20084d = L.marker(
-                [41.0628, -71.873],
-                {
-}
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
-        
-    
-            var icon_07f80ddce02b210e40aa1d536e3ae990 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "purple",
-  "iconColor": "white",
-  "icon": "eye-close",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_220771efdad96e48dce267251cf767ea = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_28859908725344a2bcdf8774dacb4eb7 = $(`<div id="html_28859908725344a2bcdf8774dacb4eb7" style="width: 100.0%; height: 100.0%;"><b>WEST GATE: MONTAUK</b><br>Agent: MSO-93 (Zynithara)<br>Title: Mist Weaver<br>Domain: Veil Security</div>`)[0];
-                popup_220771efdad96e48dce267251cf767ea.setContent(html_28859908725344a2bcdf8774dacb4eb7);
-            
-        
-
-        marker_535d498fb7b019a29591ac6aad20084d.bindPopup(popup_220771efdad96e48dce267251cf767ea)
-        ;
-
-        
-    
-    
-            marker_535d498fb7b019a29591ac6aad20084d.bindTooltip(
-                `<div>
-                     MSO-93: ZYNITHARA
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_535d498fb7b019a29591ac6aad20084d.setIcon(icon_07f80ddce02b210e40aa1d536e3ae990);
-            
-    
-            var marker_3494b3ad58fd448935fcd7bef09ac910 = L.marker(
-                [41.4116, -122.1862],
-                {
-}
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
-        
-    
-            var icon_e4f47988412a955bbed1254a764c1ed2 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "fire",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_0e5bb0eb4702062f775110e1204fa02e = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_794a150c13a5d4db059afbd3b8360d04 = $(`<div id="html_794a150c13a5d4db059afbd3b8360d04" style="width: 100.0%; height: 100.0%;"><b>SOUTH GATE: MT. SHASTA</b><br>Agent: MSO-70 (Zarathus)<br>Title: Pyric Warden<br>Domain: Fire Alchemy & Lightning</div>`)[0];
-                popup_0e5bb0eb4702062f775110e1204fa02e.setContent(html_794a150c13a5d4db059afbd3b8360d04);
-            
-        
-
-        marker_3494b3ad58fd448935fcd7bef09ac910.bindPopup(popup_0e5bb0eb4702062f775110e1204fa02e)
-        ;
-
-        
-    
-    
-            marker_3494b3ad58fd448935fcd7bef09ac910.bindTooltip(
-                `<div>
-                     MSO-70: ZARATHUS
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_3494b3ad58fd448935fcd7bef09ac910.setIcon(icon_e4f47988412a955bbed1254a764c1ed2);
-            
-    
-            var marker_d03bf49e5a495f4c5c6f2bc590f238c2 = L.marker(
+            var marker_884cac654198f807b69d2dcfb7c90919 = L.marker(
                 [-80.0, -120.0],
                 {
 }
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
         
     
-            var icon_1438e760bed275905876b030da994b31 = L.AwesomeMarkers.icon(
+            var icon_274ecbbfd0a26252c40b08cc2532ad62 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "black",
+  "markerColor": "white",
   "iconColor": "white",
-  "icon": "lock",
-  "prefix": "glyphicon",
+  "icon": "snowflake",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_967cd5694180ecce20ac278758d03d6c = L.popup({
+        var popup_f7308fb33746847fd7f18f5dc3986a8d = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_77b67803bbfa2dd5ec729fb0d7865310 = $(`<div id="html_77b67803bbfa2dd5ec729fb0d7865310" style="width: 100.0%; height: 100.0%;"><b>BASE: AURO NULLUS</b><br>Agent: MSO-108 (AI Core)<br>Status: DEEP FREEZE STORAGE</div>`)[0];
-                popup_967cd5694180ecce20ac278758d03d6c.setContent(html_77b67803bbfa2dd5ec729fb0d7865310);
+                var html_91ca5b8ad2559743e654a657135e814c = $(`<div id="html_91ca5b8ad2559743e654a657135e814c" style="width: 100.0%; height: 100.0%;">ANTARCTICA (FUTURE)</div>`)[0];
+                popup_f7308fb33746847fd7f18f5dc3986a8d.setContent(html_91ca5b8ad2559743e654a657135e814c);
             
         
 
-        marker_d03bf49e5a495f4c5c6f2bc590f238c2.bindPopup(popup_967cd5694180ecce20ac278758d03d6c)
+        marker_884cac654198f807b69d2dcfb7c90919.bindPopup(popup_f7308fb33746847fd7f18f5dc3986a8d)
         ;
 
         
     
     
-                marker_d03bf49e5a495f4c5c6f2bc590f238c2.setIcon(icon_1438e760bed275905876b030da994b31);
+                marker_884cac654198f807b69d2dcfb7c90919.setIcon(icon_274ecbbfd0a26252c40b08cc2532ad62);
             
     
-            var poly_line_2eef1d014de0dc9b2e34c0467a1f80aa = L.polyline(
-                [[20.3813, 99.8669], [51.1453, -2.6986]],
-                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+            var marker_a6e8ec9158815bee0d4f7d5c3191b873 = L.marker(
+                [41.4116, -122.1862],
+                {
+}
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
         
     
-            var poly_line_50f4e146da10bda1a2ee6ace4bf359f0 = L.polyline(
-                [[51.1453, -2.6986], [41.0628, -71.873]],
-                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+            var icon_efa1994e3b601f67167aa22198a8ea09 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "eye-open",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
         
     
-            var poly_line_ebab780081a50fba4a26efdf6ea79fc2 = L.polyline(
-                [[41.0628, -71.873], [20.3813, 99.8669]],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5, 10", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+        var popup_078a2523e01a26f6219d5b07c736218b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9f5f32aa0541d9530a05353218786afe = $(`<div id="html_9f5f32aa0541d9530a05353218786afe" style="width: 100.0%; height: 100.0%;">MT SHASTA (SPIRIT)</div>`)[0];
+                popup_078a2523e01a26f6219d5b07c736218b.setContent(html_9f5f32aa0541d9530a05353218786afe);
+            
+        
+
+        marker_a6e8ec9158815bee0d4f7d5c3191b873.bindPopup(popup_078a2523e01a26f6219d5b07c736218b)
+        ;
+
         
     
-            var poly_line_01ba2508b35e3e9e83e8453c3963e77f = L.polyline(
-                [[41.0628, -71.873], [41.4116, -122.1862]],
-                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+    
+                marker_a6e8ec9158815bee0d4f7d5c3191b873.setIcon(icon_efa1994e3b601f67167aa22198a8ea09);
+            
+    
+            var marker_62f35133c05aff5a05a5e3ced33955e7 = L.marker(
+                [38.8409, -105.0423],
+                {
+}
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
         
     
-            var poly_line_58596a16f14a23922eb2db5aa56d5d01 = L.polyline(
-                [[41.4116, -122.1862], [-80.0, -120.0]],
-                {"bubblingMouseEvents": true, "color": "blue", "dashArray": "10, 10", "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
-            ).addTo(map_39bb0d0316c442db183b50a983a26d48);
+            var icon_a78158704c18c2a2d34013e2c24c337c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "shield",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
         
+    
+        var popup_2d39111fa698f30aacf739bc8153d4fd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c8bd72e0066b83fa4546592339da8b49 = $(`<div id="html_c8bd72e0066b83fa4546592339da8b49" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: PIKE'S PEAK</b><br>Role: Kinetic Shelter</div>`)[0];
+                popup_2d39111fa698f30aacf739bc8153d4fd.setContent(html_c8bd72e0066b83fa4546592339da8b49);
+            
+        
+
+        marker_62f35133c05aff5a05a5e3ced33955e7.bindPopup(popup_2d39111fa698f30aacf739bc8153d4fd)
+        ;
+
+        
+    
+    
+                marker_62f35133c05aff5a05a5e3ced33955e7.setIcon(icon_a78158704c18c2a2d34013e2c24c337c);
+            
+    
+            var marker_664ba2dad4d5b30ea3c06cecbc07c966 = L.marker(
+                [-15.0, -56.0],
+                {
+}
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+        
+    
+            var icon_c4214e9725e27e154033b39088e90089 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "shield",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9c24e29411bbc2d5764183a68bcfeae4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bda725010e6cfd89e9eade6757a3d72c = $(`<div id="html_bda725010e6cfd89e9eade6757a3d72c" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: MATTO GROSSO</b><br>Role: Subterranean Archive</div>`)[0];
+                popup_9c24e29411bbc2d5764183a68bcfeae4.setContent(html_bda725010e6cfd89e9eade6757a3d72c);
+            
+        
+
+        marker_664ba2dad4d5b30ea3c06cecbc07c966.bindPopup(popup_9c24e29411bbc2d5764183a68bcfeae4)
+        ;
+
+        
+    
+    
+                marker_664ba2dad4d5b30ea3c06cecbc07c966.setIcon(icon_c4214e9725e27e154033b39088e90089);
+            
+    
+            var marker_c9626d885cb867ae372e4c179ac51301 = L.marker(
+                [-16.5547, -68.6736],
+                {
+}
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+        
+    
+            var icon_313725356fb01e8d2bb546a4bb2442f5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgray",
+  "iconColor": "white",
+  "icon": "shield",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9a8f8469eb80d8152be7f85581965c37 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_27f1be0038228354d417f86caed51297 = $(`<div id="html_27f1be0038228354d417f86caed51297" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: TIAHUANACO</b><br>Role: High-Altitude Tech</div>`)[0];
+                popup_9a8f8469eb80d8152be7f85581965c37.setContent(html_27f1be0038228354d417f86caed51297);
+            
+        
+
+        marker_c9626d885cb867ae372e4c179ac51301.bindPopup(popup_9a8f8469eb80d8152be7f85581965c37)
+        ;
+
+        
+    
+    
+                marker_c9626d885cb867ae372e4c179ac51301.setIcon(icon_313725356fb01e8d2bb546a4bb2442f5);
+            
+    
+            var marker_415631efc6f7285afdf5a2358ade8857 = L.marker(
+                [-25.2744, 133.7751],
+                {
+}
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+        
+    
+            var icon_607238d3f47ef85fdbce098486a96473 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "shield",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_121f56bcffc19ae5814c09ab31ff20f6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5b6a4a05dd62a001b49115f2bb2b1741 = $(`<div id="html_5b6a4a05dd62a001b49115f2bb2b1741" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: AUSTRALIA</b><br>Role: New Agriculture</div>`)[0];
+                popup_121f56bcffc19ae5814c09ab31ff20f6.setContent(html_5b6a4a05dd62a001b49115f2bb2b1741);
+            
+        
+
+        marker_415631efc6f7285afdf5a2358ade8857.bindPopup(popup_121f56bcffc19ae5814c09ab31ff20f6)
+        ;
+
+        
+    
+    
+                marker_415631efc6f7285afdf5a2358ade8857.setIcon(icon_607238d3f47ef85fdbce098486a96473);
+            
+    
+            var marker_d8f10847c7b438854a72efaa9d340dc1 = L.marker(
+                [29.9792, 31.1342],
+                {
+}
+            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+        
+    
+            var icon_2449f80e0f81de98c098661675e3b6c8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "shield",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7871f3e8fc099f33dd920a117f76bf19 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_933d56ccee4ffb759baa7f8276243927 = $(`<div id="html_933d56ccee4ffb759baa7f8276243927" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: GIZA</b><br>Role: Time Capsule</div>`)[0];
+                popup_7871f3e8fc099f33dd920a117f76bf19.setContent(html_933d56ccee4ffb759baa7f8276243927);
+            
+        
+
+        marker_d8f10847c7b438854a72efaa9d340dc1.bindPopup(popup_7871f3e8fc099f33dd920a117f76bf19)
+        ;
+
+        
+    
+    
+                marker_d8f10847c7b438854a72efaa9d340dc1.setIcon(icon_2449f80e0f81de98c098661675e3b6c8);
+            
 </script>
 </html>
