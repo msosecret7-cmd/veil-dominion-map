@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_e2b9ced8d42d79ec3631472455fead33 {
+                #map_380409a5d4de073fede2b28043b02b9d {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -50,20 +50,21 @@
             </script>
 
         
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
 </head>
 <body>
     
     
-            <div class="folium-map" id="map_e2b9ced8d42d79ec3631472455fead33" ></div>
+            <div class="folium-map" id="map_380409a5d4de073fede2b28043b02b9d" ></div>
         
 </body>
 <script>
     
     
-            var map_e2b9ced8d42d79ec3631472455fead33 = L.map(
-                "map_e2b9ced8d42d79ec3631472455fead33",
+            var map_380409a5d4de073fede2b28043b02b9d = L.map(
+                "map_380409a5d4de073fede2b28043b02b9d",
                 {
-                    center: [0.0, 0.0],
+                    center: [20.0, 0.0],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 2,
@@ -73,12 +74,33 @@
 
                 }
             );
+            L.control.scale().addTo(map_380409a5d4de073fede2b28043b02b9d);
 
             
 
         
     
-            var tile_layer_42c1b8394df151abfdc55c770213a236 = L.tileLayer(
+            var tile_layer_05c3093d030b05893cd7507741fd8e76 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_05c3093d030b05893cd7507741fd8e76.addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            var tile_layer_972085aac1016b532f37f5b7ed145519 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -95,17 +117,37 @@
             );
         
     
-            tile_layer_42c1b8394df151abfdc55c770213a236.addTo(map_e2b9ced8d42d79ec3631472455fead33);
+            tile_layer_972085aac1016b532f37f5b7ed145519.addTo(map_380409a5d4de073fede2b28043b02b9d);
         
     
-            var marker_bc8d3f1278fbaa70062aff6357bab528 = L.marker(
+            var tile_layer_b26c3e9c2f605194d2064312eddac2bb = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_b26c3e9c2f605194d2064312eddac2bb.addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            var marker_8b2b0a3991ae705db6ecc4c9d10afa6a = L.marker(
                 [20.3813, 99.8669],
                 {
 }
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
         
     
-            var icon_e3d9d872f1d3cfcb54d73b0415e7273a = L.AwesomeMarkers.icon(
+            var icon_a9610e9345712b2cfc6df631cd7d8726 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "green",
   "iconColor": "white",
@@ -116,328 +158,415 @@
             );
         
     
-        var popup_cea7fecb1c20ae918adb8571c265612b = L.popup({
+        var popup_4350c4afde4156b0fa32dbeb063132d8 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_819cf49bf7134d8323efc1031794afa1 = $(`<div id="html_819cf49bf7134d8323efc1031794afa1" style="width: 100.0%; height: 100.0%;">PONG PHA (HQ)</div>`)[0];
-                popup_cea7fecb1c20ae918adb8571c265612b.setContent(html_819cf49bf7134d8323efc1031794afa1);
+                var html_a70c5dfad4051870b9d4992f50546e5f = $(`<div id="html_a70c5dfad4051870b9d4992f50546e5f" style="width: 100.0%; height: 100.0%;"><b>PONG PHA (Zero Point)</b> (Anchor)</div>`)[0];
+                popup_4350c4afde4156b0fa32dbeb063132d8.setContent(html_a70c5dfad4051870b9d4992f50546e5f);
             
         
 
-        marker_bc8d3f1278fbaa70062aff6357bab528.bindPopup(popup_cea7fecb1c20ae918adb8571c265612b)
+        marker_8b2b0a3991ae705db6ecc4c9d10afa6a.bindPopup(popup_4350c4afde4156b0fa32dbeb063132d8)
         ;
 
         
     
     
-                marker_bc8d3f1278fbaa70062aff6357bab528.setIcon(icon_e3d9d872f1d3cfcb54d73b0415e7273a);
+                marker_8b2b0a3991ae705db6ecc4c9d10afa6a.setIcon(icon_a9610e9345712b2cfc6df631cd7d8726);
             
     
-            var marker_f48e7b3756e5a97c4858712270252846 = L.marker(
-                [25.0, -71.0],
+            var marker_3d7029ecbc908053d6ab4c31204a6b03 = L.marker(
+                [-20.3813, -80.1331],
                 {
 }
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
         
     
-            var icon_3b48544f799f362c0bd39da4943fc5d6 = L.AwesomeMarkers.icon(
+            var icon_9187e0d771c603bcc0aba8e169666510 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "orange",
+  "markerColor": "black",
   "iconColor": "white",
-  "icon": "bolt",
+  "icon": "ghost",
   "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_1421e2d06d865a4198b2965469aca3a5 = L.popup({
+        var popup_53bad44b5efea184e0fb7b6d7810083a = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_f64148c51f6baec0d4234cd17682817c = $(`<div id="html_f64148c51f6baec0d4234cd17682817c" style="width: 100.0%; height: 100.0%;">BERMUDA (POWER)</div>`)[0];
-                popup_1421e2d06d865a4198b2965469aca3a5.setContent(html_f64148c51f6baec0d4234cd17682817c);
+                var html_5779ad2a921761a0deab0b46bb894854 = $(`<div id="html_5779ad2a921761a0deab0b46bb894854" style="width: 100.0%; height: 100.0%;"><b>PONG PHA (Zero Point) SHADOW</b> (Antipode)</div>`)[0];
+                popup_53bad44b5efea184e0fb7b6d7810083a.setContent(html_5779ad2a921761a0deab0b46bb894854);
             
         
 
-        marker_f48e7b3756e5a97c4858712270252846.bindPopup(popup_1421e2d06d865a4198b2965469aca3a5)
+        marker_3d7029ecbc908053d6ab4c31204a6b03.bindPopup(popup_53bad44b5efea184e0fb7b6d7810083a)
         ;
 
         
     
     
-                marker_f48e7b3756e5a97c4858712270252846.setIcon(icon_3b48544f799f362c0bd39da4943fc5d6);
+                marker_3d7029ecbc908053d6ab4c31204a6b03.setIcon(icon_9187e0d771c603bcc0aba8e169666510);
             
     
-            var marker_884cac654198f807b69d2dcfb7c90919 = L.marker(
-                [-80.0, -120.0],
-                {
-}
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+            var poly_line_530ec83580628700de30e90d0bffb5d0 = L.polyline(
+                [[20.3813, 99.8669], [-20.3813, -80.1331]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
         
     
-            var icon_274ecbbfd0a26252c40b08cc2532ad62 = L.AwesomeMarkers.icon(
+            poly_line_530ec83580628700de30e90d0bffb5d0.bindTooltip(
+                `<div>
+                     Shadow Link: PONG PHA (Zero Point)
+                 </div>`,
                 {
-  "markerColor": "white",
-  "iconColor": "white",
-  "icon": "snowflake",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
+  "sticky": true,
 }
             );
         
     
-        var popup_f7308fb33746847fd7f18f5dc3986a8d = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_91ca5b8ad2559743e654a657135e814c = $(`<div id="html_91ca5b8ad2559743e654a657135e814c" style="width: 100.0%; height: 100.0%;">ANTARCTICA (FUTURE)</div>`)[0];
-                popup_f7308fb33746847fd7f18f5dc3986a8d.setContent(html_91ca5b8ad2559743e654a657135e814c);
-            
-        
-
-        marker_884cac654198f807b69d2dcfb7c90919.bindPopup(popup_f7308fb33746847fd7f18f5dc3986a8d)
-        ;
-
-        
-    
-    
-                marker_884cac654198f807b69d2dcfb7c90919.setIcon(icon_274ecbbfd0a26252c40b08cc2532ad62);
-            
-    
-            var marker_a6e8ec9158815bee0d4f7d5c3191b873 = L.marker(
-                [41.4116, -122.1862],
+            var marker_4068575b12bfeb6980c33445fbde771c = L.marker(
+                [20.7888, 97.0333],
                 {
 }
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
         
     
-            var icon_efa1994e3b601f67167aa22198a8ea09 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "purple",
-  "iconColor": "white",
-  "icon": "eye-open",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_078a2523e01a26f6219d5b07c736218b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_9f5f32aa0541d9530a05353218786afe = $(`<div id="html_9f5f32aa0541d9530a05353218786afe" style="width: 100.0%; height: 100.0%;">MT SHASTA (SPIRIT)</div>`)[0];
-                popup_078a2523e01a26f6219d5b07c736218b.setContent(html_9f5f32aa0541d9530a05353218786afe);
-            
-        
-
-        marker_a6e8ec9158815bee0d4f7d5c3191b873.bindPopup(popup_078a2523e01a26f6219d5b07c736218b)
-        ;
-
-        
-    
-    
-                marker_a6e8ec9158815bee0d4f7d5c3191b873.setIcon(icon_efa1994e3b601f67167aa22198a8ea09);
-            
-    
-            var marker_62f35133c05aff5a05a5e3ced33955e7 = L.marker(
-                [38.8409, -105.0423],
-                {
-}
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
-        
-    
-            var icon_a78158704c18c2a2d34013e2c24c337c = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "orange",
-  "iconColor": "white",
-  "icon": "shield",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_2d39111fa698f30aacf739bc8153d4fd = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_c8bd72e0066b83fa4546592339da8b49 = $(`<div id="html_c8bd72e0066b83fa4546592339da8b49" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: PIKE'S PEAK</b><br>Role: Kinetic Shelter</div>`)[0];
-                popup_2d39111fa698f30aacf739bc8153d4fd.setContent(html_c8bd72e0066b83fa4546592339da8b49);
-            
-        
-
-        marker_62f35133c05aff5a05a5e3ced33955e7.bindPopup(popup_2d39111fa698f30aacf739bc8153d4fd)
-        ;
-
-        
-    
-    
-                marker_62f35133c05aff5a05a5e3ced33955e7.setIcon(icon_a78158704c18c2a2d34013e2c24c337c);
-            
-    
-            var marker_664ba2dad4d5b30ea3c06cecbc07c966 = L.marker(
-                [-15.0, -56.0],
-                {
-}
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
-        
-    
-            var icon_c4214e9725e27e154033b39088e90089 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "darkgreen",
-  "iconColor": "white",
-  "icon": "shield",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_9c24e29411bbc2d5764183a68bcfeae4 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_bda725010e6cfd89e9eade6757a3d72c = $(`<div id="html_bda725010e6cfd89e9eade6757a3d72c" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: MATTO GROSSO</b><br>Role: Subterranean Archive</div>`)[0];
-                popup_9c24e29411bbc2d5764183a68bcfeae4.setContent(html_bda725010e6cfd89e9eade6757a3d72c);
-            
-        
-
-        marker_664ba2dad4d5b30ea3c06cecbc07c966.bindPopup(popup_9c24e29411bbc2d5764183a68bcfeae4)
-        ;
-
-        
-    
-    
-                marker_664ba2dad4d5b30ea3c06cecbc07c966.setIcon(icon_c4214e9725e27e154033b39088e90089);
-            
-    
-            var marker_c9626d885cb867ae372e4c179ac51301 = L.marker(
-                [-16.5547, -68.6736],
-                {
-}
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
-        
-    
-            var icon_313725356fb01e8d2bb546a4bb2442f5 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "lightgray",
-  "iconColor": "white",
-  "icon": "shield",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_9a8f8469eb80d8152be7f85581965c37 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_27f1be0038228354d417f86caed51297 = $(`<div id="html_27f1be0038228354d417f86caed51297" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: TIAHUANACO</b><br>Role: High-Altitude Tech</div>`)[0];
-                popup_9a8f8469eb80d8152be7f85581965c37.setContent(html_27f1be0038228354d417f86caed51297);
-            
-        
-
-        marker_c9626d885cb867ae372e4c179ac51301.bindPopup(popup_9a8f8469eb80d8152be7f85581965c37)
-        ;
-
-        
-    
-    
-                marker_c9626d885cb867ae372e4c179ac51301.setIcon(icon_313725356fb01e8d2bb546a4bb2442f5);
-            
-    
-            var marker_415631efc6f7285afdf5a2358ade8857 = L.marker(
-                [-25.2744, 133.7751],
-                {
-}
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
-        
-    
-            var icon_607238d3f47ef85fdbce098486a96473 = L.AwesomeMarkers.icon(
+            var icon_b29e50f693f5854850f5c402cffbcd5c = L.AwesomeMarkers.icon(
                 {
   "markerColor": "green",
   "iconColor": "white",
-  "icon": "shield",
+  "icon": "star",
   "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_121f56bcffc19ae5814c09ab31ff20f6 = L.popup({
+        var popup_8d0c976706ec3826347799c2cdcf285c = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_5b6a4a05dd62a001b49115f2bb2b1741 = $(`<div id="html_5b6a4a05dd62a001b49115f2bb2b1741" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: AUSTRALIA</b><br>Role: New Agriculture</div>`)[0];
-                popup_121f56bcffc19ae5814c09ab31ff20f6.setContent(html_5b6a4a05dd62a001b49115f2bb2b1741);
+                var html_95e8d6bab8af3c5e1d5cfd70894ecefc = $(`<div id="html_95e8d6bab8af3c5e1d5cfd70894ecefc" style="width: 100.0%; height: 100.0%;"><b>TAUNGGYI (Highland Node)</b> (Anchor)</div>`)[0];
+                popup_8d0c976706ec3826347799c2cdcf285c.setContent(html_95e8d6bab8af3c5e1d5cfd70894ecefc);
             
         
 
-        marker_415631efc6f7285afdf5a2358ade8857.bindPopup(popup_121f56bcffc19ae5814c09ab31ff20f6)
+        marker_4068575b12bfeb6980c33445fbde771c.bindPopup(popup_8d0c976706ec3826347799c2cdcf285c)
         ;
 
         
     
     
-                marker_415631efc6f7285afdf5a2358ade8857.setIcon(icon_607238d3f47ef85fdbce098486a96473);
+                marker_4068575b12bfeb6980c33445fbde771c.setIcon(icon_b29e50f693f5854850f5c402cffbcd5c);
             
     
-            var marker_d8f10847c7b438854a72efaa9d340dc1 = L.marker(
-                [29.9792, 31.1342],
+            var marker_65d343b44eb50b08cb66397e04ccc918 = L.marker(
+                [-20.7888, -82.9667],
                 {
 }
-            ).addTo(map_e2b9ced8d42d79ec3631472455fead33);
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
         
     
-            var icon_2449f80e0f81de98c098661675e3b6c8 = L.AwesomeMarkers.icon(
+            var icon_c6016713ca0a8a612922f3444f301c48 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "red",
+  "markerColor": "black",
   "iconColor": "white",
-  "icon": "shield",
+  "icon": "ghost",
   "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
         
     
-        var popup_7871f3e8fc099f33dd920a117f76bf19 = L.popup({
+        var popup_7272a0438b8daa006ebb35e6511e93dc = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_933d56ccee4ffb759baa7f8276243927 = $(`<div id="html_933d56ccee4ffb759baa7f8276243927" style="width: 100.0%; height: 100.0%;"><b>🛡️ SAFE ZONE: GIZA</b><br>Role: Time Capsule</div>`)[0];
-                popup_7871f3e8fc099f33dd920a117f76bf19.setContent(html_933d56ccee4ffb759baa7f8276243927);
+                var html_9100641b12978829428a23d7c9464a4e = $(`<div id="html_9100641b12978829428a23d7c9464a4e" style="width: 100.0%; height: 100.0%;"><b>TAUNGGYI (Highland Node) SHADOW</b> (Antipode)</div>`)[0];
+                popup_7272a0438b8daa006ebb35e6511e93dc.setContent(html_9100641b12978829428a23d7c9464a4e);
             
         
 
-        marker_d8f10847c7b438854a72efaa9d340dc1.bindPopup(popup_7871f3e8fc099f33dd920a117f76bf19)
+        marker_65d343b44eb50b08cb66397e04ccc918.bindPopup(popup_7272a0438b8daa006ebb35e6511e93dc)
         ;
 
         
     
     
-                marker_d8f10847c7b438854a72efaa9d340dc1.setIcon(icon_2449f80e0f81de98c098661675e3b6c8);
+                marker_65d343b44eb50b08cb66397e04ccc918.setIcon(icon_c6016713ca0a8a612922f3444f301c48);
             
+    
+            var poly_line_c8bcbf2a20fe679b91915051263c1a1a = L.polyline(
+                [[20.7888, 97.0333], [-20.7888, -82.9667]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            poly_line_c8bcbf2a20fe679b91915051263c1a1a.bindTooltip(
+                `<div>
+                     Shadow Link: TAUNGGYI (Highland Node)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1707adb90b2b96817b76bb4195a3a8df = L.marker(
+                [-80.0, -120.0],
+                {
+}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            var icon_7f96309fa9ef1ea37432e0b71ea06e5d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6346890458e5c2e9fc99ecbfa7dc058c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2b2b01d5dcda6741704a8b90c7c6a56b = $(`<div id="html_2b2b01d5dcda6741704a8b90c7c6a56b" style="width: 100.0%; height: 100.0%;"><b>AURORA NULLUS (Source)</b> (Anchor)</div>`)[0];
+                popup_6346890458e5c2e9fc99ecbfa7dc058c.setContent(html_2b2b01d5dcda6741704a8b90c7c6a56b);
+            
+        
+
+        marker_1707adb90b2b96817b76bb4195a3a8df.bindPopup(popup_6346890458e5c2e9fc99ecbfa7dc058c)
+        ;
+
+        
+    
+    
+                marker_1707adb90b2b96817b76bb4195a3a8df.setIcon(icon_7f96309fa9ef1ea37432e0b71ea06e5d);
+            
+    
+            var marker_1e416944137ef76b900f6374584f717f = L.marker(
+                [80.0, 60.0],
+                {
+}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            var icon_8df4672eb6324f004438315169778cb6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ghost",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6785a95bcf1df73e6744de69b99f84a2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2d5e0605e36af15be0329075d69b13de = $(`<div id="html_2d5e0605e36af15be0329075d69b13de" style="width: 100.0%; height: 100.0%;"><b>AURORA NULLUS (Source) SHADOW</b> (Antipode)</div>`)[0];
+                popup_6785a95bcf1df73e6744de69b99f84a2.setContent(html_2d5e0605e36af15be0329075d69b13de);
+            
+        
+
+        marker_1e416944137ef76b900f6374584f717f.bindPopup(popup_6785a95bcf1df73e6744de69b99f84a2)
+        ;
+
+        
+    
+    
+                marker_1e416944137ef76b900f6374584f717f.setIcon(icon_8df4672eb6324f004438315169778cb6);
+            
+    
+            var poly_line_955a63319c1502663209fed42d69297b = L.polyline(
+                [[-80.0, -120.0], [80.0, 60.0]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            poly_line_955a63319c1502663209fed42d69297b.bindTooltip(
+                `<div>
+                     Shadow Link: AURORA NULLUS (Source)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c8ce43d8389da271ebc8755fb121b665 = L.marker(
+                [-16.5547, -68.6736],
+                {
+}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            var icon_586ed31d63ca5240b2cd254a7a46a975 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ccf6dc540919fb53cc1b2af64fabe178 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9e19d0bf351effb86b3c0004f190fa90 = $(`<div id="html_9e19d0bf351effb86b3c0004f190fa90" style="width: 100.0%; height: 100.0%;"><b>MT SILICA (Andes)</b> (Anchor)</div>`)[0];
+                popup_ccf6dc540919fb53cc1b2af64fabe178.setContent(html_9e19d0bf351effb86b3c0004f190fa90);
+            
+        
+
+        marker_c8ce43d8389da271ebc8755fb121b665.bindPopup(popup_ccf6dc540919fb53cc1b2af64fabe178)
+        ;
+
+        
+    
+    
+                marker_c8ce43d8389da271ebc8755fb121b665.setIcon(icon_586ed31d63ca5240b2cd254a7a46a975);
+            
+    
+            var marker_e7d1e9983019965731808c883b21e64c = L.marker(
+                [16.5547, 111.3264],
+                {
+}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            var icon_37a3e383b075838ade8139f24793316b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ghost",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fe6530ff76bae386ca04c8c251006733 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_77dbe1c4e49c8f5058198f93525c5516 = $(`<div id="html_77dbe1c4e49c8f5058198f93525c5516" style="width: 100.0%; height: 100.0%;"><b>MT SILICA (Andes) SHADOW</b> (Antipode)</div>`)[0];
+                popup_fe6530ff76bae386ca04c8c251006733.setContent(html_77dbe1c4e49c8f5058198f93525c5516);
+            
+        
+
+        marker_e7d1e9983019965731808c883b21e64c.bindPopup(popup_fe6530ff76bae386ca04c8c251006733)
+        ;
+
+        
+    
+    
+                marker_e7d1e9983019965731808c883b21e64c.setIcon(icon_37a3e383b075838ade8139f24793316b);
+            
+    
+            var poly_line_b128c58a322904740ba1877c7f321be1 = L.polyline(
+                [[-16.5547, -68.6736], [16.5547, 111.3264]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            poly_line_b128c58a322904740ba1877c7f321be1.bindTooltip(
+                `<div>
+                     Shadow Link: MT SILICA (Andes)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            ant_path_691e06b228f2c798a5cc75dfd402b46a = L.polyline.antPath(
+              [[20.3813, 99.8669], [20.7888, 97.0333], [-16.5547, -68.6736], [-80.0, -120.0]],
+              {
+  "stroke": true,
+  "color": "#00fbff",
+  "weight": 4,
+  "opacity": 0.8,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#00fbff",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+        
+    
+            ant_path_691e06b228f2c798a5cc75dfd402b46a.bindTooltip(
+                `<div>
+                     THE BLUE VEIN
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var layer_control_183b84ad902e95d83b9e42dc0e94c090_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_05c3093d030b05893cd7507741fd8e76,
+                    "Dark Mode (Labyrinth View)" : tile_layer_972085aac1016b532f37f5b7ed145519,
+                    "Satellite View (Physical Anchor)" : tile_layer_b26c3e9c2f605194d2064312eddac2bb,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_183b84ad902e95d83b9e42dc0e94c090 = L.control.layers(
+                layer_control_183b84ad902e95d83b9e42dc0e94c090_layers.base_layers,
+                layer_control_183b84ad902e95d83b9e42dc0e94c090_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_380409a5d4de073fede2b28043b02b9d);
+
+        
 </script>
 </html>
