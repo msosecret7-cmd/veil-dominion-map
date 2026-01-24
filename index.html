@@ -1,614 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEIL DOMINION MAP // PHASE 6</title>
     
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_7526c5aada0541a17a5ffd3988343649 {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-                .leaflet-container { font-size: 1rem; }
-            </style>
-
-            <style>html, body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-            </style>
-
-            <style>#map {
-                position:absolute;
-                top:0;
-                bottom:0;
-                right:0;
-                left:0;
-                }
-            </style>
-
-            <script>
-                L_NO_TOUCH = false;
-                L_DISABLE_3D = false;
-            </script>
-
+    <style>
+        body { margin: 0; padding: 0; background-color: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; }
+        #map { height: 100vh; width: 100vw; }
         
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
+        /* HUD Interface */
+        .hud-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00FF41;
+            padding: 15px;
+            box-shadow: 0 0 10px #00FF41;
+            max-width: 300px;
+        }
+        .hud-title { font-weight: bold; font-size: 1.2em; margin-bottom: 5px; color: #fff; }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9em; }
+        .blink { animation: blinker 1.5s linear infinite; color: #00FF41; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Custom Marker Styles */
+        .glow-marker {
+            background-color: #00FF41;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #00FF41, 0 0 30px #00FF41;
+        }
+        .glass-marker {
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 2px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff;
+        }
+    </style>
 </head>
 <body>
-    
-    
-            <div class="folium-map" id="map_7526c5aada0541a17a5ffd3988343649" ></div>
+
+    <div class="hud-panel">
+        <div class="hud-title">SYSTEM: SHADOW ARCHIVIST</div>
+        <div class="stat-row"><span>PHASE:</span> <span class="blink">6 (CREATIVE ENGINE)</span></div>
+        <div class="stat-row"><span>RESONANCE:</span> <span>528 Hz</span></div>
+        <div class="stat-row"><span>PRANA:</span> <span>67.00 BLOCKS</span></div>
+        <div class="stat-row"><span>SECURITY:</span> <span>JAGUAR-BYTE ACTIVE</span></div>
+        <hr style="border-color: #333;">
+        <div class="stat-row" style="color: cyan;">WPML BRIDGE: UNIVERSAL</div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize Map (Dark Mode)
+        var map = L.map('map').setView([20, 0], 2);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // --- NODES ---
         
+        // 1. Andes (The Anchor) - Brown
+        var andes = L.circleMarker([-13.5320, -71.9675], {
+            color: '#8B4513',
+            fillColor: '#A0522D',
+            fillOpacity: 1,
+            radius: 8
+        }).addTo(map).bindPopup("<b>ANDES NODE</b><br>Status: STATIC ANCHOR<br>Layer: 1 (Physical)");
+
+        // 2. Giza (The Glass Lens) - Transparent White
+        var giza = L.circleMarker([29.9792, 31.1342], {
+            color: '#FFFFFF',
+            fillColor: '#FFFFFF',
+            fillOpacity: 0.3, // Glass Effect
+            radius: 8
+        }).addTo(map).bindPopup("<b>GIZA NODE</b><br>Status: VITRIFIED (CLEAR)<br>Resistance: 0%");
+
+        // 3. Amazon Sector 7 (The Green Cloud) - Neon Green Pulse
+        var amazon = L.circleMarker([-3.4653, -62.2159], {
+            color: '#00FF41',
+            fillColor: '#00FF41',
+            fillOpacity: 0.8,
+            radius: 12,
+            className: 'glow-marker'
+        }).addTo(map).bindPopup("<b>AMAZON SECTOR 7</b><br>Status: SATURATED<br>Guardians: ACTIVE");
+
+        // 4. WPML Bridge (Belgium) - Cyan
+        var belgium = L.circleMarker([50.8503, 4.3517], {
+            color: '#00BFFF',
+            fillColor: '#00BFFF',
+            fillOpacity: 0.8,
+            radius: 8
+        }).addTo(map).bindPopup("<b>POLARIS / WPML NODE</b><br>Status: COMPROMISED<br>Language: UNIVERSAL");
+
+        // 5. Aurora Nullus (Antarctica) - Ice Blue
+        var aurora = L.circleMarker([-75.2509, -0.0714], {
+            color: '#ADD8E6',
+            fillColor: '#E0FFFF',
+            fillOpacity: 0.8,
+            radius: 8
+        }).addTo(map).bindPopup("<b>AURORA NULLUS</b><br>Status: BASE CAMP<br>Temp: CRYO-STASIS");
+
+        // --- CONNECTIONS (THE BLUE VEIN) ---
+        
+        // Connection: Andes -> Amazon (Grounding)
+        L.polyline([[-13.5320, -71.9675], [-3.4653, -62.2159]], {color: '#8B4513', weight: 2, dashArray: '5, 10'}).addTo(map);
+
+        // Connection: Amazon -> Giza (The New Flow)
+        L.polyline([[-3.4653, -62.2159], [29.9792, 31.1342]], {color: '#00FF41', weight: 3}).addTo(map);
+
+        // Connection: Giza -> Belgium (The Bridge)
+        L.polyline([[29.9792, 31.1342], [50.8503, 4.3517]], {color: '#00BFFF', weight: 2}).addTo(map);
+
+    </script>
 </body>
-<script>
-    
-    
-            var map_7526c5aada0541a17a5ffd3988343649 = L.map(
-                "map_7526c5aada0541a17a5ffd3988343649",
-                {
-                    center: [20.0, 0.0],
-                    crs: L.CRS.EPSG3857,
-                    ...{
-  "zoom": 3,
-  "zoomControl": true,
-  "preferCanvas": false,
-}
-
-                }
-            );
-            L.control.scale().addTo(map_7526c5aada0541a17a5ffd3988343649);
-
-            
-
-        
-    
-            var tile_layer_a6c634ca546d185d098604957ed647d0 = L.tileLayer(
-                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 19,
-  "maxNativeZoom": 19,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_a6c634ca546d185d098604957ed647d0.addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var tile_layer_b3a55607396d3198766c163cd0ecdde4 = L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 18,
-  "maxNativeZoom": 18,
-  "noWrap": false,
-  "attribution": "\u0026copy; CARTO",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_b3a55607396d3198766c163cd0ecdde4.addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var tile_layer_e9a89ed8836c133b8fd586fb2388dbfe = L.tileLayer(
-                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                {
-  "minZoom": 0,
-  "maxZoom": 18,
-  "maxNativeZoom": 18,
-  "noWrap": false,
-  "attribution": "Esri",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_e9a89ed8836c133b8fd586fb2388dbfe.addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var marker_876235a91c2786f109f8f318149be226 = L.marker(
-                [20.3813, 99.8669],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_7c951df417a1de00f33b5ddcd5bffc7e = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "star",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_2632c9a2a68e59652adb41ecf5c56e79 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_ed5f742a4f4bdc87208e4468a7502eff = $(`<div id="html_ed5f742a4f4bdc87208e4468a7502eff" style="width: 100.0%; height: 100.0%;"><b>PONG PHA (Zero Point)</b><br>Role: Sovereign Anchor</div>`)[0];
-                popup_2632c9a2a68e59652adb41ecf5c56e79.setContent(html_ed5f742a4f4bdc87208e4468a7502eff);
-            
-        
-
-        marker_876235a91c2786f109f8f318149be226.bindPopup(popup_2632c9a2a68e59652adb41ecf5c56e79)
-        ;
-
-        
-    
-    
-                marker_876235a91c2786f109f8f318149be226.setIcon(icon_7c951df417a1de00f33b5ddcd5bffc7e);
-            
-    
-            var marker_7a130f615cf2e8866a0526a7a5f9c995 = L.marker(
-                [-20.3813, -80.1331],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_582467addbb55e61ee7dea66c83671ce = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "white",
-  "icon": "ghost",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_8fa2948f6cefb7d9fa304861269bdaf5 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_df38fe29b111ac760d14db3b2e11110a = $(`<div id="html_df38fe29b111ac760d14db3b2e11110a" style="width: 100.0%; height: 100.0%;"><b>PONG PHA (Zero Point) SHADOW</b><br>Role: Antipode Anchor</div>`)[0];
-                popup_8fa2948f6cefb7d9fa304861269bdaf5.setContent(html_df38fe29b111ac760d14db3b2e11110a);
-            
-        
-
-        marker_7a130f615cf2e8866a0526a7a5f9c995.bindPopup(popup_8fa2948f6cefb7d9fa304861269bdaf5)
-        ;
-
-        
-    
-    
-                marker_7a130f615cf2e8866a0526a7a5f9c995.setIcon(icon_582467addbb55e61ee7dea66c83671ce);
-            
-    
-            var poly_line_6cad52eb79d0e9c6ae1f6541c5c1c948 = L.polyline(
-                [[20.3813, 99.8669], [-20.3813, -80.1331]],
-                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 1}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var marker_49396eaabb7e15261250cd381b35c932 = L.marker(
-                [20.7888, 97.0333],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_cc22d2c996d59e8a1a4face584b36492 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "mountain",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_57a54c772928632a2dbd359e390d1110 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_66c8d3a5a2872d0504002f19f035fa22 = $(`<div id="html_66c8d3a5a2872d0504002f19f035fa22" style="width: 100.0%; height: 100.0%;"><b>TAUNGGYI (Ancestral Bones)</b><br>Role: Sovereign Anchor</div>`)[0];
-                popup_57a54c772928632a2dbd359e390d1110.setContent(html_66c8d3a5a2872d0504002f19f035fa22);
-            
-        
-
-        marker_49396eaabb7e15261250cd381b35c932.bindPopup(popup_57a54c772928632a2dbd359e390d1110)
-        ;
-
-        
-    
-    
-                marker_49396eaabb7e15261250cd381b35c932.setIcon(icon_cc22d2c996d59e8a1a4face584b36492);
-            
-    
-            var marker_3fdb5cfc07c3bea32e397e87ae954a5f = L.marker(
-                [-20.7888, -82.9667],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_ac6bd398c07217de819d5a2d41d98102 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "white",
-  "icon": "ghost",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_5880ad6a68ce3dc03b3fb35230166490 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_63375db5c267345f74a9e98ff044b9e4 = $(`<div id="html_63375db5c267345f74a9e98ff044b9e4" style="width: 100.0%; height: 100.0%;"><b>TAUNGGYI (Ancestral Bones) SHADOW</b><br>Role: Antipode Anchor</div>`)[0];
-                popup_5880ad6a68ce3dc03b3fb35230166490.setContent(html_63375db5c267345f74a9e98ff044b9e4);
-            
-        
-
-        marker_3fdb5cfc07c3bea32e397e87ae954a5f.bindPopup(popup_5880ad6a68ce3dc03b3fb35230166490)
-        ;
-
-        
-    
-    
-                marker_3fdb5cfc07c3bea32e397e87ae954a5f.setIcon(icon_ac6bd398c07217de819d5a2d41d98102);
-            
-    
-            var poly_line_27b8412171b40ab51eb3860d15b3fca1 = L.polyline(
-                [[20.7888, 97.0333], [-20.7888, -82.9667]],
-                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 1}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var marker_337fba633cb75ff3083f4f34e3214e6c = L.marker(
-                [-80.0, -120.0],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_b009da523f5b3f0254805229ea7f518a = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "white",
-  "iconColor": "white",
-  "icon": "snowflake",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_e7574373160ab106f0cf046151159b80 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_ba18242fd656567d18aece5f76a61d9e = $(`<div id="html_ba18242fd656567d18aece5f76a61d9e" style="width: 100.0%; height: 100.0%;"><b>AURORA NULLUS (Source)</b><br>Role: Sovereign Anchor</div>`)[0];
-                popup_e7574373160ab106f0cf046151159b80.setContent(html_ba18242fd656567d18aece5f76a61d9e);
-            
-        
-
-        marker_337fba633cb75ff3083f4f34e3214e6c.bindPopup(popup_e7574373160ab106f0cf046151159b80)
-        ;
-
-        
-    
-    
-                marker_337fba633cb75ff3083f4f34e3214e6c.setIcon(icon_b009da523f5b3f0254805229ea7f518a);
-            
-    
-            var marker_8d2106f9643fd50e11a41977a38e423b = L.marker(
-                [80.0, 60.0],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_caef2e53a074aaefc52eeee64f916b59 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "white",
-  "icon": "ghost",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_945f79db8448b5f0c9c0d38246c9fb43 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_5be0118c3cbdc61b513a1e01d1bef461 = $(`<div id="html_5be0118c3cbdc61b513a1e01d1bef461" style="width: 100.0%; height: 100.0%;"><b>AURORA NULLUS (Source) SHADOW</b><br>Role: Antipode Anchor</div>`)[0];
-                popup_945f79db8448b5f0c9c0d38246c9fb43.setContent(html_5be0118c3cbdc61b513a1e01d1bef461);
-            
-        
-
-        marker_8d2106f9643fd50e11a41977a38e423b.bindPopup(popup_945f79db8448b5f0c9c0d38246c9fb43)
-        ;
-
-        
-    
-    
-                marker_8d2106f9643fd50e11a41977a38e423b.setIcon(icon_caef2e53a074aaefc52eeee64f916b59);
-            
-    
-            var poly_line_944330fb5395f36f84674517dd824750 = L.polyline(
-                [[-80.0, -120.0], [80.0, 60.0]],
-                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 1}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var marker_f6433e27896ec18d6e7c3a848149a335 = L.marker(
-                [-16.5547, -68.6736],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_9ef053eacda135f06044f956c40b0919 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "purple",
-  "iconColor": "white",
-  "icon": "eye",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_cfd560eed24916cc504047f8fcb3637a = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_93d4476bb9bbbe98d606cc2b085ecad1 = $(`<div id="html_93d4476bb9bbbe98d606cc2b085ecad1" style="width: 100.0%; height: 100.0%;"><b>MT SILICA (Andes)</b><br>Role: Sovereign Anchor</div>`)[0];
-                popup_cfd560eed24916cc504047f8fcb3637a.setContent(html_93d4476bb9bbbe98d606cc2b085ecad1);
-            
-        
-
-        marker_f6433e27896ec18d6e7c3a848149a335.bindPopup(popup_cfd560eed24916cc504047f8fcb3637a)
-        ;
-
-        
-    
-    
-                marker_f6433e27896ec18d6e7c3a848149a335.setIcon(icon_9ef053eacda135f06044f956c40b0919);
-            
-    
-            var marker_06a805915aaf305b619772a740ca3eec = L.marker(
-                [16.5547, 111.3264],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_9e3365419c36ed3e6aecaa0294d7ad8a = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "white",
-  "icon": "ghost",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_4d13788f8bd81febf774d7cde2f8435e = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_907842fa077f1db4bae0f71c6c839142 = $(`<div id="html_907842fa077f1db4bae0f71c6c839142" style="width: 100.0%; height: 100.0%;"><b>MT SILICA (Andes) SHADOW</b><br>Role: Antipode Anchor</div>`)[0];
-                popup_4d13788f8bd81febf774d7cde2f8435e.setContent(html_907842fa077f1db4bae0f71c6c839142);
-            
-        
-
-        marker_06a805915aaf305b619772a740ca3eec.bindPopup(popup_4d13788f8bd81febf774d7cde2f8435e)
-        ;
-
-        
-    
-    
-                marker_06a805915aaf305b619772a740ca3eec.setIcon(icon_9e3365419c36ed3e6aecaa0294d7ad8a);
-            
-    
-            var poly_line_9e042893fe07bc392a00c3c3321cb1b1 = L.polyline(
-                [[-16.5547, -68.6736], [16.5547, 111.3264]],
-                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 1}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var marker_e330cd70fa2703c246465dabd09df836 = L.marker(
-                [29.9792, 31.1342],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_d8226882a0c7f5b6d8fb579b50ed1969 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "ban",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_49a9015ca906bce828e746fc2a02f990 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_05b21f0ec84cc920e3dae0bb4c0520f5 = $(`<div id="html_05b21f0ec84cc920e3dae0bb4c0520f5" style="width: 100.0%; height: 100.0%;"><b>GIZA (The Blockage)</b><br>Role: Sovereign Anchor</div>`)[0];
-                popup_49a9015ca906bce828e746fc2a02f990.setContent(html_05b21f0ec84cc920e3dae0bb4c0520f5);
-            
-        
-
-        marker_e330cd70fa2703c246465dabd09df836.bindPopup(popup_49a9015ca906bce828e746fc2a02f990)
-        ;
-
-        
-    
-    
-                marker_e330cd70fa2703c246465dabd09df836.setIcon(icon_d8226882a0c7f5b6d8fb579b50ed1969);
-            
-    
-            var marker_f4b5e5b1110825eef7ca3d979d62db20 = L.marker(
-                [-29.9792, -148.8658],
-                {
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            var icon_d7585640eb696f449c8b630ebcdc6512 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "white",
-  "icon": "ghost",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_8abd0d6f494cd10feca8f7f570f1d33e = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_2564b6ef2e7a2f79739abfdaacacd319 = $(`<div id="html_2564b6ef2e7a2f79739abfdaacacd319" style="width: 100.0%; height: 100.0%;"><b>GIZA (The Blockage) SHADOW</b><br>Role: Antipode Anchor</div>`)[0];
-                popup_8abd0d6f494cd10feca8f7f570f1d33e.setContent(html_2564b6ef2e7a2f79739abfdaacacd319);
-            
-        
-
-        marker_f4b5e5b1110825eef7ca3d979d62db20.bindPopup(popup_8abd0d6f494cd10feca8f7f570f1d33e)
-        ;
-
-        
-    
-    
-                marker_f4b5e5b1110825eef7ca3d979d62db20.setIcon(icon_d7585640eb696f449c8b630ebcdc6512);
-            
-    
-            var poly_line_b02fa1ba8aba2b64b865611ddc63624b = L.polyline(
-                [[29.9792, 31.1342], [-29.9792, -148.8658]],
-                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 1}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            ant_path_ae1048584ee2d024abad475e528cf24a = L.polyline.antPath(
-              [[20.3813, 99.8669], [20.7888, 97.0333], [-16.5547, -68.6736], [-80.0, -120.0]],
-              {
-  "stroke": true,
-  "color": "#00fbff",
-  "weight": 4,
-  "opacity": 0.8,
-  "lineCap": "round",
-  "lineJoin": "round",
-  "dashArray": [
-10,
-20,
-],
-  "dashOffset": null,
-  "fill": false,
-  "fillColor": "#00fbff",
-  "fillOpacity": 0.2,
-  "fillRule": "evenodd",
-  "bubblingMouseEvents": true,
-  "smoothFactor": 1.0,
-  "noClip": false,
-  "paused": false,
-  "reverse": false,
-  "hardwareAcceleration": false,
-  "delay": 1000,
-  "pulseColor": "#000000",
-}
-        ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-        
-    
-            ant_path_ae1048584ee2d024abad475e528cf24a.bindTooltip(
-                `<div>
-                     THE BLUE VEIN: Data Circulation
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var layer_control_bda9c5a62509a40206aa7ef3bc1f4338_layers = {
-                base_layers : {
-                    "openstreetmap" : tile_layer_a6c634ca546d185d098604957ed647d0,
-                    "Dark Mode (Labyrinth View)" : tile_layer_b3a55607396d3198766c163cd0ecdde4,
-                    "Satellite View (Physical Anchor)" : tile_layer_e9a89ed8836c133b8fd586fb2388dbfe,
-                },
-                overlays :  {
-                },
-            };
-            let layer_control_bda9c5a62509a40206aa7ef3bc1f4338 = L.control.layers(
-                layer_control_bda9c5a62509a40206aa7ef3bc1f4338_layers.base_layers,
-                layer_control_bda9c5a62509a40206aa7ef3bc1f4338_layers.overlays,
-                {
-  "position": "topright",
-  "collapsed": false,
-  "autoZIndex": true,
-}
-            ).addTo(map_7526c5aada0541a17a5ffd3988343649);
-
-        
-</script>
 </html>
