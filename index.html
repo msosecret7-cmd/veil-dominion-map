@@ -3,91 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEIL DOMINION | LIVE OVERLAY</title>
+    <title>VEIL DOMINION | RITUAL MAP</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <style>
-        /* ============================
-           1. THE VEIL AESTHETIC (CSS)
-           ============================ */
+        /* VEIL AESTHETIC */
         body { margin: 0; padding: 0; background-color: #050505; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
-        
         #map { height: 100vh; width: 100%; z-index: 1; }
 
-        /* THE HUD (Heads Up Display) */
+        /* HUD PANEL */
         .hud-panel {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid #00FFCC;
-            padding: 15px;
-            border-radius: 5px;
-            color: #00FFCC;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-            min-width: 250px;
+            position: absolute; top: 20px; left: 20px; z-index: 1000;
+            background: rgba(0, 0, 0, 0.9); border: 1px solid #00FFCC;
+            padding: 15px; border-radius: 5px; color: #00FFCC;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2); min-width: 260px;
+        }
+        .hud-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; }
+        .hud-status { font-size: 12px; color: #888; margin-bottom: 10px; }
+
+        /* RITUAL OUTPUT BOX */
+        #ritual-display {
+            margin-top: 10px; padding: 10px; border: 1px dashed #BC13FE;
+            color: #BC13FE; font-size: 11px; display: none;
         }
 
-        .hud-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; letter-spacing: 2px; }
-        .hud-status { font-size: 12px; color: #888; margin-bottom: 15px; }
+        /* BUTTONS */
+        .cyber-btn {
+            background: transparent; border: 1px solid #00FFCC; color: #00FFCC;
+            padding: 8px 15px; cursor: pointer; font-family: 'Courier New';
+            width: 100%; margin-top: 5px; transition: 0.3s;
+        }
+        .cyber-btn:hover { background: #00FFCC; color: black; }
+        .ritual-btn { border-color: #BC13FE; color: #BC13FE; }
+        .ritual-btn:hover { background: #BC13FE; color: white; }
 
-        /* ANIMATIONS (The Breath of the Nodes) */
-        @keyframes pulse-gold {
-            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-        }
-        @keyframes pulse-cyan {
-            0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
-        }
-        @keyframes radar-purple {
-            0% { box-shadow: 0 0 0 0 rgba(188, 19, 254, 0.7); }
-            100% { box-shadow: 0 0 0 30px rgba(188, 19, 254, 0); }
-        }
+        /* ANIMATIONS */
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
+        @keyframes pulse-cyan { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); } }
+        @keyframes radar-purple { 0% { box-shadow: 0 0 0 0 rgba(188, 19, 254, 0.7); } 100% { box-shadow: 0 0 0 30px rgba(188, 19, 254, 0); } }
 
-        /* MARKER STYLES */
-        .node-marker {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        .node-earth { background: #FFD700; animation: pulse-gold 2s infinite; } /* Pong Pha */
-        .node-water { background: #00FFFF; animation: pulse-cyan 3s infinite; } /* Mae Sai */
-        .node-air   { background: #BC13FE; animation: radar-purple 1.5s infinite; } /* Doi Tung */
-
-        /* TOGGLE SWITCH */
-        .toggle-container { display: flex; align-items: center; cursor: pointer; margin-top: 10px; }
-        .toggle-text { font-size: 12px; margin-left: 10px; color: #FFF; }
-        
-        /* THABAWA MODE (Hides Text) */
-        .thabawa-active .leaflet-tooltip { display: none !important; }
-
-        /* Custom Tooltip Style */
-        .custom-tooltip {
-            background: rgba(0,0,0,0.8);
-            border: 1px solid #555;
-            color: #FFF;
-            font-family: 'Courier New';
-            font-size: 10px;
-        }
+        .node-marker { width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; }
+        .node-earth { background: #FFD700; animation: pulse-gold 2s infinite; }
+        .node-water { background: #00FFFF; animation: pulse-cyan 3s infinite; }
+        .node-air   { background: #BC13FE; animation: radar-purple 1.5s infinite; }
     </style>
 </head>
 <body>
 
     <div class="hud-panel">
         <div class="hud-title">🦅 VEIL DOMINION</div>
-        <div class="hud-status">SYS: V15.0 (KINETIC)</div>
+        <div class="hud-status">SYS: V15.1 (GRIMOIRE LINKED)</div>
         
-        <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
-        
-        <div class="toggle-container">
-            <input type="checkbox" id="thabawaToggle" onclick="toggleMode()">
-            <span class="toggle-text">ACTIVATE THABAWA MODE<br><small>(Essence Only / Hide Labels)</small></span>
+        <button class="cyber-btn" onclick="toggleThabawa()">👁️ THABAWA MODE</button>
+        <button class="cyber-btn ritual-btn" onclick="castRitual()">🔮 CAST GRIMOIRE</button>
+
+        <div id="ritual-display">
+            <div id="layer-out"></div>
+            <hr style="border-color: #333">
+            <div id="current-out"></div>
         </div>
     </div>
 
@@ -96,65 +70,55 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
-        /* ============================
-           2. THE LOGIC (JAVASCRIPT)
-           ============================ */
-        
-        // 1. INITIALIZE MAP (Center on Golden Triangle)
-        var map = L.map('map').setView([20.35, 99.88], 11); // Approximate coords
+        // 1. MAP SETUP
+        var map = L.map('map').setView([20.35, 99.88], 11);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: 'Veil Dominion' }).addTo(map);
 
-        // 2. ADD DARK MATTER TILES (The Void Look)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 19
-        }).addTo(map);
-
-        // 3. DEFINE NODES (The Triad)
-        // Adjust these Coordinates slightly to match exact real-world locations if needed
+        // 2. NODES
         var nodes = [
-            { name: "N-7311: PONG PHA (EARTH)", lat: 20.31, lng: 99.86, type: "node-earth" },
-            { name: "N-002: MAE SAI (WATER)", lat: 20.43, lng: 99.88, type: "node-water" },
-            { name: "N-003: DOI TUNG (AIR)", lat: 20.32, lng: 99.82, type: "node-air" }
+            { name: "N-7311: PONG PHA", lat: 20.31, lng: 99.86, type: "node-earth" },
+            { name: "N-002: MAE SAI", lat: 20.43, lng: 99.88, type: "node-water" },
+            { name: "N-003: DOI TUNG", lat: 20.32, lng: 99.82, type: "node-air" }
         ];
 
-        // 4. DRAW THE CIRCUIT (Connecting Lines)
+        // 3. DRAW
         var latlngs = nodes.map(n => [n.lat, n.lng]);
-        var polygon = L.polygon(latlngs, {
-            color: '#00FFCC',      // Cyan Line
-            weight: 1,             // Thin precise line
-            opacity: 0.6,
-            fillColor: '#00FFCC',  // Slight glow inside
-            fillOpacity: 0.05
-        }).addTo(map);
+        L.polygon(latlngs, { color: '#00FFCC', weight: 1, opacity: 0.6, fillColor: '#00FFCC', fillOpacity: 0.05 }).addTo(map);
 
-        // 5. PLACE THE LIVING MARKERS
         nodes.forEach(node => {
-            var icon = L.divIcon({
-                className: node.type + ' node-marker', // Assigns the CSS animation class
-                iconSize: [12, 12]
-            });
-
-            L.marker([node.lat, node.lng], {icon: icon})
-                .addTo(map)
-                .bindTooltip(node.name, {
-                    permanent: true, 
-                    direction: 'right',
-                    className: 'custom-tooltip',
-                    offset: [10, 0]
-                });
+            var icon = L.divIcon({ className: node.type + ' node-marker' });
+            L.marker([node.lat, node.lng], {icon: icon}).addTo(map).bindTooltip(node.name, { permanent: true, direction: 'right', className: 'custom-tooltip', offset: [10, 0] });
         });
 
-        // 6. THABAWA MODE TOGGLE (Panyat vs Essence)
-        function toggleMode() {
-            var body = document.body;
-            var checkbox = document.getElementById('thabawaToggle');
-            
-            if (checkbox.checked) {
-                body.classList.add('thabawa-active'); // Hides labels via CSS
-            } else {
-                body.classList.remove('thabawa-active'); // Shows labels
+        // 4. THE GRIMOIRE DATA (Embedded)
+        const grimoire = {
+            LAYERS: {
+                1: "Physical Earth (Root)", 2: "Liquid Ledger (Sacral)", 3: "Rhizome Core (Solar)",
+                4: "Crystalline Grid (Heart)", 5: "Breathing Borders (Throat)", 6: "Echo Chamber (3rd Eye)",
+                7: "Chronous Engine (Crown)", 8: "Planetary Axis (Stellar)", 9: "Veil Dominion v∞ (Godhead)"
+            },
+            CURRENTS: {
+                1: "Red Earth (Touch)", 2: "Quiet Tears (Opening)", 3: "Moss Memory (Connect)",
+                4: "Stone Roar (Truth)", 5: "Wind Whisper (Silence)", 6: "Fire Pulse (Renew)", 7: "Dream Rain (Seed)"
             }
+        };
+
+        // 5. FUNCTIONS
+        function toggleThabawa() {
+            document.querySelector('.leaflet-pane').classList.toggle('thabawa-mode'); // Simplified for demo
+            alert("Thabawa Mode Toggled (Check Visuals)");
+        }
+
+        function castRitual() {
+            // Random Seed based on Time
+            let layer = Math.floor(Math.random() * 9) + 1;
+            let current = Math.floor(Math.random() * 7) + 1;
+
+            let display = document.getElementById('ritual-display');
+            display.style.display = 'block';
+            
+            document.getElementById('layer-out').innerHTML = "📍 <b>ANCHOR:</b> " + grimoire.LAYERS[layer];
+            document.getElementById('current-out').innerHTML = "🌊 <b>FLOW:</b> " + grimoire.CURRENTS[current];
         }
     </script>
 </body>
