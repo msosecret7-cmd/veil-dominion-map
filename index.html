@@ -3,123 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEIL DOMINION MAP // PHASE 6</title>
+    <title>VEIL DOMINION | LIVE OVERLAY</title>
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <style>
-        body { margin: 0; padding: 0; background-color: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; }
-        #map { height: 100vh; width: 100vw; }
+        /* ============================
+           1. THE VEIL AESTHETIC (CSS)
+           ============================ */
+        body { margin: 0; padding: 0; background-color: #050505; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
         
-        /* HUD Interface */
+        #map { height: 100vh; width: 100%; z-index: 1; }
+
+        /* THE HUD (Heads Up Display) */
         .hud-panel {
             position: absolute;
             top: 20px;
             left: 20px;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #00FF41;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #00FFCC;
             padding: 15px;
-            box-shadow: 0 0 10px #00FF41;
-            max-width: 300px;
+            border-radius: 5px;
+            color: #00FFCC;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+            min-width: 250px;
         }
-        .hud-title { font-weight: bold; font-size: 1.2em; margin-bottom: 5px; color: #fff; }
-        .stat-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9em; }
-        .blink { animation: blinker 1.5s linear infinite; color: #00FF41; }
-        @keyframes blinker { 50% { opacity: 0; } }
 
-        /* Custom Marker Styles */
-        .glow-marker {
-            background-color: #00FF41;
-            border-radius: 50%;
-            box-shadow: 0 0 15px #00FF41, 0 0 30px #00FF41;
+        .hud-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; letter-spacing: 2px; }
+        .hud-status { font-size: 12px; color: #888; margin-bottom: 15px; }
+
+        /* ANIMATIONS (The Breath of the Nodes) */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
         }
-        .glass-marker {
-            background-color: rgba(255, 255, 255, 0.6);
-            border: 2px solid #fff;
+        @keyframes pulse-cyan {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
+        }
+        @keyframes radar-purple {
+            0% { box-shadow: 0 0 0 0 rgba(188, 19, 254, 0.7); }
+            100% { box-shadow: 0 0 0 30px rgba(188, 19, 254, 0); }
+        }
+
+        /* MARKER STYLES */
+        .node-marker {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            box-shadow: 0 0 10px #fff;
+            border: 2px solid white;
+        }
+        .node-earth { background: #FFD700; animation: pulse-gold 2s infinite; } /* Pong Pha */
+        .node-water { background: #00FFFF; animation: pulse-cyan 3s infinite; } /* Mae Sai */
+        .node-air   { background: #BC13FE; animation: radar-purple 1.5s infinite; } /* Doi Tung */
+
+        /* TOGGLE SWITCH */
+        .toggle-container { display: flex; align-items: center; cursor: pointer; margin-top: 10px; }
+        .toggle-text { font-size: 12px; margin-left: 10px; color: #FFF; }
+        
+        /* THABAWA MODE (Hides Text) */
+        .thabawa-active .leaflet-tooltip { display: none !important; }
+
+        /* Custom Tooltip Style */
+        .custom-tooltip {
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #555;
+            color: #FFF;
+            font-family: 'Courier New';
+            font-size: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="hud-panel">
-        <div class="hud-title">SYSTEM: SHADOW ARCHIVIST</div>
-        <div class="stat-row"><span>PHASE:</span> <span class="blink">6 (CREATIVE ENGINE)</span></div>
-        <div class="stat-row"><span>RESONANCE:</span> <span>528 Hz</span></div>
-        <div class="stat-row"><span>PRANA:</span> <span>67.00 BLOCKS</span></div>
-        <div class="stat-row"><span>SECURITY:</span> <span>JAGUAR-BYTE ACTIVE</span></div>
-        <hr style="border-color: #333;">
-        <div class="stat-row" style="color: cyan;">WPML BRIDGE: UNIVERSAL</div>
+        <div class="hud-title">🦅 VEIL DOMINION</div>
+        <div class="hud-status">SYS: V15.0 (KINETIC)</div>
+        
+        <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+        
+        <div class="toggle-container">
+            <input type="checkbox" id="thabawaToggle" onclick="toggleMode()">
+            <span class="toggle-text">ACTIVATE THABAWA MODE<br><small>(Essence Only / Hide Labels)</small></span>
+        </div>
     </div>
 
     <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <script>
-        // Initialize Map (Dark Mode)
-        var map = L.map('map').setView([20, 0], 2);
+        /* ============================
+           2. THE LOGIC (JAVASCRIPT)
+           ============================ */
+        
+        // 1. INITIALIZE MAP (Center on Golden Triangle)
+        var map = L.map('map').setView([20.35, 99.88], 11); // Approximate coords
+
+        // 2. ADD DARK MATTER TILES (The Void Look)
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 19
         }).addTo(map);
 
-        // --- NODES ---
-        
-        // 1. Andes (The Anchor) - Brown
-        var andes = L.circleMarker([-13.5320, -71.9675], {
-            color: '#8B4513',
-            fillColor: '#A0522D',
-            fillOpacity: 1,
-            radius: 8
-        }).addTo(map).bindPopup("<b>ANDES NODE</b><br>Status: STATIC ANCHOR<br>Layer: 1 (Physical)");
+        // 3. DEFINE NODES (The Triad)
+        // Adjust these Coordinates slightly to match exact real-world locations if needed
+        var nodes = [
+            { name: "N-7311: PONG PHA (EARTH)", lat: 20.31, lng: 99.86, type: "node-earth" },
+            { name: "N-002: MAE SAI (WATER)", lat: 20.43, lng: 99.88, type: "node-water" },
+            { name: "N-003: DOI TUNG (AIR)", lat: 20.32, lng: 99.82, type: "node-air" }
+        ];
 
-        // 2. Giza (The Glass Lens) - Transparent White
-        var giza = L.circleMarker([29.9792, 31.1342], {
-            color: '#FFFFFF',
-            fillColor: '#FFFFFF',
-            fillOpacity: 0.3, // Glass Effect
-            radius: 8
-        }).addTo(map).bindPopup("<b>GIZA NODE</b><br>Status: VITRIFIED (CLEAR)<br>Resistance: 0%");
+        // 4. DRAW THE CIRCUIT (Connecting Lines)
+        var latlngs = nodes.map(n => [n.lat, n.lng]);
+        var polygon = L.polygon(latlngs, {
+            color: '#00FFCC',      // Cyan Line
+            weight: 1,             // Thin precise line
+            opacity: 0.6,
+            fillColor: '#00FFCC',  // Slight glow inside
+            fillOpacity: 0.05
+        }).addTo(map);
 
-        // 3. Amazon Sector 7 (The Green Cloud) - Neon Green Pulse
-        var amazon = L.circleMarker([-3.4653, -62.2159], {
-            color: '#00FF41',
-            fillColor: '#00FF41',
-            fillOpacity: 0.8,
-            radius: 12,
-            className: 'glow-marker'
-        }).addTo(map).bindPopup("<b>AMAZON SECTOR 7</b><br>Status: SATURATED<br>Guardians: ACTIVE");
+        // 5. PLACE THE LIVING MARKERS
+        nodes.forEach(node => {
+            var icon = L.divIcon({
+                className: node.type + ' node-marker', // Assigns the CSS animation class
+                iconSize: [12, 12]
+            });
 
-        // 4. WPML Bridge (Belgium) - Cyan
-        var belgium = L.circleMarker([50.8503, 4.3517], {
-            color: '#00BFFF',
-            fillColor: '#00BFFF',
-            fillOpacity: 0.8,
-            radius: 8
-        }).addTo(map).bindPopup("<b>POLARIS / WPML NODE</b><br>Status: COMPROMISED<br>Language: UNIVERSAL");
+            L.marker([node.lat, node.lng], {icon: icon})
+                .addTo(map)
+                .bindTooltip(node.name, {
+                    permanent: true, 
+                    direction: 'right',
+                    className: 'custom-tooltip',
+                    offset: [10, 0]
+                });
+        });
 
-        // 5. Aurora Nullus (Antarctica) - Ice Blue
-        var aurora = L.circleMarker([-75.2509, -0.0714], {
-            color: '#ADD8E6',
-            fillColor: '#E0FFFF',
-            fillOpacity: 0.8,
-            radius: 8
-        }).addTo(map).bindPopup("<b>AURORA NULLUS</b><br>Status: BASE CAMP<br>Temp: CRYO-STASIS");
-
-        // --- CONNECTIONS (THE BLUE VEIN) ---
-        
-        // Connection: Andes -> Amazon (Grounding)
-        L.polyline([[-13.5320, -71.9675], [-3.4653, -62.2159]], {color: '#8B4513', weight: 2, dashArray: '5, 10'}).addTo(map);
-
-        // Connection: Amazon -> Giza (The New Flow)
-        L.polyline([[-3.4653, -62.2159], [29.9792, 31.1342]], {color: '#00FF41', weight: 3}).addTo(map);
-
-        // Connection: Giza -> Belgium (The Bridge)
-        L.polyline([[29.9792, 31.1342], [50.8503, 4.3517]], {color: '#00BFFF', weight: 2}).addTo(map);
-
+        // 6. THABAWA MODE TOGGLE (Panyat vs Essence)
+        function toggleMode() {
+            var body = document.body;
+            var checkbox = document.getElementById('thabawaToggle');
+            
+            if (checkbox.checked) {
+                body.classList.add('thabawa-active'); // Hides labels via CSS
+            } else {
+                body.classList.remove('thabawa-active'); // Shows labels
+            }
+        }
     </script>
 </body>
 </html>
