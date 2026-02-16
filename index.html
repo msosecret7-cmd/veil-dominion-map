@@ -3,106 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEIL DOMINION | PHOENIX ASCENDANT v16.0</title>
+    <title>VEIL DOMINION | SATELLITE MAPPING v16.1</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
-        /* PHOENIX RED EARTH AESTHETIC */
-        body { margin: 0; padding: 0; background-color: #020202; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
-        #map { height: 100vh; width: 100%; z-index: 1; filter: saturate(1.2) contrast(1.1); }
+        /* SATELLITE OPTIMIZED HUD */
+        body { margin: 0; padding: 0; background-color: #000; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
+        #map { height: 100vh; width: 100%; z-index: 1; filter: contrast(1.1) brightness(0.9); }
 
-        /* HUD PANEL v16.0 */
         .hud-panel {
             position: absolute; top: 20px; left: 20px; z-index: 1000;
-            background: rgba(0, 5, 5, 0.9); border: 1px solid #00f2ff;
-            padding: 20px; border-radius: 2px; color: #00f2ff;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); min-width: 280px;
+            background: rgba(0, 10, 10, 0.85); border: 2px solid #00f2ff;
+            padding: 20px; border-radius: 4px; color: #00f2ff;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 1); min-width: 280px;
+            backdrop-filter: blur(10px); /* Satellite ပေါ်တွင် ပေါ်လွင်စေရန် */
         }
         .hud-title { font-size: 18px; font-weight: bold; letter-spacing: 2px; color: #fff; text-shadow: 0 0 10px #00f2ff; }
-        .hud-status { font-size: 11px; color: #528cff; margin: 5px 0 15px 0; border-bottom: 1px solid #1a1a1a; padding-bottom: 5px; }
+        .hud-status { font-size: 11px; color: #528cff; margin: 5px 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 5px; }
 
-        /* PRANA BAR */
+        /* PRANA HUD */
         .prana-container { margin-bottom: 15px; }
-        .prana-label { font-size: 10px; color: #888; margin-bottom: 4px; display: flex; justify-content: space-between; }
-        .prana-bar { width: 100%; height: 4px; background: #111; border: 1px solid #333; position: relative; }
-        .prana-fill { width: 91.4%; height: 100%; background: linear-gradient(90deg, #00f2ff, #bc13fe); box-shadow: 0 0 10px #00f2ff; }
-
-        /* RITUAL OUTPUT */
-        #ritual-display {
-            margin-top: 15px; padding: 12px; border-left: 3px solid #528528;
-            background: rgba(255, 255, 255, 0.03); color: #fff; font-size: 12px; display: none;
-            animation: fadeIn 0.5s ease;
-        }
+        .prana-label { font-size: 10px; color: #aaa; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .prana-bar { width: 100%; height: 5px; background: #000; border: 1px solid #00f2ff; overflow: hidden; }
+        .prana-fill { width: 91.4%; height: 100%; background: linear-gradient(90deg, #00f2ff, #bc13fe); box-shadow: 0 0 15px #00f2ff; }
 
         /* BUTTONS */
         .cyber-btn {
-            background: transparent; border: 1px solid #00f2ff; color: #00f2ff;
+            background: rgba(0, 0, 0, 0.6); border: 1px solid #00f2ff; color: #00f2ff;
             padding: 10px; cursor: pointer; font-family: 'Courier New';
-            width: 100%; margin-top: 8px; transition: 0.3s; font-size: 11px; text-transform: uppercase;
+            width: 100%; margin-top: 8px; transition: 0.3s; font-size: 11px;
         }
-        .cyber-btn:hover { background: rgba(0, 242, 255, 0.15); box-shadow: 0 0 15px #00f2ff; }
-        .ritual-btn { border-color: #bc13fe; color: #bc13fe; }
-        .ritual-btn:hover { border-color: #fff; color: #fff; background: rgba(188, 19, 254, 0.2); }
+        .cyber-btn:hover { background: #00f2ff; color: #000; box-shadow: 0 0 20px #00f2ff; }
 
-        /* NODE ANIMATIONS */
-        .node-marker { width: 14px; height: 14px; border-radius: 50%; }
-        
-        /* GIZA GLASS (VITRIFIED) */
+        /* GIZA VITRIFICATION EFFECT */
         .node-giza { 
-            background: rgba(173, 216, 230, 0.4); 
+            background: rgba(255, 255, 255, 0.3); 
             border: 2px solid #fff;
-            box-shadow: 0 0 25px #fff, inset 0 0 10px #00f2ff;
+            box-shadow: 0 0 30px #fff, inset 0 0 15px #00f2ff;
             backdrop-filter: blur(4px);
-            animation: glass-glow 2s infinite alternate;
+            animation: glass-glow 2.5s infinite alternate;
         }
 
-        /* CAPSTONE SPARK (963Hz) */
         .capstone-spark {
-            width: 4px; height: 4px; background: #fff; border-radius: 50%;
-            box-shadow: 0 0 20px 5px #fff, 0 0 40px 10px #bc13fe;
-            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            animation: spark-pulse 0.6s infinite alternate;
+            width: 6px; height: 6px; background: #fff; border-radius: 50%;
+            box-shadow: 0 0 25px 8px #fff, 0 0 45px 15px #bc13fe;
+            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            animation: spark-pulse 0.7s infinite alternate;
         }
 
-        @keyframes glass-glow { from { opacity: 0.6; transform: scale(0.9); } to { opacity: 1; transform: scale(1.1); } }
-        @keyframes spark-pulse { from { opacity: 0.5; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(2); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes glass-glow { from { opacity: 0.7; transform: scale(1); } to { opacity: 1; transform: scale(1.2); } }
+        @keyframes spark-pulse { from { opacity: 0.6; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(2.2); } }
 
         /* BLUE VEIN FLOW */
         .blue-vein { 
-            stroke: #00f2ff; stroke-width: 2; stroke-dasharray: 8; 
-            filter: drop-shadow(0 0 5px #00f2ff); animation: veinFlow 3s linear infinite; 
+            stroke: #00f2ff; stroke-width: 3; stroke-dasharray: 12; 
+            filter: drop-shadow(0 0 10px #00f2ff); animation: veinFlow 4s linear infinite; 
         }
-        @keyframes veinFlow { to { stroke-dashoffset: -100; } }
+        @keyframes veinFlow { to { stroke-dashoffset: -120; } }
 
-        .schumann-pulse { animation: schumann 7.83s infinite ease-in-out; }
-        @keyframes schumann { 0% { opacity: 0.1; } 50% { opacity: 0.3; } 100% { opacity: 0.1; } }
     </style>
 </head>
 <body>
 
     <div class="hud-panel">
-        <div class="hud-title">PHOENIX ASCENDANT</div>
-        <div class="hud-status">SYSTEM: v16.0 (PHASE 4 ACTIVE)</div>
+        <div class="hud-title">PHOENIX SATELLITE</div>
+        <div class="hud-status">SYS: v16.1 (MALKUTH VISION ACTIVE)</div>
         
         <div class="prana-container">
             <div class="prana-label"><span>PRANA RESERVES</span> <span>117.0 / 117.0</span></div>
             <div class="prana-bar"><div class="prana-fill"></div></div>
         </div>
 
-        <button class="cyber-btn" onclick="toggleBlueVein()">🌊 TOGGLE BLUE VEIN</button>
-        <button class="cyber-btn ritual-btn" onclick="executePhoenixProtocol()">🔥 PHOENIX PROTOCOL</button>
-
-        <div id="ritual-display">
-            <div id="status-line" style="color:#00f2ff; font-weight:bold; margin-bottom:5px;">[VITRIFICATION SUCCESS]</div>
-            <div id="layer-out"></div>
-            <div id="current-out"></div>
-            <div id="resonance-out" style="font-size:10px; color:#888; margin-top:10px;"></div>
-        </div>
+        <button class="cyber-btn" onclick="focusGiza()">🎯 FOCUS GIZA LENS</button>
+        <button class="cyber-btn" onclick="focusPongPha()">📍 FOCUS PONG PHA</button>
+        <button class="cyber-btn" style="border-color:#bc13fe; color:#bc13fe;" onclick="alert('RESONANCE: 528Hz | STATUS: STABLE')">🔋 SYNC CHECK</button>
     </div>
 
-    <div id="map" class="schumann-pulse"></div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // 1. MAP INITIALIZATION WITH GOOGLE SATELLITE
+        var map = L.map('map', { zoomControl: false }).setView([20.35, 99.88], 10);
+        
+        // Google Satellite Tile Layer (lyrs=s: Satellite, lyrs=y: Hybrid)
+        L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            attribution: 'Google Satellite | Veil Dominion Integration'
+        }).addTo(map);
+
+        // 2. SOVEREIGN NODES
+        var nodes = [
+            { id: "pong-pha", name: "N-7311: PONG PHA (CORE)", lat: 20.31, lng: 99.86, type: "node-giza" },
+            { id: "giza", name: "N-666: GIZA (VITRIFIED LENS)", lat: 29.97, lng: 31.13, type: "node-giza", spark: true },
+            { id: "amazon", name: "SECTOR 7: AMAZON (SOURCE)", lat: -3.46, lng: -62.21, type: "node-giza" }
+        ];
+
+        // 3. RENDER NODES & SPARK
+        nodes.forEach(node => {
+            var iconClass = node.type + ' node-marker';
+            var htmlContent = node.spark ? '<div class="capstone-spark"></div>' : '';
+            
+            var icon = L.divIcon({ className: iconClass, html: htmlContent, iconSize: [14, 14] });
+            L.marker([node.lat, node.lng], {icon: icon}).addTo(map)
+             .bindTooltip(node.name, { permanent: false });
+        });
+
+        // 4. THE BLUE VEIN (Mapping the Flow)
+        var veinPath = [
+            [20.31, 99.86],  // Pong Pha
+            [29.97, 31.13],  // Giza
+            [-3.46, -62.21]  // Amazon
+        ];
+        var blueVein = L.polyline(veinPath, { className: 'blue-vein' }).addTo(map);
+
+        // 5. NAVIGATION LOGIC
+        function focusGiza() { map.flyTo([29.97, 31.13], 15, { duration: 3 }); }
+        function focusPongPha() { map.flyTo([20.31, 99.86], 15, { duration: 3 }); }
+    </script>
+</body>
+</html>    <div id="map" class="schumann-pulse"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
