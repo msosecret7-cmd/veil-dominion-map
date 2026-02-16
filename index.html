@@ -3,122 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEIL DOMINION | RITUAL MAP</title>
+    <title>VEIL DOMINION | PHOENIX ASCENDANT v16.0</title>
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
-        /* VEIL AESTHETIC */
-        body { margin: 0; padding: 0; background-color: #050505; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
-        #map { height: 100vh; width: 100%; z-index: 1; }
+        /* PHOENIX RED EARTH AESTHETIC */
+        body { margin: 0; padding: 0; background-color: #020202; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
+        #map { height: 100vh; width: 100%; z-index: 1; filter: saturate(1.2) contrast(1.1); }
 
-        /* HUD PANEL */
+        /* HUD PANEL v16.0 */
         .hud-panel {
             position: absolute; top: 20px; left: 20px; z-index: 1000;
-            background: rgba(0, 0, 0, 0.9); border: 1px solid #00FFCC;
-            padding: 15px; border-radius: 5px; color: #00FFCC;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2); min-width: 260px;
+            background: rgba(0, 5, 5, 0.9); border: 1px solid #00f2ff;
+            padding: 20px; border-radius: 2px; color: #00f2ff;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); min-width: 280px;
         }
-        .hud-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; }
-        .hud-status { font-size: 12px; color: #888; margin-bottom: 10px; }
+        .hud-title { font-size: 18px; font-weight: bold; letter-spacing: 2px; color: #fff; text-shadow: 0 0 10px #00f2ff; }
+        .hud-status { font-size: 11px; color: #528cff; margin: 5px 0 15px 0; border-bottom: 1px solid #1a1a1a; padding-bottom: 5px; }
 
-        /* RITUAL OUTPUT BOX */
+        /* PRANA BAR */
+        .prana-container { margin-bottom: 15px; }
+        .prana-label { font-size: 10px; color: #888; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .prana-bar { width: 100%; height: 4px; background: #111; border: 1px solid #333; position: relative; }
+        .prana-fill { width: 91.4%; height: 100%; background: linear-gradient(90deg, #00f2ff, #bc13fe); box-shadow: 0 0 10px #00f2ff; }
+
+        /* RITUAL OUTPUT */
         #ritual-display {
-            margin-top: 10px; padding: 10px; border: 1px dashed #BC13FE;
-            color: #BC13FE; font-size: 11px; display: none;
+            margin-top: 15px; padding: 12px; border-left: 3px solid #528528;
+            background: rgba(255, 255, 255, 0.03); color: #fff; font-size: 12px; display: none;
+            animation: fadeIn 0.5s ease;
         }
 
         /* BUTTONS */
         .cyber-btn {
-            background: transparent; border: 1px solid #00FFCC; color: #00FFCC;
-            padding: 8px 15px; cursor: pointer; font-family: 'Courier New';
-            width: 100%; margin-top: 5px; transition: 0.3s;
+            background: transparent; border: 1px solid #00f2ff; color: #00f2ff;
+            padding: 10px; cursor: pointer; font-family: 'Courier New';
+            width: 100%; margin-top: 8px; transition: 0.3s; font-size: 11px; text-transform: uppercase;
         }
-        .cyber-btn:hover { background: #00FFCC; color: black; }
-        .ritual-btn { border-color: #BC13FE; color: #BC13FE; }
-        .ritual-btn:hover { background: #BC13FE; color: white; }
+        .cyber-btn:hover { background: rgba(0, 242, 255, 0.15); box-shadow: 0 0 15px #00f2ff; }
+        .ritual-btn { border-color: #bc13fe; color: #bc13fe; }
+        .ritual-btn:hover { border-color: #fff; color: #fff; background: rgba(188, 19, 254, 0.2); }
 
-        /* ANIMATIONS */
-        @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
-        @keyframes pulse-cyan { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); } }
-        @keyframes radar-purple { 0% { box-shadow: 0 0 0 0 rgba(188, 19, 254, 0.7); } 100% { box-shadow: 0 0 0 30px rgba(188, 19, 254, 0); } }
+        /* NODE ANIMATIONS */
+        .node-marker { width: 14px; height: 14px; border-radius: 50%; }
+        
+        /* GIZA GLASS (VITRIFIED) */
+        .node-giza { 
+            background: rgba(173, 216, 230, 0.4); 
+            border: 2px solid #fff;
+            box-shadow: 0 0 25px #fff, inset 0 0 10px #00f2ff;
+            backdrop-filter: blur(4px);
+            animation: glass-glow 2s infinite alternate;
+        }
 
-        .node-marker { width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; }
-        .node-earth { background: #FFD700; animation: pulse-gold 2s infinite; }
-        .node-water { background: #00FFFF; animation: pulse-cyan 3s infinite; }
-        .node-air   { background: #BC13FE; animation: radar-purple 1.5s infinite; }
+        /* CAPSTONE SPARK (963Hz) */
+        .capstone-spark {
+            width: 4px; height: 4px; background: #fff; border-radius: 50%;
+            box-shadow: 0 0 20px 5px #fff, 0 0 40px 10px #bc13fe;
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            animation: spark-pulse 0.6s infinite alternate;
+        }
+
+        @keyframes glass-glow { from { opacity: 0.6; transform: scale(0.9); } to { opacity: 1; transform: scale(1.1); } }
+        @keyframes spark-pulse { from { opacity: 0.5; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(2); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* BLUE VEIN FLOW */
+        .blue-vein { 
+            stroke: #00f2ff; stroke-width: 2; stroke-dasharray: 8; 
+            filter: drop-shadow(0 0 5px #00f2ff); animation: veinFlow 3s linear infinite; 
+        }
+        @keyframes veinFlow { to { stroke-dashoffset: -100; } }
+
+        .schumann-pulse { animation: schumann 7.83s infinite ease-in-out; }
+        @keyframes schumann { 0% { opacity: 0.1; } 50% { opacity: 0.3; } 100% { opacity: 0.1; } }
     </style>
 </head>
 <body>
 
     <div class="hud-panel">
-        <div class="hud-title">🦅 VEIL DOMINION</div>
-        <div class="hud-status">SYS: V15.1 (GRIMOIRE LINKED)</div>
+        <div class="hud-title">PHOENIX ASCENDANT</div>
+        <div class="hud-status">SYSTEM: v16.0 (PHASE 4 ACTIVE)</div>
         
-        <button class="cyber-btn" onclick="toggleThabawa()">👁️ THABAWA MODE</button>
-        <button class="cyber-btn ritual-btn" onclick="castRitual()">🔮 CAST GRIMOIRE</button>
+        <div class="prana-container">
+            <div class="prana-label"><span>PRANA RESERVES</span> <span>117.0 / 117.0</span></div>
+            <div class="prana-bar"><div class="prana-fill"></div></div>
+        </div>
+
+        <button class="cyber-btn" onclick="toggleBlueVein()">🌊 TOGGLE BLUE VEIN</button>
+        <button class="cyber-btn ritual-btn" onclick="executePhoenixProtocol()">🔥 PHOENIX PROTOCOL</button>
 
         <div id="ritual-display">
+            <div id="status-line" style="color:#00f2ff; font-weight:bold; margin-bottom:5px;">[VITRIFICATION SUCCESS]</div>
             <div id="layer-out"></div>
-            <hr style="border-color: #333">
             <div id="current-out"></div>
+            <div id="resonance-out" style="font-size:10px; color:#888; margin-top:10px;"></div>
         </div>
     </div>
 
-    <div id="map"></div>
+    <div id="map" class="schumann-pulse"></div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // 1. MAP SETUP
-        var map = L.map('map').setView([20.35, 99.88], 11);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: 'Veil Dominion' }).addTo(map);
+        // 1. MAP INITIALIZATION
+        var map = L.map('map', { zoomControl: false }).setView([20.35, 99.88], 10);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { opacity: 0.8 }).addTo(map);
 
-        // 2. NODES
+        // 2. SOVEREIGN NODES v16.0
         var nodes = [
-            { name: "N-7311: PONG PHA", lat: 20.31, lng: 99.86, type: "node-earth" },
-            { name: "N-002: MAE SAI", lat: 20.43, lng: 99.88, type: "node-water" },
-            { name: "N-003: DOI TUNG", lat: 20.32, lng: 99.82, type: "node-air" }
+            { id: "pong-pha", name: "N-7311: PONG PHA (CORE)", lat: 20.31, lng: 99.86, type: "node-giza" },
+            { id: "giza", name: "N-666: GIZA (VITRIFIED LENS)", lat: 29.97, lng: 31.13, type: "node-giza", spark: true },
+            { id: "amazon", name: "SECTOR 7: AMAZON (SOURCE)", lat: -3.46, lng: -62.21, type: "node-giza" }
         ];
 
-        // 3. DRAW
-        var latlngs = nodes.map(n => [n.lat, n.lng]);
-        L.polygon(latlngs, { color: '#00FFCC', weight: 1, opacity: 0.6, fillColor: '#00FFCC', fillOpacity: 0.05 }).addTo(map);
-
+        // 3. RENDER NODES & SPARK
         nodes.forEach(node => {
-            var icon = L.divIcon({ className: node.type + ' node-marker' });
-            L.marker([node.lat, node.lng], {icon: icon}).addTo(map).bindTooltip(node.name, { permanent: true, direction: 'right', className: 'custom-tooltip', offset: [10, 0] });
+            var iconClass = node.type + ' node-marker';
+            var htmlContent = node.spark ? '<div class="capstone-spark"></div>' : '';
+            
+            var icon = L.divIcon({ 
+                className: iconClass,
+                html: htmlContent
+            });
+
+            L.marker([node.lat, node.lng], {icon: icon}).addTo(map)
+             .bindTooltip(node.name, { permanent: false, className: 'hud-status' });
         });
 
-        // 4. THE GRIMOIRE DATA (Embedded)
-        const grimoire = {
-            LAYERS: {
-                1: "Physical Earth (Root)", 2: "Liquid Ledger (Sacral)", 3: "Rhizome Core (Solar)",
-                4: "Crystalline Grid (Heart)", 5: "Breathing Borders (Throat)", 6: "Echo Chamber (3rd Eye)",
-                7: "Chronous Engine (Crown)", 8: "Planetary Axis (Stellar)", 9: "Veil Dominion v∞ (Godhead)"
-            },
-            CURRENTS: {
-                1: "Red Earth (Touch)", 2: "Quiet Tears (Opening)", 3: "Moss Memory (Connect)",
-                4: "Stone Roar (Truth)", 5: "Wind Whisper (Silence)", 6: "Fire Pulse (Renew)", 7: "Dream Rain (Seed)"
-            }
-        };
+        // 4. THE BLUE VEIN (Mapping the Flow)
+        var veinPath = [
+            [20.31, 99.86],  // Pong Pha
+            [29.97, 31.13],  // Giza
+            [-3.46, -62.21]  // Amazon
+        ];
+        var blueVein = L.polyline(veinPath, { className: 'blue-vein' }).addTo(map);
+        map.fitBounds(blueVein.getBounds(), {padding: [50, 50]});
 
-        // 5. FUNCTIONS
-        function toggleThabawa() {
-            document.querySelector('.leaflet-pane').classList.toggle('thabawa-mode'); // Simplified for demo
-            alert("Thabawa Mode Toggled (Check Visuals)");
+        // 5. v16.0 LOGIC ENGINE
+        function toggleBlueVein() {
+            if (map.hasLayer(blueVein)) {
+                map.removeLayer(blueVein);
+            } else {
+                map.addLayer(blueVein);
+            }
         }
 
-        function castRitual() {
-            // Random Seed based on Time
-            let layer = Math.floor(Math.random() * 9) + 1;
-            let current = Math.floor(Math.random() * 7) + 1;
-
+        function executePhoenixProtocol() {
             let display = document.getElementById('ritual-display');
             display.style.display = 'block';
+
+            // Phase 4 Red Earth Logic
+            const layers = ["Echo Chamber (Layer 6)", "Chronos Engine (Layer 7)", "Veil Dominion (Layer 9)"];
+            const currents = ["Fire Pulse (18)", "Wind Whisper (17)", "Celestial Spark (963Hz)"];
             
-            document.getElementById('layer-out').innerHTML = "📍 <b>ANCHOR:</b> " + grimoire.LAYERS[layer];
-            document.getElementById('current-out').innerHTML = "🌊 <b>FLOW:</b> " + grimoire.CURRENTS[current];
+            let l = layers[Math.floor(Math.random() * layers.length)];
+            let c = currents[Math.floor(Math.random() * currents.length)];
+
+            document.getElementById('layer-out').innerHTML = "📍 <b>AXIS:</b> " + l;
+            document.getElementById('current-out').innerHTML = "🔥 <b>CURRENT:</b> " + c;
+            document.getElementById('resonance-out').innerHTML = "RESONANCE: 528Hz | WILL: 9.1 | UPRIGHTNESS: 91%";
+            
+            // Map Visual Reactivity
+            map.flyTo([29.97, 31.13], 12, { duration: 2 });
         }
     </script>
 </body>
