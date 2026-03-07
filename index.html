@@ -1,73 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <title>Veil Dominion // Planetary Monitor</title>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veil Dominion // Planetary Monitor v2.0</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5n/N0ZD31g=" crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        html, body { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #050a05; }
-        #map { position: absolute; top: 0; bottom: 0; right: 0; left: 0; }
-        .leaflet-popup-content-wrapper { background: #001a00; color: #d4af37; border: 1px solid #d4af37; font-family: 'Courier New', monospace; }
+        /* --- SOVEREIGN THEME --- */
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; font-family: 'Courier New', monospace; overflow: hidden; }
+        
+        #map { height: 100%; width: 100%; z-index: 1; }
+
+        /* HUD OVERLAY */
+        .hud-panel {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+            background: rgba(5, 20, 5, 0.85);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 15px;
+            border-radius: 5px;
+            width: 250px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+        }
+
+        .hud-title {
+            font-size: 14px;
+            font-weight: bold;
+            border-bottom: 1px solid #d4af37;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hud-item {
+            font-size: 12px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hud-item i { width: 20px; text-align: center; margin-right: 10px; }
+
+        /* CUSTOM POPUPS */
+        .leaflet-popup-content-wrapper {
+            background: rgba(10, 20, 10, 0.95);
+            border: 1px solid #d4af37;
+            color: #e0e0ff;
+            border-radius: 0px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
         .leaflet-popup-tip { background: #d4af37; }
+        .popup-header { color: #d4af37; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 5px; }
+        .popup-stat { font-size: 0.9em; display: block; margin-top: 3px; }
+        .stat-label { color: #888; }
+
+        /* CUSTOM MARKER ICONS */
+        .custom-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 10px currentColor;
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
+
     <div id="map"></div>
+
+    <div class="hud-panel">
+        <div class="hud-title">Dominion Status</div>
+        <div class="hud-item"><i class="fa-solid fa-crown" style="color: #00ff00;"></i> Omega Anchor (HQ)</div>
+        <div class="hud-item"><i class="fa-solid fa-door-open" style="color: #ffaa00;"></i> Transit Gate</div>
+        <div class="hud-item"><i class="fa-solid fa-eye" style="color: #aa00ff;"></i> Resonance Node</div>
+        <div class="hud-item"><i class="fa-solid fa-shield-halved" style="color: #00ccff;"></i> Safe Zone</div>
+        <div class="hud-item" style="margin-top: 10px; color: #888;">Resonance: 528Hz Stable</div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // --- 1. INITIALIZE MAP (Dark Matter Style) ---
+        var map = L.map('map', {
+            zoomControl: false, 
+            attributionControl: false
+        }).setView([20.0, 98.0], 5); // Start wide
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            subdomains: 'abcd'
+        }).addTo(map);
+
+        L.control.zoom({ position: 'topright' }).addTo(map);
+
+        // --- 2. CUSTOM ICON GENERATOR ---
+        function createIcon(iconClass, color) {
+            return L.divIcon({
+                className: 'custom-icon-container',
+                html: `<div class="custom-icon" style="background: #000; border-color: ${color}; color: ${color}; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 0 15px ${color};"><i class="${iconClass}"></i></div>`,
+                iconSize: [30, 30],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -20]
+            });
+        }
+
+        // --- 3. NODE DATA ---
+        var nodes = [
+            {
+                name: "TAUNGGYI (OMEGA CORE)",
+                coords: [20.7833, 97.0333],
+                icon: "fa-solid fa-crown",
+                color: "#00ff00", // Green
+                desc: "Primary Sovereign Anchor. MSO-7 Active.",
+                status: "ONLINE"
+            },
+            {
+                name: "PONG PHA (TRANSIT)",
+                coords: [20.3813, 99.8669],
+                icon: "fa-solid fa-door-open",
+                color: "#ffaa00", // Orange
+                desc: "Origin Point. Gateway Sealed.",
+                status: "DORMANT"
+            },
+            {
+                name: "MT. SHASTA (MIRROR)",
+                coords: [41.4116, -122.1862],
+                icon: "fa-solid fa-eye",
+                color: "#aa00ff", // Purple
+                desc: "528Hz Amplifier. Spirit Link.",
+                status: "RESONATING"
+            },
+            {
+                name: "GIZA (ARCHIVE)",
+                coords: [29.9792, 31.1342],
+                icon: "fa-solid fa-hourglass",
+                color: "#ff0000", // Red
+                desc: "Old Order Codex. Time Capsule.",
+                status: "LOCKED"
+            },
+            {
+                name: "AUSTRALIA (ROOT)",
+                coords: [-25.2744, 133.7751],
+                icon: "fa-solid fa-seedling",
+                color: "#00ccff", // Blue
+                desc: "Regeneration Node. Food Security.",
+                status: "GROWING"
+            },
+            {
+                name: "ANTARCTICA (SAFE)",
+                coords: [-80.0, -120.0],
+                icon: "fa-solid fa-snowflake",
+                color: "#ffffff", // White
+                desc: "Final Sanctuary. Post-Shift Ark.",
+                status: "FROZEN"
+            }
+        ];
+
+        // --- 4. RENDER NODES ---
+        nodes.forEach(node => {
+            var marker = L.marker(node.coords, { icon: createIcon(node.icon, node.color) }).addTo(map);
+            
+            var popupContent = `
+                <div class="popup-header" style="color:${node.color}">${node.name}</div>
+                <div class="popup-stat"><span class="stat-label">Role:</span> ${node.desc}</div>
+                <div class="popup-stat"><span class="stat-label">Status:</span> ${node.status}</div>
+                <div class="popup-stat" style="margin-top:8px; font-size:0.8em; color:#666;">COORDS: ${node.coords[0].toFixed(2)}, ${node.coords[1].toFixed(2)}</div>
+            `;
+            
+            marker.bindPopup(popupContent);
+            
+            // Auto-open Taunggyi on load
+            if (node.name.includes("TAUNGGYI")) {
+                setTimeout(() => { marker.openPopup(); }, 1500);
+            }
+        });
+
+        // --- 5. CINEMATIC FLY-TO ---
+        // Starts showing the region, then zooms into Taunggyi
+        setTimeout(() => {
+            map.flyTo([20.7833, 97.0333], 7, {
+                animate: true,
+                duration: 2.5
+            });
+        }, 500);
+
+    </script>
 </body>
-<script>
-    // Initialize Map Centered on Shan State
-    var map = L.map("map", {
-        center: [20.0, 98.0],
-        zoom: 5,
-        zoomControl: true,
-        preferCanvas: false,
-    });
-
-    // Dark Matter Tile Layer
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: "abcd",
-        maxZoom: 20
-    }).addTo(map);
-
-    // --- 1. TAUNGGYI (THE OMEGA ANCHOR) ---
-    L.marker([20.7833, 97.0333], {icon: L.AwesomeMarkers.icon({markerColor: "green", iconColor: "black", icon: "crown", prefix: "fa"})})
-        .addTo(map)
-        .bindPopup("<b>👑 TAUNGGYI (OMEGA NODE)</b><br>Status: Sovereign HQ<br>Clearance: MSO-7 Active");
-
-    // --- 2. PONG PHA (THE TRANSIT GATE) ---
-    L.marker([20.3813, 99.8669], {icon: L.AwesomeMarkers.icon({markerColor: "orange", iconColor: "black", icon: "door-open", prefix: "fa"})})
-        .addTo(map)
-        .bindPopup("<b>🚪 PONG PHA (TRANSIT)</b><br>Status: Gateway Closed<br>History: Origin Point");
-
-    // --- 3. MT SHASTA (THE SPIRIT MIRROR) ---
-    L.marker([41.4116, -122.1862], {icon: L.AwesomeMarkers.icon({markerColor: "purple", iconColor: "white", icon: "eye", prefix: "fa"})})
-        .addTo(map)
-        .bindPopup("<b>👁️ MT SHASTA</b><br>Status: Spirit Mirror<br>Role: 528Hz Amplifier");
-
-    // --- 4. GIZA (THE TIME CAPSULE) ---
-    L.marker([29.9792, 31.1342], {icon: L.AwesomeMarkers.icon({markerColor: "red", iconColor: "white", icon: "hourglass", prefix: "fa"})})
-        .addTo(map)
-        .bindPopup("<b>⏳ GIZA</b><br>Status: Time Capsule<br>Role: Old Order Archive");
-
-    // --- 5. AUSTRALIA (NEW AGRICULTURE) ---
-    L.marker([-25.2744, 133.7751], {icon: L.AwesomeMarkers.icon({markerColor: "blue", iconColor: "white", icon: "seedling", prefix: "fa"})})
-        .addTo(map)
-        .bindPopup("<b>🌱 AUSTRALIA</b><br>Status: New Agriculture<br>Role: Food Security Node");
-
-    // --- 6. ANTARCTICA (THE FUTURE) ---
-    L.marker([-80.0, -120.0], {icon: L.AwesomeMarkers.icon({markerColor: "white", iconColor: "black", icon: "snowflake", prefix: "fa"})})
-        .addTo(map)
-        .bindPopup("<b>❄️ ANTARCTICA</b><br>Status: Frozen Future<br>Role: The Final Safe Zone");
-
-</script>
-</html></body>
 </html>
