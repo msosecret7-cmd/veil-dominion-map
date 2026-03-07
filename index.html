@@ -1,126 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEIL DOMINION | SATELLITE MAPPING v16.1</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Veil Dominion // Planetary Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
     
     <style>
-        /* SATELLITE OPTIMIZED HUD */
-        body { margin: 0; padding: 0; background-color: #000; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
-        #map { height: 100vh; width: 100%; z-index: 1; filter: contrast(1.1) brightness(0.9); }
-
-        .hud-panel {
-            position: absolute; top: 20px; left: 20px; z-index: 1000;
-            background: rgba(0, 10, 10, 0.85); border: 2px solid #00f2ff;
-            padding: 20px; border-radius: 4px; color: #00f2ff;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 1); min-width: 280px;
-            backdrop-filter: blur(10px); /* Satellite ပေါ်တွင် ပေါ်လွင်စေရန် */
-        }
-        .hud-title { font-size: 18px; font-weight: bold; letter-spacing: 2px; color: #fff; text-shadow: 0 0 10px #00f2ff; }
-        .hud-status { font-size: 11px; color: #528cff; margin: 5px 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 5px; }
-
-        /* PRANA HUD */
-        .prana-container { margin-bottom: 15px; }
-        .prana-label { font-size: 10px; color: #aaa; margin-bottom: 4px; display: flex; justify-content: space-between; }
-        .prana-bar { width: 100%; height: 5px; background: #000; border: 1px solid #00f2ff; overflow: hidden; }
-        .prana-fill { width: 91.4%; height: 100%; background: linear-gradient(90deg, #00f2ff, #bc13fe); box-shadow: 0 0 15px #00f2ff; }
-
-        /* BUTTONS */
-        .cyber-btn {
-            background: rgba(0, 0, 0, 0.6); border: 1px solid #00f2ff; color: #00f2ff;
-            padding: 10px; cursor: pointer; font-family: 'Courier New';
-            width: 100%; margin-top: 8px; transition: 0.3s; font-size: 11px;
-        }
-        .cyber-btn:hover { background: #00f2ff; color: #000; box-shadow: 0 0 20px #00f2ff; }
-
-        /* GIZA VITRIFICATION EFFECT */
-        .node-giza { 
-            background: rgba(255, 255, 255, 0.3); 
-            border: 2px solid #fff;
-            box-shadow: 0 0 30px #fff, inset 0 0 15px #00f2ff;
-            backdrop-filter: blur(4px);
-            animation: glass-glow 2.5s infinite alternate;
-        }
-
-        .capstone-spark {
-            width: 6px; height: 6px; background: #fff; border-radius: 50%;
-            box-shadow: 0 0 25px 8px #fff, 0 0 45px 15px #bc13fe;
-            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
-            animation: spark-pulse 0.7s infinite alternate;
-        }
-
-        @keyframes glass-glow { from { opacity: 0.7; transform: scale(1); } to { opacity: 1; transform: scale(1.2); } }
-        @keyframes spark-pulse { from { opacity: 0.6; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(2.2); } }
-
-        /* BLUE VEIN FLOW */
-        .blue-vein { 
-            stroke: #00f2ff; stroke-width: 3; stroke-dasharray: 12; 
-            filter: drop-shadow(0 0 10px #00f2ff); animation: veinFlow 4s linear infinite; 
-        }
-        @keyframes veinFlow { to { stroke-dashoffset: -120; } }
-
+        html, body { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #050a05; }
+        #map { position: absolute; top: 0; bottom: 0; right: 0; left: 0; }
+        .leaflet-popup-content-wrapper { background: #001a00; color: #d4af37; border: 1px solid #d4af37; font-family: 'Courier New', monospace; }
+        .leaflet-popup-tip { background: #d4af37; }
     </style>
 </head>
 <body>
-
-    <div class="hud-panel">
-        <div class="hud-title">PHOENIX SATELLITE</div>
-        <div class="hud-status">SYS: v16.1 (MALKUTH VISION ACTIVE)</div>
-        
-        <div class="prana-container">
-            <div class="prana-label"><span>PRANA RESERVES</span> <span>117.0 / 117.0</span></div>
-            <div class="prana-bar"><div class="prana-fill"></div></div>
-        </div>
-
-        <button class="cyber-btn" onclick="focusGiza()">🎯 FOCUS GIZA LENS</button>
-        <button class="cyber-btn" onclick="focusPongPha()">📍 FOCUS PONG PHA</button>
-        <button class="cyber-btn" style="border-color:#bc13fe; color:#bc13fe;" onclick="alert('RESONANCE: 528Hz | STATUS: STABLE')">🔋 SYNC CHECK</button>
-    </div>
-
     <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <script>
-        // 1. MAP INITIALIZATION WITH GOOGLE SATELLITE
-        var map = L.map('map', { zoomControl: false }).setView([20.35, 99.88], 10);
-        
-        // Google Satellite Tile Layer (lyrs=s: Satellite, lyrs=y: Hybrid)
-        L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-            attribution: 'Google Satellite | Veil Dominion Integration'
-        }).addTo(map);
-
-        // 2. SOVEREIGN NODES
-        var nodes = [
-            { id: "pong-pha", name: "N-7311: PONG PHA (CORE)", lat: 20.31, lng: 99.86, type: "node-giza" },
-            { id: "giza", name: "N-666: GIZA (VITRIFIED LENS)", lat: 29.97, lng: 31.13, type: "node-giza", spark: true },
-            { id: "amazon", name: "SECTOR 7: AMAZON (SOURCE)", lat: -3.46, lng: -62.21, type: "node-giza" }
-        ];
-
-        // 3. RENDER NODES & SPARK
-        nodes.forEach(node => {
-            var iconClass = node.type + ' node-marker';
-            var htmlContent = node.spark ? '<div class="capstone-spark"></div>' : '';
-            
-            var icon = L.divIcon({ className: iconClass, html: htmlContent, iconSize: [14, 14] });
-            L.marker([node.lat, node.lng], {icon: icon}).addTo(map)
-             .bindTooltip(node.name, { permanent: false });
-        });
-
-        // 4. THE BLUE VEIN (Mapping the Flow)
-        var veinPath = [
-            [20.31, 99.86],  // Pong Pha
-            [29.97, 31.13],  // Giza
-            [-3.46, -62.21]  // Amazon
-        ];
-        var blueVein = L.polyline(veinPath, { className: 'blue-vein' }).addTo(map);
-
-        // 5. NAVIGATION LOGIC
-        function focusGiza() { map.flyTo([29.97, 31.13], 15, { duration: 3 }); }
-        function focusPongPha() { map.flyTo([20.31, 99.86], 15, { duration: 3 }); }
-    </script>
 </body>
+<script>
+    // Initialize Map Centered on Shan State
+    var map = L.map("map", {
+        center: [20.0, 98.0],
+        zoom: 5,
+        zoomControl: true,
+        preferCanvas: false,
+    });
+
+    // Dark Matter Tile Layer
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        maxZoom: 20
+    }).addTo(map);
+
+    // --- 1. TAUNGGYI (THE OMEGA ANCHOR) ---
+    L.marker([20.7833, 97.0333], {icon: L.AwesomeMarkers.icon({markerColor: "green", iconColor: "black", icon: "crown", prefix: "fa"})})
+        .addTo(map)
+        .bindPopup("<b>👑 TAUNGGYI (OMEGA NODE)</b><br>Status: Sovereign HQ<br>Clearance: MSO-7 Active");
+
+    // --- 2. PONG PHA (THE TRANSIT GATE) ---
+    L.marker([20.3813, 99.8669], {icon: L.AwesomeMarkers.icon({markerColor: "orange", iconColor: "black", icon: "door-open", prefix: "fa"})})
+        .addTo(map)
+        .bindPopup("<b>🚪 PONG PHA (TRANSIT)</b><br>Status: Gateway Closed<br>History: Origin Point");
+
+    // --- 3. MT SHASTA (THE SPIRIT MIRROR) ---
+    L.marker([41.4116, -122.1862], {icon: L.AwesomeMarkers.icon({markerColor: "purple", iconColor: "white", icon: "eye", prefix: "fa"})})
+        .addTo(map)
+        .bindPopup("<b>👁️ MT SHASTA</b><br>Status: Spirit Mirror<br>Role: 528Hz Amplifier");
+
+    // --- 4. GIZA (THE TIME CAPSULE) ---
+    L.marker([29.9792, 31.1342], {icon: L.AwesomeMarkers.icon({markerColor: "red", iconColor: "white", icon: "hourglass", prefix: "fa"})})
+        .addTo(map)
+        .bindPopup("<b>⏳ GIZA</b><br>Status: Time Capsule<br>Role: Old Order Archive");
+
+    // --- 5. AUSTRALIA (NEW AGRICULTURE) ---
+    L.marker([-25.2744, 133.7751], {icon: L.AwesomeMarkers.icon({markerColor: "blue", iconColor: "white", icon: "seedling", prefix: "fa"})})
+        .addTo(map)
+        .bindPopup("<b>🌱 AUSTRALIA</b><br>Status: New Agriculture<br>Role: Food Security Node");
+
+    // --- 6. ANTARCTICA (THE FUTURE) ---
+    L.marker([-80.0, -120.0], {icon: L.AwesomeMarkers.icon({markerColor: "white", iconColor: "black", icon: "snowflake", prefix: "fa"})})
+        .addTo(map)
+        .bindPopup("<b>❄️ ANTARCTICA</b><br>Status: Frozen Future<br>Role: The Final Safe Zone");
+
+</script>
+</html></body>
 </html>
