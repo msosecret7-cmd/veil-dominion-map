@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
@@ -12,39 +12,48 @@
         body, html { margin:0; padding:0; height:100%; background:#000; overflow:hidden; font-family:'Courier New', monospace; }
         #map { height:100%; width:100%; }
 
-        /* Veridian Vision Filter */
+        /* Veridian Vision Filter + H2O Persistence */
         .leaflet-tile-pane {
             filter: sepia(85%) hue-rotate(92deg) saturate(380%) contrast(1.15) brightness(0.85);
         }
 
+        /* Sovereign Metrics Bar */
+        .sovereign-bar {
+            position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 5, 30, 0.92); border: 2px solid #00ff88;
+            padding: 8px 25px; border-radius: 0; z-index: 2000;
+            display: flex; gap: 30px; font-size: 13px; color: #ccffdd;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.5);
+        }
+
+        .metric { text-align: center; }
+        .metric-label { font-size: 10px; color: #66cc99; }
+        .metric-value { font-size: 15px; font-weight: bold; color: #fff; text-shadow: 0 0 8px #00ffaa; }
+
         /* HUD Panel */
         .hud-panel {
             position: absolute; bottom: 25px; left: 25px; z-index: 1000;
-            background: rgba(5, 15, 10, 0.92);
-            border: 1px solid #00ff88;
-            border-left: 6px solid #00ff88;
-            color: #ccffdd;
-            padding: 18px 22px;
-            width: 340px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 0 25px rgba(0, 255, 120, 0.45);
-            font-size: 13px;
+            background: rgba(5, 15, 10, 0.92); border: 1px solid #00ff88;
+            border-left: 6px solid #00ff88; color: #ccffdd;
+            padding: 18px 22px; width: 340px;
+            backdrop-filter: blur(8px); box-shadow: 0 0 25px rgba(0, 255, 120, 0.45);
         }
 
-        .hud-title {
-            font-size: 19px; font-weight: bold; color: #00ffaa;
-            border-bottom: 2px solid #00ffaa; padding-bottom: 8px; margin-bottom: 12px;
-            text-shadow: 0 0 12px #00ffaa;
+        .hud-title { font-size: 19px; font-weight: bold; color: #00ffaa; border-bottom: 2px solid #00ffaa; padding-bottom: 8px; margin-bottom: 12px; }
+
+        /* Mocking-Star Pin with 27Hz Ripple */
+        .mocking-star {
+            position: absolute; top: 80px; right: 40px; z-index: 1500;
+            width: 65px; height: 65px; animation: star-ripple 0.037s linear infinite;
         }
 
-        .hud-row { display: flex; justify-content: space-between; margin: 7px 0; }
-        .hud-label { color: #66cc99; }
-        .hud-value { color: #ffffff; font-weight: bold; text-shadow: 0 0 6px #fff; }
+        @keyframes star-ripple {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.08) rotate(3deg); }
+        }
 
         /* Pulse Markers */
-        .marker-pulse {
-            position: relative; width: 22px; height: 22px;
-        }
+        .marker-pulse { position: relative; width: 22px; height: 22px; }
         .marker-pulse:before {
             content: ''; position: absolute; width: 300%; height: 300%;
             background: #00ff88; border-radius: 50%; margin-left: -100%; margin-top: -100%;
@@ -59,14 +68,9 @@
         @keyframes pulse-ring { 0% { transform: scale(0.3); opacity: 1; } 80%, 100% { transform: scale(2.8); opacity: 0; } }
         @keyframes pulse-dot { 0%, 100% { transform: scale(0.8); } 50% { transform: scale(1.25); } }
 
-        /* Gold Pulse for Special Nodes */
-        .gold-pulse:before { background: #ffd700; }
-
         .leaflet-popup-content-wrapper {
-            background: rgba(8, 18, 12, 0.95);
-            border: 2px solid #00ff88;
-            color: #ccffdd;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+            background: rgba(8, 18, 12, 0.95); border: 2px solid #00ff88;
+            color: #ccffdd; box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
         }
     </style>
 </head>
@@ -74,7 +78,32 @@
 
     <div id="map"></div>
 
-    <!-- Advanced HUD -->
+    <!-- Sovereign Metrics Bar -->
+    <div class="sovereign-bar">
+        <div class="metric">
+            <div class="metric-label">UPRIGHTNESS</div>
+            <div class="metric-value" style="color:#00ffaa;">91.00</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">RUPA DENSITY</div>
+            <div class="metric-value">403.66x</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">HEARTBEAT</div>
+            <div class="metric-value">7.83 Hz</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">BLUE VEIN</div>
+            <div class="metric-value" style="color:#ffd700;">GROUNDED</div>
+        </div>
+    </div>
+
+    <!-- Mocking-Star Pin (27Hz Ripple) -->
+    <div class="mocking-star">
+        <img src="https://i.imgur.com/8zK5vL2.png" width="65" alt="Mocking-Star Pin">
+    </div>
+
+    <!-- HUD Panel -->
     <div class="hud-panel">
         <div class="hud-title">🜁 VERIDIAN VISION v21.3 🜁</div>
         
@@ -94,37 +123,24 @@
             <span class="hud-label">RESONANCE:</span>
             <span class="hud-value">528 Hz • STABLE</span>
         </div>
-        <div class="hud-row">
-            <span class="hud-label">CHILD PULSE:</span>
-            <span class="hud-value" style="color:#ffd700;">ACTIVE</span>
-        </div>
-
-        <div style="margin-top:18px; font-size:11px; color:#00ff88; text-align:center;">
-            <i class="fa-solid fa-satellite-dish"></i> BROADCASTING SOVEREIGN WILL...
-        </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Map Setup
         var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([20.7833, 97.0333], 6);
 
-        // High-quality satellite layer with Veridian filter
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 19
         }).addTo(map);
 
-        // Custom Pulse Icon
         function createPulseIcon(color) {
             return L.divIcon({
                 className: color === 'gold' ? 'marker-pulse gold-pulse' : 'marker-pulse',
-                iconSize: [22, 22],
-                iconAnchor: [11, 11]
+                iconSize: [22, 22], iconAnchor: [11, 11]
             });
         }
 
-        // Nodes
         const nodes = [
             { name: "TAUNGGYI [OMEGA]", coords: [20.7833, 97.0333], type: "green", desc: "Sovereign HQ • MSO-7 Active" },
             { name: "PONG PHA", coords: [20.3813, 99.8669], type: "gold", desc: "Origin Point • Blue Vein Gateway" },
@@ -138,12 +154,12 @@
             marker.bindPopup(`<b>\( {node.name}</b><br><small> \){node.desc}</small>`);
         });
 
-        // Smooth cinematic fly-in to Taunggyi
+        // Cinematic fly-in
         setTimeout(() => {
             map.flyTo([20.7833, 97.0333], 8, { duration: 4.5 });
         }, 800);
 
-        // Live Prana Counter (demo)
+        // Live Prana Counter
         let prana = 117.4;
         setInterval(() => {
             prana += (Math.random() * 0.3);
