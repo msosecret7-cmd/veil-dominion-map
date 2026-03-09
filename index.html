@@ -1,242 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veil Dominion // Veridian Vision v21.3</title>
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5n/N0ZD31g=" crossorigin=""/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* --- THE VERIDIAN MATRIX THEME --- */
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; font-family: 'Courier New', monospace; overflow: hidden; }
-        
-        #map { height: 100%; width: 100%; z-index: 1; background: #000; }
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* 🔥 THE MAGIC: TURNING SATELLITE INTO GREEN VISION 🔥 */
+    <style>
+        body, html { margin:0; padding:0; height:100%; background:#000; overflow:hidden; font-family:'Courier New', monospace; }
+        #map { height:100%; width:100%; }
+
+        /* Veridian Vision Filter */
         .leaflet-tile-pane {
-            filter: sepia(100%) hue-rotate(90deg) saturate(350%) contrast(1.2) brightness(0.8);
-            -webkit-filter: sepia(100%) hue-rotate(90deg) saturate(350%) contrast(1.2) brightness(0.8);
+            filter: sepia(85%) hue-rotate(92deg) saturate(380%) contrast(1.15) brightness(0.85);
         }
 
-        /* HUD OVERLAY (Military Sci-Fi Style) */
+        /* HUD Panel */
         .hud-panel {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            z-index: 1000;
-            background: rgba(0, 20, 0, 0.85);
-            border: 1px solid #00ff66;
-            border-left: 5px solid #00ff66;
-            color: #00ff66;
-            padding: 20px;
-            width: 300px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 0 20px rgba(0, 255, 100, 0.4);
-            font-size: 12px;
-            text-transform: uppercase;
+            position: absolute; bottom: 25px; left: 25px; z-index: 1000;
+            background: rgba(5, 15, 10, 0.92);
+            border: 1px solid #00ff88;
+            border-left: 6px solid #00ff88;
+            color: #ccffdd;
+            padding: 18px 22px;
+            width: 340px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.45);
+            font-size: 13px;
         }
 
         .hud-title {
-            font-size: 18px;
-            font-weight: bold;
-            border-bottom: 2px solid #00ff66;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px #00ff66;
+            font-size: 19px; font-weight: bold; color: #00ffaa;
+            border-bottom: 2px solid #00ffaa; padding-bottom: 8px; margin-bottom: 12px;
+            text-shadow: 0 0 12px #00ffaa;
         }
 
-        .hud-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed #004400; padding-bottom: 5px; }
-        .hud-label { color: #44aa44; }
-        .hud-value { color: #fff; font-weight: bold; text-shadow: 0 0 5px #fff; }
+        .hud-row { display: flex; justify-content: space-between; margin: 7px 0; }
+        .hud-label { color: #66cc99; }
+        .hud-value { color: #ffffff; font-weight: bold; text-shadow: 0 0 6px #fff; }
 
-        /* 3D PULSING MARKERS */
-        @keyframes pulse-ring {
-            0% { transform: scale(0.33); opacity: 1; }
-            80%, 100% { transform: scale(2.5); opacity: 0; }
-        }
-        
-        @keyframes pulse-dot {
-            0% { transform: scale(0.8); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(0.8); }
-        }
-
+        /* Pulse Markers */
         .marker-pulse {
-            position: relative;
-            width: 20px;
-            height: 20px;
+            position: relative; width: 22px; height: 22px;
         }
-        
         .marker-pulse:before {
-            content: '';
-            position: relative;
-            display: block;
-            width: 300%;
-            height: 300%;
-            box-sizing: border-box;
-            margin-left: -100%;
-            margin-top: -100%;
-            border-radius: 45px;
-            background-color: #00ff66;
-            animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            content: ''; position: absolute; width: 300%; height: 300%;
+            background: #00ff88; border-radius: 50%; margin-left: -100%; margin-top: -100%;
+            animation: pulse-ring 2.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
-        
         .marker-pulse:after {
-            content: '';
-            position: absolute;
-            left: 0; 
-            top: 0;
-            display: block;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 0 8px rgba(0,0,0,.3);
-            animation: pulse-dot 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
+            content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+            background: #fff; border-radius: 50%; box-shadow: 0 0 12px #00ffaa;
+            animation: pulse-dot 2.2s infinite;
         }
 
-        .gold-pulse:before { background-color: #d4af37; }
-        
-        /* POPUP STYLING */
+        @keyframes pulse-ring { 0% { transform: scale(0.3); opacity: 1; } 80%, 100% { transform: scale(2.8); opacity: 0; } }
+        @keyframes pulse-dot { 0%, 100% { transform: scale(0.8); } 50% { transform: scale(1.25); } }
+
+        /* Gold Pulse for Special Nodes */
+        .gold-pulse:before { background: #ffd700; }
+
         .leaflet-popup-content-wrapper {
-            background: rgba(0, 20, 0, 0.9);
-            border: 2px solid #00ff66;
-            color: #ccffcc;
-            font-family: 'Courier New', monospace;
-            border-radius: 0;
-            box-shadow: 0 0 20px rgba(0, 255, 100, 0.5);
+            background: rgba(8, 18, 12, 0.95);
+            border: 2px solid #00ff88;
+            color: #ccffdd;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
         }
-        .leaflet-popup-tip { background: #00ff66; }
     </style>
 </head>
 <body>
 
     <div id="map"></div>
 
+    <!-- Advanced HUD -->
     <div class="hud-panel">
-        <div class="hud-title">SATELLITE UPLINK</div>
+        <div class="hud-title">🜁 VERIDIAN VISION v21.3 🜁</div>
         
         <div class="hud-row">
-            <span class="hud-label">TARGET:</span>
-            <span class="hud-value">TAUNGGYI [OMEGA]</span>
+            <span class="hud-label">NODE:</span>
+            <span class="hud-value">TAUNGGYI [OMEGA ANCHOR]</span>
         </div>
         <div class="hud-row">
             <span class="hud-label">MODE:</span>
-            <span class="hud-value" style="color:#00ff66;">VERIDIAN VISION (3D)</span>
+            <span class="hud-value" style="color:#00ffaa;">RESONANCE CASCADE</span>
         </div>
         <div class="hud-row">
-            <span class="hud-label">ALTITUDE:</span>
-            <span class="hud-value">LOW ORBIT</span>
+            <span class="hud-label">PRANA:</span>
+            <span class="hud-value" id="prana-display">117.4</span>
         </div>
         <div class="hud-row">
-            <span class="hud-label">SYNC:</span>
-            <span class="hud-value">100% COHERENT</span>
+            <span class="hud-label">RESONANCE:</span>
+            <span class="hud-value">528 Hz • STABLE</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label">CHILD PULSE:</span>
+            <span class="hud-value" style="color:#ffd700;">ACTIVE</span>
         </div>
 
-        <div style="margin-top: 15px; font-size: 10px; color: #00ff66; text-align: center;">
-            <i class="fa-solid fa-satellite-dish"></i> TRANSMITTING DATA STREAM...
+        <div style="margin-top:18px; font-size:11px; color:#00ff88; text-align:center;">
+            <i class="fa-solid fa-satellite-dish"></i> BROADCASTING SOVEREIGN WILL...
         </div>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // --- 1. INITIALIZE MAP ---
-        var map = L.map('map', {
-            zoomControl: false,
-            attributionControl: false,
-            center: [20.0, 98.0],
-            zoom: 5
-        });
+        // Map Setup
+        var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([20.7833, 97.0333], 6);
 
-        // --- 2. SATELLITE LAYER (Esri World Imagery) ---
-        // This provides the "Google Earth" look
+        // High-quality satellite layer with Veridian filter
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri',
             maxZoom: 19
         }).addTo(map);
 
-        L.control.zoom({ position: 'topright' }).addTo(map);
-
-        // --- 3. CREATE 3D PULSE ICONS ---
+        // Custom Pulse Icon
         function createPulseIcon(color) {
             return L.divIcon({
                 className: color === 'gold' ? 'marker-pulse gold-pulse' : 'marker-pulse',
-                iconSize: [20, 20],
-                iconAnchor: [10, 10],
-                popupAnchor: [0, -20]
+                iconSize: [22, 22],
+                iconAnchor: [11, 11]
             });
         }
 
-        // --- 4. NODE DATA ---
-        var nodes = [
-            {
-                name: "TAUNGGYI [OMEGA ANCHOR]",
-                coords: [20.7833, 97.0333],
-                type: "green",
-                desc: "Sovereign HQ. MSO-7 Active.",
-                status: "ONLINE"
-            },
-            {
-                name: "PONG PHA [TRANSIT]",
-                coords: [20.3813, 99.8669],
-                type: "gold",
-                desc: "Gateway Sealed. Origin Point.",
-                status: "DORMANT"
-            },
-            {
-                name: "AMAZON [SECTOR 7]",
-                coords: [-3.4653, -62.2159],
-                type: "green",
-                desc: "Veridian Rootsong. Bio-Server.",
-                status: "GROWING"
-            },
-            {
-                name: "GIZA [STATIC]",
-                coords: [29.9792, 31.1342],
-                type: "gold",
-                desc: "Old Order Archive. Monitored.",
-                status: "LOCKED"
-            },
-            {
-                name: "MT. SHASTA [LENS]",
-                coords: [41.4116, -122.1862],
-                type: "green",
-                desc: "528Hz Amplifier.",
-                status: "RESONATING"
-            }
+        // Nodes
+        const nodes = [
+            { name: "TAUNGGYI [OMEGA]", coords: [20.7833, 97.0333], type: "green", desc: "Sovereign HQ • MSO-7 Active" },
+            { name: "PONG PHA", coords: [20.3813, 99.8669], type: "gold", desc: "Origin Point • Blue Vein Gateway" },
+            { name: "AMAZON ROOT", coords: [-3.4653, -62.2159], type: "green", desc: "Veridian Rootsong • Bio-Server" },
+            { name: "GIZA THROAT", coords: [29.9792, 31.1342], type: "gold", desc: "Old Order Archive • Monitored" },
+            { name: "MT. SHASTA LENS", coords: [41.4116, -122.1862], type: "green", desc: "528Hz Amplifier" }
         ];
 
-        // --- 5. RENDER NODES ---
         nodes.forEach(node => {
             var marker = L.marker(node.coords, { icon: createPulseIcon(node.type) }).addTo(map);
-            
-            var popupContent = `
-                <div style="font-weight:bold; font-size:14px; margin-bottom:5px; color:#fff; text-shadow:0 0 5px #00ff66;">${node.name}</div>
-                <div style="font-size:11px; color:#ccffcc;">ROLE: ${node.desc}</div>
-                <div style="font-size:11px; color:#00ff66; margin-top:3px;">STATUS: [${node.status}]</div>
-            `;
-            
-            marker.bindPopup(popupContent);
-            
-            // Auto-open Taunggyi
-            if (node.name.includes("TAUNGGYI")) {
-                setTimeout(() => marker.openPopup(), 3000);
-            }
+            marker.bindPopup(`<b>\( {node.name}</b><br><small> \){node.desc}</small>`);
         });
 
-        // --- 6. CINEMATIC ORBIT ---
-        // Smoothly fly to Taunggyi like a spy satellite
+        // Smooth cinematic fly-in to Taunggyi
         setTimeout(() => {
-            map.flyTo([20.7833, 97.0333], 8, {
-                animate: true,
-                duration: 4.0 // Slower, more majestic approach
-            });
-        }, 1000);
+            map.flyTo([20.7833, 97.0333], 8, { duration: 4.5 });
+        }, 800);
 
+        // Live Prana Counter (demo)
+        let prana = 117.4;
+        setInterval(() => {
+            prana += (Math.random() * 0.3);
+            document.getElementById('prana-display').textContent = prana.toFixed(1);
+        }, 1800);
     </script>
 </body>
 </html>
