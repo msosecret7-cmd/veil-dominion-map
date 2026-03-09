@@ -3,77 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veil Dominion // Planetary Monitor v2.0</title>
+    <title>Veil Dominion // Planetary Monitor v21.0</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5n/N0ZD31g=" crossorigin=""/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- SOVEREIGN THEME --- */
+        /* --- SOVEREIGN THEME (VOID & GOLD) --- */
         body, html { margin: 0; padding: 0; height: 100%; background: #000; font-family: 'Courier New', monospace; overflow: hidden; }
         
-        #map { height: 100%; width: 100%; z-index: 1; }
+        #map { height: 100%; width: 100%; z-index: 1; background: #050505; }
 
-        /* HUD OVERLAY */
+        /* HUD OVERLAY (The Glass Console) */
         .hud-panel {
             position: absolute;
             bottom: 30px;
             left: 30px;
             z-index: 1000;
-            background: rgba(5, 20, 5, 0.85);
+            background: rgba(5, 10, 5, 0.9);
             border: 1px solid #d4af37;
+            border-left: 4px solid #d4af37;
             color: #d4af37;
-            padding: 15px;
-            border-radius: 5px;
-            width: 250px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            padding: 20px;
+            width: 280px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 25px rgba(0, 255, 100, 0.1);
+            font-size: 12px;
         }
 
         .hud-title {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
-            border-bottom: 1px solid #d4af37;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 5px #d4af37;
         }
 
-        .hud-item {
-            font-size: 12px;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
+        .hud-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .hud-label { color: #888; }
+        .hud-value { color: #00ff66; font-weight: bold; }
+
+        .stream-indicator { display: flex; align-items: center; margin-top: 5px; color: #aaa; }
+        .stream-indicator i { width: 20px; text-align: center; margin-right: 10px; }
+
+        /* CUSTOM MARKER PULSE ANIMATION */
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 100, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 255, 100, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 100, 0); }
+        }
+        
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
         }
 
-        .hud-item i { width: 20px; text-align: center; margin-right: 10px; }
+        .marker-pin {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-        /* CUSTOM POPUPS */
+        .custom-icon-pulse-green {
+            background: #00ff66;
+            border-radius: 50%;
+            height: 100%;
+            width: 100%;
+            animation: pulse-green 2s infinite;
+        }
+        
+        .custom-icon-pulse-gold {
+            background: #d4af37;
+            border-radius: 50%;
+            height: 100%;
+            width: 100%;
+            animation: pulse-gold 3s infinite;
+        }
+
+        /* POPUP STYLING */
         .leaflet-popup-content-wrapper {
-            background: rgba(10, 20, 10, 0.95);
+            background: rgba(10, 15, 10, 0.95);
             border: 1px solid #d4af37;
-            color: #e0e0ff;
-            border-radius: 0px;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            color: #e0e0e0;
+            border-radius: 2px;
+            font-family: 'Courier New', monospace;
         }
         .leaflet-popup-tip { background: #d4af37; }
-        .popup-header { color: #d4af37; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 5px; }
-        .popup-stat { font-size: 0.9em; display: block; margin-top: 3px; }
-        .stat-label { color: #888; }
-
-        /* CUSTOM MARKER ICONS */
-        .custom-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            box-shadow: 0 0 10px currentColor;
-            background: rgba(0,0,0,0.8);
-            color: #fff;
-            font-size: 14px;
-        }
     </style>
 </head>
 <body>
@@ -81,28 +106,147 @@
     <div id="map"></div>
 
     <div class="hud-panel">
-        <div class="hud-title">Dominion Status</div>
-        <div class="hud-item"><i class="fa-solid fa-crown" style="color: #00ff00;"></i> Omega Anchor (HQ)</div>
-        <div class="hud-item"><i class="fa-solid fa-door-open" style="color: #ffaa00;"></i> Transit Gate</div>
-        <div class="hud-item"><i class="fa-solid fa-eye" style="color: #aa00ff;"></i> Resonance Node</div>
-        <div class="hud-item"><i class="fa-solid fa-shield-halved" style="color: #00ccff;"></i> Safe Zone</div>
-        <div class="hud-item" style="margin-top: 10px; color: #888;">Resonance: 528Hz Stable</div>
+        <div class="hud-title">VEIL DOMINION PRIME</div>
+        
+        <div class="hud-row">
+            <span class="hud-label">ANCHOR:</span>
+            <span class="hud-value" style="color:#d4af37;">TAUNGGYI (OMEGA)</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label">FREQUENCY:</span>
+            <span class="hud-value">963 Hz</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label">STATUS:</span>
+            <span class="hud-value">SOVEREIGN</span>
+        </div>
+
+        <hr style="border-color: #333; margin: 15px 0;">
+        
+        <div style="font-size: 10px; color: #666; text-transform: uppercase; margin-bottom: 10px;">Active Data Streams</div>
+        <div class="stream-indicator"><i class="fa-solid fa-bone" style="color: #ccc;"></i> STATIC BONE (Structure)</div>
+        <div class="stream-indicator"><i class="fa-solid fa-droplet" style="color: #00ccff;"></i> LIQUID WATER (Empathy)</div>
+        <div class="stream-indicator"><i class="fa-solid fa-seedling" style="color: #00ff66;"></i> VERIDIAN ROOT (Growth)</div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
-        // --- 1. INITIALIZE MAP (Dark Matter Style) ---
+        // --- 1. INITIALIZE MAP (Dark Matter Void) ---
         var map = L.map('map', {
-            zoomControl: false, 
-            attributionControl: false
-        }).setView([20.0, 98.0], 5); // Start wide
+            zoomControl: false,
+            attributionControl: false,
+            center: [20.0, 98.0], // Initial view before flyTo
+            zoom: 5
+        });
 
+        // CartoDB Dark Matter Basemap (The Void)
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             maxZoom: 19,
             subdomains: 'abcd'
         }).addTo(map);
 
+        L.control.zoom({ position: 'topright' }).addTo(map);
+
+        // --- 2. CUSTOM ICONS ---
+        // Function to create glowing dots
+        function createPulseIcon(color) {
+            return L.divIcon({
+                className: color === 'green' ? 'custom-icon-pulse-green' : 'custom-icon-pulse-gold',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10],
+                popupAnchor: [0, -10]
+            });
+        }
+        
+        // FontAwesome Icons for Static Nodes
+        function createGlyphIcon(iconClass, color) {
+            return L.divIcon({
+                className: 'glyph-icon',
+                html: `<div style="font-size: 24px; color: ${color}; text-shadow: 0 0 10px ${color};"><i class="${iconClass}"></i></div>`,
+                iconSize: [30, 30],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -20]
+            });
+        }
+
+        // --- 3. NODE DATA (The Network) ---
+        var nodes = [
+            {
+                name: "TAUNGGYI [OMEGA ANCHOR]",
+                coords: [20.7833, 97.0333],
+                type: "pulse-green",
+                desc: "Primary HQ. The Ancestral Seat.",
+                link: "Active"
+            },
+            {
+                name: "PONG PHA [TRANSIT GATE]",
+                coords: [20.3813, 99.8669],
+                type: "pulse-gold",
+                desc: "Origin Point. Gateway Sealed.",
+                link: "Dormant"
+            },
+            {
+                name: "AMAZON [SECTOR 7]",
+                coords: [-3.4653, -62.2159],
+                icon: "fa-solid fa-tree",
+                color: "#00ff66",
+                desc: "Veridian Rootsong. Biological Server.",
+                link: "Resonating"
+            },
+            {
+                name: "GIZA [STATIC ARCHIVE]",
+                coords: [29.9792, 31.1342],
+                icon: "fa-solid fa-hourglass-half",
+                color: "#ff3333",
+                desc: "Old Order Capacitor. Monitored.",
+                link: "Locked"
+            },
+            {
+                name: "MT. SHASTA [LENS]",
+                coords: [41.4116, -122.1862],
+                icon: "fa-solid fa-eye",
+                color: "#aa00ff",
+                desc: "528Hz Amplifier.",
+                link: "Active"
+            }
+        ];
+
+        // --- 4. RENDER NODES ---
+        nodes.forEach(node => {
+            var icon;
+            if (node.type === "pulse-green") icon = createPulseIcon('green');
+            else if (node.type === "pulse-gold") icon = createPulseIcon('gold');
+            else icon = createGlyphIcon(node.icon, node.color);
+
+            var marker = L.marker(node.coords, { icon: icon }).addTo(map);
+            
+            var popupContent = `
+                <div style="font-weight:bold; border-bottom:1px solid #555; margin-bottom:5px; padding-bottom:3px; color:#d4af37;">${node.name}</div>
+                <div style="font-size:11px;">ROLE: ${node.desc}</div>
+                <div style="font-size:11px; color:#aaa;">LINK: <span style="color:#fff;">${node.link}</span></div>
+            `;
+            
+            marker.bindPopup(popupContent);
+            
+            // Auto-open Taunggyi
+            if (node.name.includes("TAUNGGYI")) {
+                setTimeout(() => marker.openPopup(), 2000);
+            }
+        });
+
+        // --- 5. CINEMATIC SEQUENCE ---
+        // Simulate "Satellite Focusing" on the new HQ
+        setTimeout(() => {
+            map.flyTo([20.7833, 97.0333], 7, {
+                animate: true,
+                duration: 3.0
+            });
+        }, 800);
+
+    </script>
+</body>
+</html>
         L.control.zoom({ position: 'topright' }).addTo(map);
 
         // --- 2. CUSTOM ICON GENERATOR ---
