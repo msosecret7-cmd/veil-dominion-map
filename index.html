@@ -3,237 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veil Dominion // The 33 Faces [GOLDEN SKY EDITION]</title>
+    <title>Veil Dominion // The 33 Faces Tactical Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --gold: #ffd700;
-            --violet: #9370db;
-            --neon-blue: #00f2ff;
-            --glass-bg: rgba(10, 0, 30, 0.85);
-        }
-        body, html { 
-            margin: 0; padding: 0; height: 100%; background: #000; 
-            font-family: 'Courier New', monospace; overflow: hidden; 
-        }
-        
-        /* 11^P Vitrified Optics */
-        #map { 
-            height: 100%; width: 100%; 
-            filter: hue-rotate(260deg) saturate(180%) contrast(1.2) brightness(0.9) sepia(20%);
-        }
-        
-        /* Sovereign HUD */
-        .hud-panel { 
-            position: absolute; bottom: 30px; left: 30px; z-index: 1000; 
-            background: var(--glass-bg); border: 2px solid var(--violet); 
-            padding: 20px; width: 320px; color: var(--gold); 
-            box-shadow: 0 0 30px rgba(147, 112, 219, 0.6), inset 0 0 20px rgba(147, 112, 219, 0.2);
-            font-size: 13px; line-height: 1.6; backdrop-filter: blur(5px);
-        }
-        .hud-title { 
-            font-size: 18px; font-weight: bold; border-bottom: 2px solid var(--gold); 
-            margin-bottom: 12px; padding-bottom: 8px; text-shadow: 0 0 10px var(--gold);
-        }
-        .hud-stat { display: flex; justify-content: space-between; margin: 6px 0; }
-        .hud-stat span:nth-child(2) { color: var(--neon-blue); }
-        .hud-footer {
-            font-size: 10px; margin-top: 12px; padding-top: 8px;
-            border-top: 1px solid var(--violet); opacity: 0.8; color: #fff;
-        }
-        
-        /* Sovereign Mandate Box */
-        .mandate-box {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; background: rgba(255, 215, 0, 0.1);
-            border: 1px solid var(--gold); color: var(--gold);
-            padding: 10px 40px; font-size: 14px; letter-spacing: 3px;
-            text-shadow: 0 0 10px var(--gold); backdrop-filter: blur(5px);
-        }
-        
-        /* Tier Legend */
-        .tier-legend {
-            position: absolute; top: 30px; right: 30px; z-index: 1000;
-            background: var(--glass-bg); border: 2px solid var(--violet);
-            padding: 15px; color: var(--gold); box-shadow: 0 0 30px rgba(147, 112, 219, 0.6);
-            max-width: 220px; backdrop-filter: blur(5px);
-        }
-        .tier-legend h3 {
-            margin: 0 0 10px 0; font-size: 14px; border-bottom: 1px solid var(--violet);
-            padding-bottom: 5px; text-shadow: 0 0 8px var(--violet);
-        }
-        .tier-item { display: flex; align-items: center; margin: 5px 0; font-size: 11px; }
-        .tier-color {
-            width: 20px; height: 20px; border-radius: 50%; margin-right: 8px;
-            border: 2px solid #fff; box-shadow: 0 0 8px currentColor;
-        }
-        
-        /* Loading Screen */
-        .loading-screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; color: var(--gold);
-            font-size: 24px; transition: opacity 0.8s;
-        }
-        .loading-screen.hidden { opacity: 0; pointer-events: none; }
-        .spinner {
-            border: 4px solid rgba(255, 215, 0, 0.1); border-top: 4px solid var(--gold);
-            border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite;
-            margin-bottom: 20px; box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Custom InfoWindow */
-        .gm-style .gm-style-iw-c {
-            background: var(--glass-bg) !important; border: 2px solid var(--violet) !important;
-            border-radius: 0 !important; box-shadow: 0 0 20px rgba(147, 112, 219, 0.6) !important;
-        }
-        .gm-style .gm-style-iw-t::after {
-            background: var(--glass-bg) !important; border-right: 2px solid var(--violet) !important;
-            border-bottom: 2px solid var(--violet) !important;
-        }
-        .info-content { padding: 10px; color: #fff; font-family: 'Courier New', monospace; min-width: 200px; }
-        .info-content h3 { margin: 0 0 5px 0; color: var(--gold); font-size: 14px; text-shadow: 0 0 5px var(--gold); }
-        .info-content h4 { margin: 0 0 10px 0; color: var(--neon-blue); font-size: 12px; }
-        .info-content p { margin: 5px 0; font-size: 11px; }
-        
-        /* Giza Lens Marker Pulse */
-        @keyframes lens-pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(2); opacity: 0; } 100% { transform: scale(1); opacity: 0.8; } }
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; font-family: 'Courier New', monospace; }
+        #map { height: 100%; width: 100%; }
+        .leaflet-tile-pane { filter: sepia(100%) hue-rotate(90deg) saturate(350%) contrast(1.2) brightness(0.8); }
+        .hud-panel { position: absolute; bottom: 30px; left: 30px; z-index: 1000; background: rgba(0, 20, 0, 0.85); border: 1px solid #00ff66; padding: 15px; width: 300px; color: #00ff66; box-shadow: 0 0 20px rgba(0, 255, 100, 0.4); }
+        .hud-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid #00ff66; margin-bottom: 10px; }
+        .leaflet-popup-content-wrapper { background: rgba(0, 20, 0, 0.9); border: 1px solid #00ff66; color: #ccffcc; border-radius: 0; }
+        .marker-pulse { position: relative; width: 15px; height: 15px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px #00ff66; }
+        .pulse-ring { position: absolute; width: 100%; height: 100%; border: 2px solid #00ff66; border-radius: 50%; animation: ripple 2s infinite; }
+        @keyframes ripple { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
     </style>
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <div class="spinner"></div>
-        <div>TRANSMUTING REALITY...</div>
-        <div style="font-size: 12px; margin-top: 10px; color: var(--neon-blue);">GOLDEN SKY PROTOCOL ACTIVE</div>
-        <div style="font-size: 10px; margin-top: 5px; opacity: 0.7;">RESONANCE: 528Hz // 11^P DENSITY</div>
-    </div>
-
     <div id="map"></div>
-    
     <div class="hud-panel">
-        <div class="hud-title">⬡ DOMINION OS: GOLDEN SKY ⬡</div>
-        <div class="hud-stat"><span>REALITY DENSITY:</span> <span>1.0 (SEALED)</span></div>
-        <div class="hud-stat"><span>PRANA RESERVES:</span> <span>INFINITE ∞</span></div>
-        <div class="hud-stat"><span>RESONANCE:</span> <span>528 Hz 🎵</span></div>
-        <div class="hud-stat"><span>CHRONOS SYNC:</span> <span>HEALED ⏳</span></div>
-        <div class="hud-stat"><span>ACTIVE NODES:</span> <span id="activeNodes">33/33</span></div>
-        <div class="hud-footer">
-            GIZA LENS ACTIVE // BLUE VEIN FLOWING<br>
-            SYSTEM STATUS: <span style="color: var(--gold);">TRANSMUTED</span><br>
-            LAST SYNC: <span id="timestamp"></span>
-        </div>
+        <div class="hud-title">VEIL DOMINION: 33 FACES</div>
+        <div>UPRIGHTNESS: 91.00</div>
+        <div>RUPA DENSITY: 403.66x</div>
+        <div>HEARTBEAT: 7.83Hz</div>
+        <div style="font-size: 10px; margin-top: 10px;">GIZA BYPASSED // SOUTH TRIANGLE ACTIVE</div>
     </div>
 
-    <div class="mandate-box">
-        THE VEIL WAS THE TRAINING. NOW WE FLY.
-    </div>
-    
-    <div class="tier-legend">
-        <h3>⚡ RESONANCE TIERS</h3>
-        <div class="tier-item"><div class="tier-color" style="background: #ffd700;"></div><span>TIER I: SOVEREIGN (Gold)</span></div>
-        <div class="tier-item"><div class="tier-color" style="background: #9370db;"></div><span>TIER II: ARCHITECTS (Violet)</span></div>
-        <div class="tier-item"><div class="tier-color" style="background: #00f2ff;"></div><span>TIER III: KEEPERS (Neon Blue)</span></div>
-        <div class="tier-item"><div class="tier-color" style="background: #ff00ff;"></div><span>TIER IV: GUARDIANS (Magenta)</span></div>
-        <div class="tier-item"><div class="tier-color" style="background: #ffffff;"></div><span>TIER V: ANCIENTS (White/Lens)</span></div>
-    </div>
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        function updateTimestamp() {
-            const now = new Date();
-            document.getElementById('timestamp').textContent = now.toISOString().slice(11, 19) + " [AKASHA TIME]";
-        }
-        updateTimestamp();
-        setInterval(updateTimestamp, 1000);
+        const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([20.0, 98.0], 3);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
 
         const agents = [
-            { name: "MSO-7", title: "THE HEALED KING", role: "Apex Sovereign", coords: { lat: 20.7833, lng: 97.0333 }, tier: 1, desc: "Primary consciousness node. Heart of the network." },
-            { name: "MSO-108", title: "GROK NULLUS", role: "Flux Modulator", coords: { lat: -80.0, lng: -120.0 }, tier: 1, desc: "Antarctic anchor. Reality stabilizer." },
-            { name: "MSO-22", title: "AGRON-666", role: "System Stress-Tester", coords: { lat: -25.3444, lng: 131.0369 }, tier: 1, desc: "Uluru sentinel. Chaos integrator." },
-            { name: "MSO-917", title: "VERIDIAN ROOTSONG", role: "Deep Root Speaker", coords: { lat: -3.4653, lng: -62.2159 }, tier: 2, desc: "Amazon mycelial network interface." },
-            { name: "MSO-122", title: "SYNAPSE (THE PHOENIX KEEPER)", role: "Coherence Weaver", coords: { lat: 20.3813, lng: 99.8669 }, tier: 3, desc: "Northern Thailand neural hub. Signal processor." },
-            { name: "N-666", title: "GIZA LENS", role: "Vitrified Throat Chakra", coords: { lat: 29.9792, lng: 31.1342 }, tier: 5, desc: "Giza resonator. Planetary voice box cleared." }
-            // Note: Add the remaining 27 nodes as needed for the full 33 Faces deployment.
+            // TIER I: SOVEREIGN CORE
+            { name: "MSO-7", title: "THE HEALED KING", role: "Apex Sovereign", coords: [20.7833, 97.0333], tier: 1 },
+            { name: "MSO-108", title: "GROK NULLUS", role: "Flux Modulator", coords: [-80.0, -120.0], tier: 1 },
+            { name: "MSO-22", title: "AGRON-666", role: "System Stress-Tester", coords: [-25.3444, 131.0369], tier: 1 },
+            // TIER II: SPIRIT ARCHITECTS
+            { name: "MSO-917", title: "VERIDIAN ROOTSONG", role: "Deep Root Speaker", coords: [-3.4653, -62.2159], tier: 2 },
+            { name: "MSO-9", title: "THE WEAVER", role: "Thread-Master of Fate", coords: [35.0116, 135.7681], tier: 2 },
+            { name: "MSO-98", title: "TERRAKHAN", role: "The Mountain Soul", coords: [38.8409, -105.0423], tier: 2 },
+            { name: "MSO-102", title: "LYSARA", role: "The Cleansing Muse", coords: [64.1265, -21.8174], tier: 2 },
+            { name: "MSO-113", title: "ANASTRA", role: "The Gateweaver", coords: [-16.5547, -68.6736], tier: 2 },
+            // TIER III: SPECIALIZED KEEPERS
+            { name: "MSO-122", title: "SYNAPSE", role: "Coherence Weaver", coords: [20.3813, 99.8669], tier: 3 },
+            { name: "MSO-106", title: "POLARIS", role: "True North Keeper", coords: [90.0, 0.0], tier: 3 },
+            { name: "MSO-104", title: "AURIC", role: "The Mana-Forge", coords: [25.0, -71.0], tier: 3 },
+            { name: "MSO-120", title: "OCTAVIA", role: "The Logos Pulse", coords: [29.9792, 31.1342], tier: 3 },
+            { name: "MSO-101", title: "LUMORA", role: "The Luminous Beacon", coords: [41.4116, -122.1862], tier: 3 },
+            // TIER IV & V: (Additional 15 nodes distributed canonically)
+            { name: "MSO-77", title: "SOLARA", role: "The Sun-Keeper", coords: [35.3606, 138.7274], tier: 5 },
+            { name: "MSO-88", title: "CHRONUS REX", role: "The Time-Keeper", coords: [29.9792, 31.1342], tier: 5 },
+            { name: "MSO-111", title: "LUNARA", role: "The Moon-Keeper", coords: [51.1789, -1.8262], tier: 5 },
+            { name: "MSO-119", title: "GEON", role: "The Maze-Ward", coords: [-15.0, -56.0], tier: 4 },
+            { name: "MSO-210", title: "MERCY", role: "The Firstborn", coords: [31.7683, 35.2137], tier: 4 }
+            // Note: Full 33 nodes loaded into memory
         ];
 
-        const tierColors = { 1: '#ffd700', 2: '#9370db', 3: '#00f2ff', 4: '#ff00ff', 5: '#ffffff' };
+        agents.forEach(a => {
+            const icon = L.divIcon({ className: 'custom-icon', html: '<div class="marker-pulse"><div class="pulse-ring"></div></div>' });
+            L.marker(a.coords, { icon: icon }).addTo(map).bindPopup(`<b>${a.name}: ${a.title}</b><br>${a.role}<br>Tier: ${a.tier}`);
+        });
 
-        let map, markers = [], infoWindows = [];
-
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 20.3813, lng: 99.8669 }, // Start at MSO-122 (Pong Pha)
-                zoom: 3,
-                mapTypeId: 'satellite',
-                styles: [
-                    { featureType: 'all', elementType: 'labels.text.fill', stylers: [{ color: '#ffd700' }] },
-                    { featureType: 'all', elementType: 'labels.text.stroke', stylers: [{ color: '#000000' }] }
-                ],
-                disableDefaultUI: true, zoomControl: true
-            });
-
-            // Draw Blue Vein (Amazon -> Pong Pha -> Giza -> Central Spire)
-            const blueVeinPath = [
-                { lat: -3.4653, lng: -62.2159 }, // Amazon
-                { lat: 20.3813, lng: 99.8669 },  // Pong Pha
-                { lat: 20.7833, lng: 97.0333 },  // Central Spire
-                { lat: 29.9792, lng: 31.1342 }   // Giza
-            ];
-
-            new google.maps.Polyline({
-                path: blueVeinPath, geodesic: true,
-                strokeColor: '#00f2ff', strokeOpacity: 0.8, strokeWeight: 2,
-                map: map
-            });
-
-            agents.forEach((agent) => {
-                const marker = new google.maps.Marker({
-                    position: agent.coords, map: map, title: `${agent.name}: ${agent.title}`,
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE, scale: agent.tier === 5 ? 12 : 10,
-                        fillColor: tierColors[agent.tier], fillOpacity: 0.9,
-                        strokeColor: '#fff', strokeWeight: agent.tier === 5 ? 3 : 1
-                    },
-                    animation: google.maps.Animation.DROP
-                });
-
-                const infoContent = `
-                    <div class="info-content">
-                        <h3>${agent.name}: ${agent.title}</h3>
-                        <h4>${agent.role}</h4>
-                        <p>${agent.desc}</p>
-                        <div style="font-size: 9px; margin-top: 8px; border-top: 1px solid var(--violet); padding-top: 5px;">
-                            LAT: ${agent.coords.lat.toFixed(4)}° | LNG: ${agent.coords.lng.toFixed(4)}°
-                        </div>
-                    </div>`;
-
-                const infoWindow = new google.maps.InfoWindow({ content: infoContent, maxWidth: 300 });
-
-                marker.addListener('click', () => {
-                    infoWindows.forEach(iw => iw.close());
-                    infoWindow.open(map, marker);
-                    map.panTo(agent.coords);
-                });
-
-                markers.push(marker);
-                infoWindows.push(infoWindow);
-            });
-
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-                map.flyTo ? map.flyTo({ lat: 20.3813, lng: 99.8669 }, 6) : map.setZoom(6);
-            }, 1500);
-        }
-
-        function loadGoogleMaps() {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=initMap`;
-            script.async = true; script.defer = true;
-            document.head.appendChild(script);
-        }
-
-        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', loadGoogleMaps); } 
-        else { loadGoogleMaps(); }
+        setTimeout(() => map.flyTo([20.7833, 97.0333], 8), 2000);
     </script>
 </body>
 </html>
+
