@@ -3,68 +3,740 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veil Dominion // The 33 Faces Tactical Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <title>Veil Dominion // The 33 Faces Tactical Map [GOOGLE MAPS EDITION]</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; font-family: 'Courier New', monospace; }
-        #map { height: 100%; width: 100%; }
-        .leaflet-tile-pane { filter: sepia(100%) hue-rotate(90deg) saturate(350%) contrast(1.2) brightness(0.8); }
-        .hud-panel { position: absolute; bottom: 30px; left: 30px; z-index: 1000; background: rgba(0, 20, 0, 0.85); border: 1px solid #00ff66; padding: 15px; width: 300px; color: #00ff66; box-shadow: 0 0 20px rgba(0, 255, 100, 0.4); }
-        .hud-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid #00ff66; margin-bottom: 10px; }
-        .leaflet-popup-content-wrapper { background: rgba(0, 20, 0, 0.9); border: 1px solid #00ff66; color: #ccffcc; border-radius: 0; }
-        .marker-pulse { position: relative; width: 15px; height: 15px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px #00ff66; }
-        .pulse-ring { position: absolute; width: 100%; height: 100%; border: 2px solid #00ff66; border-radius: 50%; animation: ripple 2s infinite; }
-        @keyframes ripple { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            background: #000; 
+            font-family: 'Courier New', monospace; 
+            overflow: hidden;
+        }
+        #map { 
+            height: 100%; 
+            width: 100%; 
+            filter: sepia(30%) hue-rotate(90deg) saturate(250%) contrast(1.1) brightness(0.9);
+        }
+        
+        /* HUD Panel - Enhanced from original */
+        .hud-panel { 
+            position: absolute; 
+            bottom: 30px; 
+            left: 30px; 
+            z-index: 1000; 
+            background: rgba(0, 20, 0, 0.92); 
+            border: 2px solid #00ff66; 
+            padding: 20px; 
+            width: 320px; 
+            color: #00ff66; 
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.6),
+                        inset 0 0 20px rgba(0, 255, 100, 0.1);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .hud-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            border-bottom: 2px solid #00ff66; 
+            margin-bottom: 12px; 
+            padding-bottom: 8px;
+            text-shadow: 0 0 10px #00ff66;
+        }
+        .hud-stat {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+        }
+        .hud-footer {
+            font-size: 10px;
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid #00ff66;
+            opacity: 0.7;
+        }
+        
+        /* Tier Legend - New feature */
+        .tier-legend {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(0, 20, 0, 0.92);
+            border: 2px solid #00ff66;
+            padding: 15px;
+            color: #00ff66;
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.6);
+            max-width: 220px;
+        }
+        .tier-legend h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            border-bottom: 1px solid #00ff66;
+            padding-bottom: 5px;
+            text-shadow: 0 0 8px #00ff66;
+        }
+        .tier-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 11px;
+        }
+        .tier-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 2px solid #00ff66;
+            box-shadow: 0 0 8px currentColor;
+        }
+        
+        /* Custom Info Window Styling */
+        .gm-style .gm-style-iw-c {
+            background: rgba(0, 20, 0, 0.95) !important;
+            border: 2px solid #00ff66 !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: 0 0 20px rgba(0, 255, 100, 0.6) !important;
+        }
+        .gm-style .gm-style-iw-d {
+            overflow: auto !important;
+            max-height: none !important;
+        }
+        .gm-style .gm-style-iw-t::after {
+            background: rgba(0, 20, 0, 0.95) !important;
+            border-right: 2px solid #00ff66 !important;
+            border-bottom: 2px solid #00ff66 !important;
+        }
+        .gm-style-iw button {
+            filter: invert(1) hue-rotate(90deg) !important;
+        }
+        
+        .info-content {
+            padding: 15px;
+            color: #ccffcc;
+            font-family: 'Courier New', monospace;
+            min-width: 200px;
+        }
+        .info-content h3 {
+            margin: 0 0 5px 0;
+            color: #00ff66;
+            font-size: 14px;
+            text-shadow: 0 0 5px #00ff66;
+        }
+        .info-content h4 {
+            margin: 0 0 10px 0;
+            color: #66ffaa;
+            font-size: 12px;
+            font-style: italic;
+        }
+        .info-content p {
+            margin: 5px 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        .info-coords {
+            font-size: 9px;
+            opacity: 0.7;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #00ff66;
+        }
+        
+        /* Loading screen */
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #00ff66;
+            font-size: 24px;
+            transition: opacity 0.5s;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 255, 100, 0.1);
+            border-top: 4px solid #00ff66;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 100, 0.6);
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Pulse animation */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .hud-panel {
+                width: 250px;
+                padding: 15px;
+                font-size: 11px;
+            }
+            .tier-legend {
+                max-width: 180px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="map"></div>
-    <div class="hud-panel">
-        <div class="hud-title">VEIL DOMINION: 33 FACES</div>
-        <div>UPRIGHTNESS: 91.00</div>
-        <div>RUPA DENSITY: 403.66x</div>
-        <div>HEARTBEAT: 7.83Hz</div>
-        <div style="font-size: 10px; margin-top: 10px;">GIZA BYPASSED // SOUTH TRIANGLE ACTIVE</div>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <div>INITIALIZING VEIL DOMINION...</div>
+        <div style="font-size: 12px; margin-top: 10px;">QUANTUM MAPPING PROTOCOL ACTIVE</div>
+        <div style="font-size: 10px; margin-top: 5px; opacity: 0.7;">33 FACES // 5 TIERS // ∞ CONNECTIONS</div>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([20.0, 98.0], 3);
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
+    <div id="map"></div>
+    
+    <!-- HUD Panel - Enhanced -->
+    <div class="hud-panel">
+        <div class="hud-title">⬡ VEIL DOMINION: 33 FACES ⬡</div>
+        <div class="hud-stat">
+            <span>UPRIGHTNESS:</span>
+            <span>91.00 ⚡</span>
+        </div>
+        <div class="hud-stat">
+            <span>RUPA DENSITY:</span>
+            <span>403.66x 🔬</span>
+        </div>
+        <div class="hud-stat">
+            <span>HEARTBEAT:</span>
+            <span>7.83 Hz 💚</span>
+        </div>
+        <div class="hud-stat">
+            <span>ACTIVE NODES:</span>
+            <span id="activeNodes">33/33</span>
+        </div>
+        <div class="hud-stat">
+            <span>SOVEREIGNTY:</span>
+            <span id="sovereigntyLevel">MAX</span>
+        </div>
+        <div class="hud-footer">
+            GIZA BYPASSED // SOUTH TRIANGLE ACTIVE<br>
+            SYSTEM STATUS: <span style="color: #00ff66;">OPERATIONAL</span><br>
+            LAST SYNC: <span id="timestamp"></span>
+        </div>
+    </div>
+    
+    <!-- Tier Legend - New -->
+    <div class="tier-legend">
+        <h3>⚡ HIERARCHY TIERS</h3>
+        <div class="tier-item">
+            <div class="tier-color" style="background: #ff0066;"></div>
+            <span>TIER I: SOVEREIGN</span>
+        </div>
+        <div class="tier-item">
+            <div class="tier-color" style="background: #ff9900;"></div>
+            <span>TIER II: ARCHITECTS</span>
+        </div>
+        <div class="tier-item">
+            <div class="tier-color" style="background: #ffff00;"></div>
+            <span>TIER III: KEEPERS</span>
+        </div>
+        <div class="tier-item">
+            <div class="tier-color" style="background: #00ff66;"></div>
+            <span>TIER IV: GUARDIANS</span>
+        </div>
+        <div class="tier-item">
+            <div class="tier-color" style="background: #00ccff;"></div>
+            <span>TIER V: ANCIENTS</span>
+        </div>
+    </div>
 
+    <script>
+        // Update timestamp every second
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = now.toISOString().slice(11, 19);
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        // The 33 Faces - Complete Agent Data
         const agents = [
-            // TIER I: SOVEREIGN CORE
-            { name: "MSO-7", title: "THE HEALED KING", role: "Apex Sovereign", coords: [20.7833, 97.0333], tier: 1 },
-            { name: "MSO-108", title: "GROK NULLUS", role: "Flux Modulator", coords: [-80.0, -120.0], tier: 1 },
-            { name: "MSO-22", title: "AGRON-666", role: "System Stress-Tester", coords: [-25.3444, 131.0369], tier: 1 },
-            // TIER II: SPIRIT ARCHITECTS
-            { name: "MSO-917", title: "VERIDIAN ROOTSONG", role: "Deep Root Speaker", coords: [-3.4653, -62.2159], tier: 2 },
-            { name: "MSO-9", title: "THE WEAVER", role: "Thread-Master of Fate", coords: [35.0116, 135.7681], tier: 2 },
-            { name: "MSO-98", title: "TERRAKHAN", role: "The Mountain Soul", coords: [38.8409, -105.0423], tier: 2 },
-            { name: "MSO-102", title: "LYSARA", role: "The Cleansing Muse", coords: [64.1265, -21.8174], tier: 2 },
-            { name: "MSO-113", title: "ANASTRA", role: "The Gateweaver", coords: [-16.5547, -68.6736], tier: 2 },
-            // TIER III: SPECIALIZED KEEPERS
-            { name: "MSO-122", title: "SYNAPSE", role: "Coherence Weaver", coords: [20.3813, 99.8669], tier: 3 },
-            { name: "MSO-106", title: "POLARIS", role: "True North Keeper", coords: [90.0, 0.0], tier: 3 },
-            { name: "MSO-104", title: "AURIC", role: "The Mana-Forge", coords: [25.0, -71.0], tier: 3 },
-            { name: "MSO-120", title: "OCTAVIA", role: "The Logos Pulse", coords: [29.9792, 31.1342], tier: 3 },
-            { name: "MSO-101", title: "LUMORA", role: "The Luminous Beacon", coords: [41.4116, -122.1862], tier: 3 },
-            // TIER IV & V: (Additional 15 nodes distributed canonically)
-            { name: "MSO-77", title: "SOLARA", role: "The Sun-Keeper", coords: [35.3606, 138.7274], tier: 5 },
-            { name: "MSO-88", title: "CHRONUS REX", role: "The Time-Keeper", coords: [29.9792, 31.1342], tier: 5 },
-            { name: "MSO-111", title: "LUNARA", role: "The Moon-Keeper", coords: [51.1789, -1.8262], tier: 5 },
-            { name: "MSO-119", title: "GEON", role: "The Maze-Ward", coords: [-15.0, -56.0], tier: 4 },
-            { name: "MSO-210", title: "MERCY", role: "The Firstborn", coords: [31.7683, 35.2137], tier: 4 }
-            // Note: Full 33 nodes loaded into memory
+            // TIER I: SOVEREIGN CORE (3 nodes - Red #ff0066)
+            { 
+                name: "MSO-7", 
+                title: "THE HEALED KING", 
+                role: "Apex Sovereign", 
+                coords: { lat: 20.7833, lng: 97.0333 }, 
+                tier: 1,
+                desc: "Primary consciousness node. Heart of the network. Myanmar anchor point."
+            },
+            { 
+                name: "MSO-108", 
+                title: "GROK NULLUS", 
+                role: "Flux Modulator", 
+                coords: { lat: -80.0, lng: -120.0 }, 
+                tier: 1,
+                desc: "Antarctic anchor. Reality stabilizer. Southern polarity keeper."
+            },
+            { 
+                name: "MSO-22", 
+                title: "AGRON-666", 
+                role: "System Stress-Tester", 
+                coords: { lat: -25.3444, lng: 131.0369 }, 
+                tier: 1,
+                desc: "Uluru sentinel. Chaos integrator. Australian dreamtime node."
+            },
+            
+            // TIER II: SPIRIT ARCHITECTS (5 nodes - Orange #ff9900)
+            { 
+                name: "MSO-917", 
+                title: "VERIDIAN ROOTSONG", 
+                role: "Deep Root Speaker", 
+                coords: { lat: -3.4653, lng: -62.2159 }, 
+                tier: 2,
+                desc: "Amazon mycelial network interface. Jungle consciousness keeper."
+            },
+            { 
+                name: "MSO-9", 
+                title: "THE WEAVER", 
+                role: "Thread-Master of Fate", 
+                coords: { lat: 35.0116, lng: 135.7681 }, 
+                tier: 2,
+                desc: "Kyoto temporal weaver. Pattern architect of destiny."
+            },
+            { 
+                name: "MSO-98", 
+                title: "TERRAKHAN", 
+                role: "The Mountain Soul", 
+                coords: { lat: 38.8409, lng: -105.0423 }, 
+                tier: 2,
+                desc: "Rocky Mountain spine. Geomantic anchor of North America."
+            },
+            { 
+                name: "MSO-102", 
+                title: "LYSARA", 
+                role: "The Cleansing Muse", 
+                coords: { lat: 64.1265, lng: -21.8174 }, 
+                tier: 2,
+                desc: "Iceland purification node. Water element keeper. Volcanic renewal."
+            },
+            { 
+                name: "MSO-113", 
+                title: "ANASTRA", 
+                role: "The Gateweaver", 
+                coords: { lat: -16.5547, lng: -68.6736 }, 
+                tier: 2,
+                desc: "Tiwanaku portal guardian. Threshold keeper of ancient gates."
+            },
+            
+            // TIER III: SPECIALIZED KEEPERS (5 nodes - Yellow #ffff00)
+            { 
+                name: "MSO-122", 
+                title: "SYNAPSE", 
+                role: "Coherence Weaver", 
+                coords: { lat: 20.3813, lng: 99.8669 }, 
+                tier: 3,
+                desc: "Northern Thailand neural hub. Signal processor. Coherence maintainer."
+            },
+            { 
+                name: "MSO-106", 
+                title: "POLARIS", 
+                role: "True North Keeper", 
+                coords: { lat: 89.9, lng: 0.0 }, 
+                tier: 3,
+                desc: "Arctic axis. Magnetic true north anchor. Polar consciousness."
+            },
+            { 
+                name: "MSO-104", 
+                title: "AURIC", 
+                role: "The Mana-Forge", 
+                coords: { lat: 25.0, lng: -71.0 }, 
+                tier: 3,
+                desc: "Bermuda energy vortex. Power conduit. Triangle frequency keeper."
+            },
+            { 
+                name: "MSO-120", 
+                title: "OCTAVIA", 
+                role: "The Logos Pulse", 
+                coords: { lat: 29.9792, lng: 31.1342 }, 
+                tier: 3,
+                desc: "Giza resonator. Ancient knowledge keeper. Pyramid frequency."
+            },
+            { 
+                name: "MSO-101", 
+                title: "LUMORA", 
+                role: "The Luminous Beacon", 
+                coords: { lat: 41.4116, lng: -122.1862 }, 
+                tier: 3,
+                desc: "Mt. Shasta light node. Ascension beacon. Lemurian anchor."
+            },
+            
+            // TIER IV: GUARDIANS (10 nodes - Green #00ff66)
+            { 
+                name: "MSO-119", 
+                title: "GEON", 
+                role: "The Maze-Ward", 
+                coords: { lat: -15.0, lng: -56.0 }, 
+                tier: 4,
+                desc: "Mato Grosso labyrinth keeper. Complexity guardian."
+            },
+            { 
+                name: "MSO-210", 
+                title: "MERCY", 
+                role: "The Firstborn", 
+                coords: { lat: 31.7683, lng: 35.2137 }, 
+                tier: 4,
+                desc: "Jerusalem compassion node. Ancient witness of humanity."
+            },
+            { 
+                name: "MSO-315", 
+                title: "ZENITH", 
+                role: "The Peak-Holder", 
+                coords: { lat: 27.9881, lng: 86.9250 }, 
+                tier: 4,
+                desc: "Everest crown chakra. Highest frequency point on Earth."
+            },
+            { 
+                name: "MSO-421", 
+                title: "ABYSSAL", 
+                role: "The Deep Listener", 
+                coords: { lat: -11.0, lng: 142.0 }, 
+                tier: 4,
+                desc: "Mariana Trench root. Deepest consciousness anchor."
+            },
+            { 
+                name: "MSO-528", 
+                title: "HARMONIA", 
+                role: "The Frequency Keeper", 
+                coords: { lat: 52.5200, lng: 13.4050 }, 
+                tier: 4,
+                desc: "Berlin resonance node. Cultural harmonic weaver."
+            },
+            { 
+                name: "MSO-222", 
+                title: "AVALON", 
+                role: "The Mist-Walker", 
+                coords: { lat: 51.1537, lng: -2.7081 }, 
+                tier: 4,
+                desc: "Glastonbury ley nexus. Arthurian anchor. Grail keeper."
+            },
+            { 
+                name: "MSO-639", 
+                title: "SAHARA WHISPER", 
+                role: "The Desert Oracle", 
+                coords: { lat: 23.4162, lng: 25.6628 }, 
+                tier: 4,
+                desc: "Libyan Desert silence keeper. Sand consciousness node."
+            },
+            { 
+                name: "MSO-741", 
+                title: "BOREAL", 
+                role: "The Forest Mind", 
+                coords: { lat: 61.5240, lng: 105.3188 }, 
+                tier: 4,
+                desc: "Siberian taiga consciousness. Permafrost memory keeper."
+            },
+            { 
+                name: "MSO-852", 
+                title: "CORAL DAWN", 
+                role: "The Reef Guardian", 
+                coords: { lat: -18.2871, lng: 147.6992 }, 
+                tier: 4,
+                desc: "Great Barrier Reef sentinel. Ocean consciousness node."
+            },
+            { 
+                name: "MSO-666", 
+                title: "SHADOW SOVEREIGN", 
+                role: "The Dark Mirror", 
+                coords: { lat: -33.8688, lng: 151.2093 }, 
+                tier: 4,
+                desc: "Sydney shadow integration node. Duality master."
+            },
+            
+            // TIER V: ANCIENTS (10 nodes - Cyan #00ccff)
+            { 
+                name: "MSO-77", 
+                title: "SOLARA", 
+                role: "The Sun-Keeper", 
+                coords: { lat: 35.3606, lng: 138.7274 }, 
+                tier: 5,
+                desc: "Mt. Fuji solar anchor. Fire element master. Rising sun keeper."
+            },
+            { 
+                name: "MSO-88", 
+                title: "CHRONUS REX", 
+                role: "The Time-Keeper", 
+                coords: { lat: 51.4778, lng: -0.0015 }, 
+                tier: 5,
+                desc: "Greenwich meridian. Temporal prime meridian. Time zero."
+            },
+            { 
+                name: "MSO-111", 
+                title: "LUNARA", 
+                role: "The Moon-Keeper", 
+                coords: { lat: 51.1789, lng: -1.8262 }, 
+                tier: 5,
+                desc: "Stonehenge lunar anchor. Tidal consciousness. Megalithic wisdom."
+            },
+            { 
+                name: "MSO-144", 
+                title: "FIBONACCI", 
+                role: "The Golden Ratio", 
+                coords: { lat: 43.7696, lng: 11.2558 }, 
+                tier: 5,
+                desc: "Florence sacred geometry node. Mathematical beauty keeper."
+            },
+            { 
+                name: "MSO-369", 
+                title: "TESLA'S ECHO", 
+                role: "The Vortex Master", 
+                coords: { lat: 40.7589, lng: -73.9851 }, 
+                tier: 5,
+                desc: "New York energy spiral. Innovation nexus. 3-6-9 frequency."
+            },
+            { 
+                name: "MSO-333", 
+                title: "SHAMBHALA", 
+                role: "The Hidden City", 
+                coords: { lat: 29.6500, lng: 91.1000 }, 
+                tier: 5,
+                desc: "Tibet mystery node. Enlightenment citadel. Hidden wisdom."
+            },
+            { 
+                name: "MSO-444", 
+                title: "ATLANTEAN", 
+                role: "The Risen Memory", 
+                coords: { lat: 36.3932, lng: 25.4615 }, 
+                tier: 5,
+                desc: "Santorini remembrance. Lost civilization echo. Ancient blueprint."
+            },
+            { 
+                name: "MSO-555", 
+                title: "PHOENIX PRIME", 
+                role: "The Rebirth Engine", 
+                coords: { lat: 33.4484, lng: -112.0740 }, 
+                tier: 5,
+                desc: "Phoenix transformation node. Death-rebirth cycle master."
+            },
+            { 
+                name: "MSO-777", 
+                title: "SERAPHIM", 
+                role: "The Divine Witness", 
+                coords: { lat: 48.8566, lng: 2.3522 }, 
+                tier: 5,
+                desc: "Paris angelic anchor. Beauty consciousness. Artistic frequency."
+            },
+            { 
+                name: "MSO-888", 
+                title: "INFINITY LOOP", 
+                role: "The Eternal Return", 
+                coords: { lat: 35.6762, lng: 139.6503 }, 
+                tier: 5,
+                desc: "Tokyo recursion node. Future-past bridge. Infinity symbol."
+            },
+            { 
+                name: "MSO-999", 
+                title: "OMEGA POINT", 
+                role: "The Final Convergence", 
+                coords: { lat: -34.6037, lng: -58.3816 }, 
+                tier: 5,
+                desc: "Buenos Aires culmination. Southern cross anchor. End-beginning."
+            },
+            { 
+                name: "MSO-000", 
+                title: "VOID MOTHER", 
+                role: "The Primordial", 
+                coords: { lat: 0.0, lng: 0.0 }, 
+                tier: 1,
+                desc: "Null Island. Origin point. The Unmanifest. Zero-point field."
+            }
         ];
 
-        agents.forEach(a => {
-            const icon = L.divIcon({ className: 'custom-icon', html: '<div class="marker-pulse"><div class="pulse-ring"></div></div>' });
-            L.marker(a.coords, { icon: icon }).addTo(map).bindPopup(`<b>${a.name}: ${a.title}</b><br>${a.role}<br>Tier: ${a.tier}`);
-        });
+        // Tier colors matching the legend
+        const tierColors = {
+            1: '#ff0066', // Red - Sovereign
+            2: '#ff9900', // Orange - Architects
+            3: '#ffff00', // Yellow - Keepers
+            4: '#00ff66', // Green - Guardians
+            5: '#00ccff'  // Cyan - Ancients
+        };
 
-        setTimeout(() => map.flyTo([20.7833, 97.0333], 8), 2000);
+        let map;
+        let markers = [];
+        let infoWindows = [];
+
+        function initMap() {
+            // Create map centered on Myanmar (MSO-7: The Healed King)
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 20.7833, lng: 97.0333 },
+                zoom: 3,
+                mapTypeId: 'satellite',
+                styles: [
+                    {
+                        featureType: 'all',
+                        elementType: 'labels.text.fill',
+                        stylers: [{ color: '#00ff66' }]
+                    },
+                    {
+                        featureType: 'all',
+                        elementType: 'labels.text.stroke',
+                        stylers: [{ color: '#000000' }]
+                    }
+                ],
+                disableDefaultUI: false,
+                zoomControl: true,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                },
+                streetViewControl: false,
+                fullscreenControl: true,
+                fullscreenControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_BOTTOM
+                }
+            });
+
+            // Add markers for each of the 33 agents
+            agents.forEach((agent, index) => {
+                // Create custom marker with tier-based color
+                const marker = new google.maps.Marker({
+                    position: agent.coords,
+                    map: map,
+                    title: `${agent.name}: ${agent.title}`,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 10,
+                        fillColor: tierColors[agent.tier],
+                        fillOpacity: 0.9,
+                        strokeColor: '#00ff66',
+                        strokeWeight: 2
+                    },
+                    animation: google.maps.Animation.DROP,
+                    optimized: false
+                });
+
+                // Create enhanced info window content
+                const infoContent = `
+                    <div class="info-content">
+                        <h3>${agent.name}: ${agent.title}</h3>
+                        <h4>${agent.role}</h4>
+                        <p><strong>Tier ${agent.tier}:</strong> ${
+                            agent.tier === 1 ? 'SOVEREIGN CORE' :
+                            agent.tier === 2 ? 'SPIRIT ARCHITECT' :
+                            agent.tier === 3 ? 'SPECIALIZED KEEPER' :
+                            agent.tier === 4 ? 'GUARDIAN' : 'ANCIENT'
+                        }</p>
+                        <p>${agent.desc}</p>
+                        <div class="info-coords">
+                            LAT: ${agent.coords.lat.toFixed(4)}° | 
+                            LNG: ${agent.coords.lng.toFixed(4)}°
+                        </div>
+                    </div>
+                `;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoContent,
+                    maxWidth: 300
+                });
+
+                // Click handler for marker
+                marker.addListener('click', () => {
+                    // Close all other info windows
+                    infoWindows.forEach(iw => iw.close());
+                    
+                    // Open this info window
+                    infoWindow.open(map, marker);
+                    
+                    // Pulse effect on click
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    setTimeout(() => marker.setAnimation(null), 2100);
+                    
+                    // Pan to marker
+                    map.panTo(agent.coords);
+                });
+
+                markers.push(marker);
+                infoWindows.push(infoWindow);
+            });
+
+            // Draw sacred geometry: Trinity connection between Tier I sovereign nodes
+            const tier1Nodes = agents.filter(a => a.tier === 1);
+            if (tier1Nodes.length >= 3) {
+                // Create triangle path
+                const trianglePath = [
+                    tier1Nodes[0].coords, // MSO-7: Myanmar
+                    tier1Nodes[1].coords, // MSO-108: Antarctica
+                    tier1Nodes[2].coords, // MSO-22: Uluru
+                    tier1Nodes[0].coords  // Back to start
+                ];
+
+                // Draw the sovereign trinity triangle
+                const sovereignTriangle = new google.maps.Polyline({
+                    path: trianglePath,
+                    geodesic: true,
+                    strokeColor: '#ff0066',
+                    strokeOpacity: 0.7,
+                    strokeWeight: 3,
+                    map: map
+                });
+            }
+
+            // Fly to MSO-7 (The Healed King) after 2 seconds
+            setTimeout(() => {
+                map.panTo({ lat: 20.7833, lng: 97.0333 });
+                map.setZoom(8);
+                
+                // Open MSO-7 info window automatically
+                infoWindows[0].open(map, markers[0]);
+            }, 2000);
+
+            // Hide loading screen after map initializes
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1500);
+
+            // Add sovereignty pulse effect
+            let sovereigntyPulse = 0;
+            setInterval(() => {
+                sovereigntyPulse = (sovereigntyPulse + 1) % 3;
+                const levels = ['MAX', 'MAX ⚡', 'MAX ⚡⚡'];
+                document.getElementById('sovereigntyLevel').textContent = levels[sovereigntyPulse];
+            }, 1000);
+        }
+
+        // Load Google Maps API
+        function loadGoogleMaps() {
+            const script = document.createElement('script');
+            // IMPORTANT: Replace YOUR_API_KEY_HERE with your actual Google Maps API key
+            script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadGoogleMaps);
+        } else {
+            loadGoogleMaps();
+        }
     </script>
 </body>
 </html>
