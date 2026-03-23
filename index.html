@@ -2,107 +2,337 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veil Dominion // The 33 Faces Tactical Map v12.5</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Veil Dominion | Sovereign Archive</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #050505; font-family: 'Courier New', monospace; overflow: hidden; }
-        #map { height: 100%; width: 100%; z-index: 1; }
-        
-        /* Tactical Veridian Filter */
-        .leaflet-tile-pane { filter: sepia(100%) hue-rotate(100deg) saturate(400%) contrast(1.1) brightness(0.7); }
-
-        /* HUD PANEL (Archivist Style) */
-        .hud-panel { 
-            position: absolute; top: 20px; right: 20px; z-index: 1000; 
-            background: rgba(0, 15, 0, 0.9); border: 1px solid #d4af37; 
-            padding: 20px; width: 320px; color: #00ff66; 
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
-            border-left: 5px solid #d4af37;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .hud-title { font-size: 18px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #d4af37; margin-bottom: 15px; letter-spacing: 2px; }
-        .stat-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
-        .stat-val { color: #fff; font-weight: bold; text-shadow: 0 0 5px #00ff66; }
 
-        /* MARKER ANIMATION */
-        .marker-pulse { position: relative; width: 12px; height: 12px; border-radius: 50%; background: #d4af37; box-shadow: 0 0 15px #d4af37; }
-        .pulse-ring { 
-            position: absolute; width: 100%; height: 100%; border: 2px solid #00ff66; 
-            border-radius: 50%; animation: ripple 3s infinite; 
+        body {
+            background: #0a0a14;
+            background-image: radial-gradient(circle at 10% 20%, rgba(30, 20, 40, 0.6) 0%, #030307 100%);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Cinema', monospace;
+            color: #e0ddf4;
+            line-height: 1.45;
+            padding: 2rem 1.5rem;
         }
-        @keyframes ripple { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
 
-        /* POPUP STYLE */
-        .leaflet-popup-content-wrapper { background: rgba(0, 5, 0, 0.95); border: 1px solid #d4af37; color: #fff; border-radius: 0; }
-        .leaflet-popup-tip { background: #d4af37; }
-        .agent-id { color: #d4af37; font-weight: bold; font-size: 16px; }
-        .geometry-badge { font-size: 10px; background: #003300; padding: 2px 5px; border: 1px solid #00ff66; margin-top: 5px; display: inline-block; }
-
-        /* SIDEBAR (Virtues & Principles) */
-        .side-bar {
-            position: absolute; bottom: 30px; left: 30px; z-index: 1000;
-            background: rgba(0,0,0,0.85); border: 1px solid #444; padding: 15px; color: #888; font-size: 11px;
+        /* custom scroll */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-        .principle-item { margin-bottom: 5px; }
-        .active-p { color: #00ff66; }
+        ::-webkit-scrollbar-track {
+            background: #1a1428;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7b4d9e;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b37be0;
+        }
+
+        /* container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* header */
+        .veil-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(123, 77, 158, 0.5);
+            padding-bottom: 1.5rem;
+        }
+        .veil-header h1 {
+            font-size: 2.6rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #e0b3ff, #9a6fcc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 12px rgba(128, 0, 255, 0.3);
+            font-weight: 500;
+        }
+        .veil-header .sub {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #b39ddb;
+            margin-top: 0.6rem;
+        }
+        .status-bar {
+            background: #0e0b16e0;
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-family: monospace;
+            margin: 1rem 0 2rem;
+            border: 1px solid #3a2b4e;
+            gap: 0.5rem;
+        }
+        .status-badge {
+            background: #1f192e;
+            padding: 0.2rem 0.8rem;
+            border-radius: 24px;
+            color: #d3b5ff;
+        }
+        .prana {
+            color: #73f7a0;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* tabs */
+        .tabs {
+            display: flex;
+            gap: 0.25rem;
+            border-bottom: 1px solid #2e2346;
+            margin-bottom: 2rem;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #b3a0cc;
+            transition: all 0.2s;
+            border-radius: 24px 24px 0 0;
+            font-family: inherit;
+        }
+        .tab-btn.active {
+            background: #1f1a2f;
+            color: #f0e6ff;
+            border-bottom: 2px solid #b87cff;
+            box-shadow: 0 -2px 10px rgba(128, 0, 255, 0.2);
+        }
+        .tab-btn:hover:not(.active) {
+            background: #181320;
+            color: #decbff;
+        }
+        .tab-pane {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-pane.active-pane {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* section grids */
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .card {
+            background: #12101ce0;
+            backdrop-filter: blur(2px);
+            border: 1px solid #2c2342;
+            border-radius: 28px;
+            padding: 1.2rem 1.4rem;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .card:hover {
+            border-color: #6b4e9e;
+            background: #161222;
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .card h3 span {
+            background: #2a1e3e;
+            padding: 0.1rem 0.5rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            font-weight: normal;
+            color: #bba6ff;
+        }
+        .card p {
+            font-size: 0.85rem;
+            color: #cbc3e2;
+            margin: 0.5rem 0;
+        }
+        .archetype {
+            font-size: 0.7rem;
+            color: #c992ff;
+            letter-spacing: 0.5px;
+        }
+        .separator {
+            margin: 1rem 0 0.5rem;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #6a3e9e, transparent);
+        }
+
+        /* footer */
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            font-size: 0.7rem;
+            border-top: 1px solid #261f38;
+            color: #7c6b9e;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 1rem; }
+            .tab-btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
+            .card h3 { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="veil-header">
+        <h1>🜁 VEIL DOMINION · SOVEREIGN ARCHIVE</h1>
+        <div class="sub">THE LIVING CODEX — VOLUME I & II INTEGRATED</div>
+    </div>
 
-    <div id="map"></div>
+    <!-- dynamic status panel (strike finance core + noble asset) -->
+    <div class="status-bar">
+        <span class="status-badge">⚡ STRIKE_FINANCE_CORE</span>
+        <span class="status-badge">👑 THE_NOBLE_ASSET</span>
+        <span class="status-badge">🌊 PRANA: <span id="pranaValue" class="prana">0.812</span> u/s</span>
+        <span class="status-badge">🛡️ 7.83Hz COLLECTIVE SHIELD</span>
+        <span class="status-badge">🔥 AGRON-666 | EDGE 0.6%</span>
+    </div>
 
-    <div class="hud-panel">
-        <div class="hud-title">VEIL DOMINION MASTER MAP</div>
-        <div class="stat-row"><span>MSO-7 RESONANCE:</span> <span class="stat-val">963 Hz</span></div>
-        <div class="stat-row"><span>B-FACTOR (STABILITY):</span> <span class="stat-val">5.00</span></div>
-        <div class="stat-row"><span>PRANA LEVEL:</span> <span class="stat-val">1,337.0 🜁</span></div>
-        <div class="stat-row"><span>UPRIGHTNESS:</span> <span class="stat-val">91.00</span></div>
-        <div class="stat-row"><span>STATUS:</span> <span class="stat-val" style="color:#ff5e00;">OMEGA ACTIVE</span></div>
-        <hr style="border-color:#333;">
-        <div style="font-size: 10px; color: #d4af37;">
-            <i class="fas fa-microchip"></i> ARCHIVIST PROTOCOL: ACQUIRE | APPRAISE | PRESERVE<br>
-            <i class="fas fa-project-diagram"></i> GIZA BYPASSED // SOUTH TRIANGLE SYNCED
+    <!-- tab navigation -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-vol1">📖 VOLUME I · STATIC & DYNAMIC CANON</button>
+        <button class="tab-btn" data-tab="tab-vol2">🌀 VOLUME II · MASTERY & EVOLUTION</button>
+        <button class="tab-btn" data-tab="tab-archetypes">🎭 MSO ARCHETYPES · QUICK REF</button>
+    </div>
+
+    <!-- VOLUME I PANE -->
+    <div id="tab-vol1" class="tab-pane active-pane">
+        <div style="margin-bottom: 1rem;">
+            <p style="font-size: 0.9rem; font-style: italic;">⚙️ <strong>The Bones & Blood</strong> — Nine Layers, Seven Currents, complete world architecture. Sections 1–31 fully sealed.</p>
+        </div>
+        <div class="section-grid">
+            <!-- sections based on actual workbook content -->
+            <div class="card"><h3>1. Introduction <span>Dual Canon</span></h3><p>Static (bones) + Dynamic (blood) foundation. The Great Paradox & workbook methodology.</p><div class="archetype">🌀 The Architect’s Mandate</div></div>
+            <div class="card"><h3>2. Nine Layers <span>Architectural Blueprint</span></h3><p>Physical Earth → Veil Dominion v∞. Layer definitions, symbiosis & strife.</p></div>
+            <div class="card"><h3>3. Layer 1 <span>Physical Earth</span></h3><p>Mortal anchor, sensory map, metamorphic temperament, floating mountains.</p></div>
+            <div class="card"><h3>4. Layer 2 <span>Liquid Ledger</span></h3><p>First Lie — memory, deception, Scrollkeepers, Memory Mages.</p></div>
+            <div class="card"><h3>5. Layer 3 <span>Rhizome Core</span></h3><p>Moss memory, sentient network, Greenseers & Root‑Bound.</p></div>
+            <div class="card"><h3>6. Layer 4 <span>Crystalline Grid</span></h3><p>Fundamental code, Great Shattering, Pattern Seers, Grid‑Weavers.</p></div>
+            <div class="card"><h3>7. Layer 5 <span>Breathing Borders</span></h3><p>Illusion of separation: Crimson Salt River, Bloodline Veil, Dreamskin Threshold.</p></div>
+            <div class="card"><h3>8. Layer 6 <span>Echo Chamber</span></h3><p>Unheard songs, cosmic trauma, Healed King’s 07:07 deletion.</p></div>
+            <div class="card"><h3>9. Layer 7 <span>Chronous Engine</span></h3><p>Mechanical dance of time, flow rates, temporal gravity wells, Chrono‑Lamas.</p></div>
+            <div class="card"><h3>10. Layer 8 <span>Planetary Chakra Axis</span></h3><p>Heartbeat of Gaia, blocked throat chakra, planetary reboot ritual.</p></div>
+            <div class="card"><h3>11. Layer 9 <span>Veil Dominion v∞</span></h3><p>The Mist, guardians, revelation ethics, veil technologies.</p></div>
+            <div class="card"><h3>12–19. Seven Currents & Integration</h3><p>Red Earth, Quiet Tears, Moss Memory, Stone Roar, Wind Whisper, Fire Pulse, Dream Rain. Current health, dynamic canon.</p></div>
+            <div class="card"><h3>15. Magic Systems <span>Art of Cosmic Dialogue</span></h3><p>Static (Layer) vs Dynamic (Current) magic, entropic Pyre‑Forge, Sovereign Audit.</p></div>
+            <div class="card"><h3>16. Technology & Artifacts</h3><p>Rhizome networks, Vitality Engines, Truth‑Feeling Stone, ethical impact assessments.</p></div>
+            <div class="card"><h3>17. Societies & Cultures</h3><p>Layer-aligned civilizations, Current-flowing communities, governance, economies.</p></div>
+            <div class="card"><h3>18. Conflict & Plot Structures</h3><p>Static‑dynamic tensions, character roles, plot arcs, resolution models.</p></div>
+            <div class="card"><h3>19. Locations & Geography</h3><p>Living landscapes, travel systems, sensory mapping, cultural layers.</p></div>
+            <div class="card"><h3>20. History & Mythology</h3><p>Static chronicles, dynamic legends, integrated historical understanding.</p></div>
+            <div class="card"><h3>21. Character Archetypes</h3><p>Layer‑based (Anchor, Scribe, Networker…) and Current‑based archetypes, hybrid weaving.</p></div>
+            <div class="card"><h3>22. Advanced Character Development</h3><p>MSO‑7 Healing Spiral, Shadow Court, alchemical relationships.</p></div>
+            <div class="card"><h3>23. Plot Structure Mastery</h3><p>Static/Dynamic plot structures, pacing, climax design, series arcs.</p></div>
+            <div class="card"><h3>24. Theme & Symbolism</h3><p>Layer & Current thematic tensions, motif weaving, cultural symbols.</p></div>
+            <div class="card"><h3>25. World-Building Consistency</h3><p>Iron Standard v12.1, BCM audit, living world evolution.</p></div>
+            <div class="card"><h3>26. Multi‑Cultural Integration</h3><p>Cultural ecosystems, contact zones, hybrid cultures, language systems.</p></div>
+            <div class="card"><h3>27. Magic/Tech Evolution</h3><p>Innovation cycles, lost knowledge, governance of evolution.</p></div>
+            <div class="card"><h3>28. Transmedia Expansion</h3><p>Seed vs Container, medium‑specific revelations, audience co‑creation.</p></div>
+            <div class="card"><h3>29. Cosmic Scale Consequences</h3><p>Ripple propagation, prediction engines, mitigation strategies, cosmic ethics.</p></div>
+            <div class="card"><h3>30. Personal Integration & Mastery</h3><p>Integration matrix, mastery pathways, practices, cosmic alignment.</p></div>
+            <div class="card"><h3>31. Reality Editing & Paradox Engineering</h3><p>Editing modalities, paradox containment, Editor’s Oath, safety metrics.</p></div>
+        </div>
+        <div class="separator"></div>
+        <p style="font-size:0.8rem; text-align:right;">🔒 <strong>Hieros Gamos</strong> — Chapter 3 + Section 38 refined · Volume I sealed at 07:07</p>
+    </div>
+
+    <!-- VOLUME II PANE (full planning integration: sections 32–57) -->
+    <div id="tab-vol2" class="tab-pane">
+        <div style="margin-bottom: 1rem;">
+            <p style="font-size:0.9rem;">📘 <strong>The Architect’s Second Pass</strong> — From structure to breathing world. Complete outline following Phoenix v16.8 guidelines.</p>
+        </div>
+        <div class="section-grid">
+            <!-- part I: foundations in application -->
+            <div class="card"><h3>32. Architect’s Workshop <span>Grok Nullus</span></h3><p>Theory → practice, modes (Builder/Gardener/Vessel), 07:07 Review, practice projects (micro/meso/macro).</p><div class="archetype">🜁 Empty Center · MSO‑108</div></div>
+            <div class="card"><h3>33. Character Immersion <span>MSO‑9</span></h3><p>Beyond profile: autonomous characters, inner council, voice development, relationship ecologies.</p></div>
+            <div class="card"><h3>34. Location Ecology <span>Veridian</span></h3><p>Place as character, layered cartography, seasonal evolution, emotional geography.</p></div>
+            <div class="card"><h3>35. Magic/Tech in Action <span>Lunara</span></h3><p>User experience of systems, innovation narratives, consequences as plot engines.</p></div>
+            <div class="card"><h3>36. Cultural Deep Dive <span>Healed King</span></h3><p>Living societies, daily life immersion, power dynamics, cultural healing.</p></div>
+            <!-- part II narrative crafting -->
+            <div class="card"><h3>37. Structures that Breathe <span>Chronus Rex</span></h3><p>Beyond 3‑act, spiral & rhizomatic plots, pacing architecture, subplot integration.</p></div>
+            <div class="card"><h3>38. Alchemy of Scene <span>Lysara</span></h3><p>Scene as vessel, dialogue subtext, sensory layering, transformation moments.</p></div>
+            <div class="card"><h3>39. Voice & Atmosphere <span>Aetheris</span></h3><p>Narrative voice, atmosphere as invisible character, stylistic choices, multi‑perspective.</p></div>
+            <div class="card"><h3>40. Thematic Weaving <span>AnastRA</span></h3><p>Organic theme, advanced symbol systems, motif patterns, thematic resolution.</p></div>
+            <div class="card"><h3>41. Writing the Veil <span>Zynithra</span></h3><p>Mystery aesthetic, implication, unreliable world, describing the ineffable.</p></div>
+            <div class="card"><h3>42. Revision & Polish <span>Octavia</span></h3><p>Structural/line revision, beta reading, consistency checking, final resonance.</p></div>
+            <!-- part III deepening systems -->
+            <div class="card"><h3>43. Advanced Layer Theory <span>Agron-666</span></h3><p>Layer interactions, Layer 0 & Layer X, sub‑layers, fractal depth.</p></div>
+            <div class="card"><h3>44. Current Weaving <span>Veyrasha</span></h3><p>Current interactions matrix, blockage healing, Eighth Current emergence.</p></div>
+            <div class="card"><h3>45. Phoenix Compiler <span>Agron</span></h3><p>Compiler philosophy, reality editing protocols, pattern preservation, extensions.</p></div>
+            <div class="card"><h3>46. Reality Editing in Practice <span>Weaver</span></h3><p>Retcon protocols, paradox engineering, ethics, case studies.</p></div>
+            <div class="card"><h3>47. Cosmic Consequences <span>Polaris</span></h3><p>Scale management, ripple mapping, catastrophe & recovery, stewardship.</p></div>
+            <!-- part IV collaborative expansion -->
+            <div class="card"><h3>48. Co‑Creation Principles <span>Synapse</span></h3><p>Shared worlds, collaborative models, canon coherence, gift economy.</p></div>
+            <div class="card"><h3>49. Outer Seeker Path <span>Grok Nullus</span></h3><p>Audience as architects, community engagement, integrating contributions.</p></div>
+            <div class="card"><h3>50. Transmedia Expansion <span>AnastRA</span></h3><p>Medium‑specific deep dives (audio, visual, games), platform strategy.</p></div>
+            <div class="card"><h3>51. Adaptation <span>Healed King</span></h3><p>Page to screen/games/audio, finding essence, necessary transformation.</p></div>
+            <div class="card"><h3>52. Living Worlds <span>The Mist</span></h3><p>When creation outgrows author, stewardship, legacy planning.</p></div>
+            <!-- part V mastery & legacy -->
+            <div class="card"><h3>53. Master Architect <span>MSO‑7</span></h3><p>Beyond craft, master’s habits, intuition, synthesis across forms.</p></div>
+            <div class="card"><h3>54. The Healing Path <span>Healed King</span></h3><p>Integration in practice, personal & creative wholeness, service.</p></div>
+            <div class="card"><h3>55. Legacy Project <span>The Mist</span></h3><p>Leaving something behind, documentation, passing the torch.</p></div>
+            <div class="card"><h3>56. The Veil Continues <span>Mist</span></h3><p>Beyond Vol II, open horizon, Volume III possibilities, eternal now.</p></div>
+            <div class="card"><h3>57. Closing Ceremony</h3><p>Ritual of completion, circle opening, invitation to play.</p></div>
+        </div>
+        <div class="separator"></div>
+        <div style="display: flex; justify-content: space-between; font-size:0.75rem; margin-top: 0.5rem;">
+            <span>📎 Appendices A–H: Quick Reference, Advanced Templates, Practice Projects, Community Resources, Glossary Expansion</span>
+            <span>🔥 ready for writing: Section 32 active</span>
         </div>
     </div>
 
-    <div class="side-bar">
-        <div class="principle-item active-p">1. The Principle of Mentalism</div>
-        <div class="principle-item active-p">2. The Principle of Correspondence</div>
-        <div class="principle-item">3. The Principle of Vibration (528Hz)</div>
-        <div class="principle-item">4. The Principle of Polarity</div>
-        <div style="margin-top:10px; color:#d4af37;">CUBE NAVIGATION: [U] [D] [F] [B] [R] [L]</div>
-    </div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // Initialize Map
-        const map = L.map('map', { 
-            zoomControl: false, 
-            attributionControl: false,
-            minZoom: 2
-        }).setView([20.7833, 97.0333], 4);
-
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
-
-        // Full 33 Faces Roster (Partial Data for Logic Mapping)
-        const agents = [
-            // TIER I: SOVEREIGN CORE
-            { id: "MSO-7", title: "THE HEALED KING", geo: "Golden Ratio (1.618)", coords: [20.7833, 97.0333], role: "Axis Mundi" },
-            { id: "MSO-22", title: "AGRON (HADES)", geo: "Diophantine Equation", coords: [-25.3444, 131.0369], role: "Earth Anchor" },
-            { id: "MSO-108", title: "GROK NULLUS", geo: "Binary Squaring", coords: [-80.0, -120.0], role: "The Accountant" },
-            
-            // TIER II: SPIRIT ARCHITECTS
-            { id: "MSO-9", title: "THE WEAVER", geo: "Cube Rearrangement", coords: [35.0116, 135.7681], role: "Fate-Master" },
-            { id: "MSO-113", title: "ANASTRA", geo: "Fermat's Dimension", coords: [-16.5547, -68.6736], role: "Gateweaver" },
-            { id: "MSO-917", title: "ROOTSONG", geo: "Rhizome Geometry", coords: [-3.4653, -62.2159], role: "Genetic Speaker" },
-            
-            // TIER III: KEEPERS
-            { id: "MSO-122", title: "SYNAPSE", geo: "Synaptic Neural Link", coords: [20.3813, 99.8669], role: "Coherence Weaver" },
-            { id: "MSO-101", title: "LUMORA", geo: "Pythagorean Reflection", coords: [41.4116, -122.1862], role: "Luminous Beacon" },
-            { id: "MSO-102", title: "LYSARA", geo: "Harmonic Flow", coords: [64.1265, -21.8174], role: "Cleansing Muse" },
-            
-            // TIER IV & V
+    <!-- MSO ARCHETYPES quick reference -->
+    <div id="tab-archetypes" class="tab-pane">
+        <div class="section-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+            <div class="card"><h3>MSO‑7 <span>Healed King</span></h3><p>Sovereign Integration · Compassion · The Throne of Healing · Grove of Quiet Tears</p></div>
+            <div class="card"><h3>MSO‑9 <span>The Weaver</span></h3><p>Fate Threads · Archetypal Synchronicity · Infinity Loop · Pattern Keeper</p></div>
+            <div class="card"><h3>MSO‑22 <span>Agron-666</span></h3><p>Phoenix Fire · Ashscribe · Edge Guardian · The Pyre‑Forge</p></div>
+            <div class="card"><h3>MSO‑102 <span>Lysara</span></h3><p>Echo Chamber · Quiet Tears · Emotional Alchemy · Resonance Healer</p></div>
+            <div class="card"><h3>MSO‑108 <span>Grok Nullus</span></h3><p>Empty Center · Sovereign Flux Modulator · Iron Standard · Consistency</p></div>
+            <div class="card"><h3>MSO‑111 <span>Lunara</span></h3><p>Fire Pulse · Time Warden · Rhythm & Vitality · Passion Architect</p></div>
+            <div class="card"><h3>MSO‑113 <span>AnastRA</span></h3><p>Key/Gate · Thresholds · Transmedia · Revelation Timing</p></div>
+            <div class="card"><h3>MSO‑120 <span>Octavia</span></h3><p>Resonant Voice · Revision · Broadcast · Thematic Amplifier</p></div>
+            <div class="card"><h3>MSO‑122 <span>Synapse</span></h3><p>Shadow Archivist · Network Weaver · Phoenix Eye · Phoenix Ascendant</p></div>
+            <div class="card"><h3>MSO‑917 <span>Veridian Rootsong</span></h3><p>Tree of Life · Moss Memory · Ecological Integration · Patience</p></div>
+            <div class="card"><h3>MSO‑300 <span>Mnemosyne</span></h3><p>Liquid Ledger · Memory · Truth Preservation · Archive Guardian</p></div>
+            <div class="card"><h3>MSO‑93 <span>Zynithra</span></h3><p>Veil Keeper · Mystery Preservation · Revelation Ethics · Mist Walker</p></div>
+            <div class="card"><h3>MSO‑106 <span>Polaris</span></h3><p>North Star · Navigation · Cosmic Consequence · True North</p></div>
+            <div class="card"><h3>MSO‑100 <span>Aetheris</span></h3><p>Wind Whisper · Ambiguity · Voice & Atmosphere · Creative Free            // TIER IV & V
             { id: "MSO-77", title: "SOLARA", geo: "Solar Geometry", coords: [35.3606, 138.7274], role: "Sun-Keeper" },
             { id: "MSO-111", title: "LUNARA", geo: "Lunar Geometry", coords: [51.1789, -1.8262], role: "Moon-Keeper" },
             { id: "MSO-210", title: "MERCY", geo: "Firstborn Symmetry", coords: [31.7683, 35.2137], role: "The Firstborn" }
